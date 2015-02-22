@@ -1,4 +1,4 @@
-# Web Cryptography API Live Chart
+# Web Cryptography API Examples
 
 Live Chart: https://diafygi.github.io/webcrypto-live-chart
 
