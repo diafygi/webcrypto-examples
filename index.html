@@ -1,0 +1,2395 @@
+<!DOCTYPE html>
+<html>
+    <!--
+    #######################################
+    ###   Welcome to the source code!   ###
+    #######################################
+
+    This file is very long because there
+    are lots of independent tests!
+
+    Each test is located in the table cell
+    that it is testing, so just scroll down
+    to the section you're interested in
+    checking out :)
+
+    Written by Daniel Roesler
+    License: GPLv2
+    Pull requests welcome!
+    https://github.com/diafygi/webcrypto-chart
+    -->
+    <head>
+        <title>Live WebCryptoAPI Chart</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <style>
+            body{font-family:sans-serif;}
+            p > span{display:inline-block;width:30px;height:16px;vertical-align:middle;}
+            table{border-collapse:collapse;}
+            th,td{padding:12px;border:1px solid #444444;}
+            th{font-size:14px;}
+            td{max-width:130px;}
+            td:first-child{max-width:200px;}
+            .disabled{background-color:#aaaaaa;}
+            .good,.bad{display:inline-block;padding-left:24px;margin-top:4px;min-height:20px;background-repeat:no-repeat;}
+            .good:first-child,.bad:first-child{margin-top:0px;}
+            .good{background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAA9ElEQVQ4y2P4//8/AzUxw6Ay0GG/A4vlFu8SEAaxKTIQbNg2r1WWW73+g/EW79UgMeoYhsAzSDYsdFUoM1DjSiyG/bfa6vWIZMOAmlZgMwyI/1hs8wwHK7TY7qEAFDhhsdXrOFCDPC7DgBqW4zEsGhwpUMMeIEnet9nsK0eOYWADQS7Douiu6U43WaQwW0aMYfgMBOE7IO8D6aXEGobLy8j4OymGwRO22SZfRaCihzg0E20YSk6x2eKtBEpHlBiGkfVAhgI1PSbXMKx52WqbpzIWQ4kyDGfhYLnDXQXJUKINw1vagGLfYot3j/lWL9ehW8BiwwA8jA6GeQxGVAAAAABJRU5ErkJggg==);}
+            .bad{background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAqklEQVQ4y7WVSxKDIBBE+0DmINnk0J7BpSZZewNXI00BhRXRSdku2gU0r5wPA8wM1Bd4foAhqB+BLq+3RA+9PMOzeT1+3sArbCxBljRPwKMF4x49lX8hIwLTn9WwQ+gOrEDJQgrTGtpAD2BZA1Ie7AzqgFF9Tu6ZcfZ4yPKGYp4oSpUvQjd59lbQBfsB/gndbat7gdKQpUWRto28seVXTz4c5ONLPmDVT8AKvHEh2mU9JE0AAAAASUVORK5CYII=);}
+        </style>
+        <script>
+            window.crypto = window.crypto || window.msCrypto; //for IE11
+            window.TESTBYTES = new Uint8Array([1, 2, 3, 4]);
+
+            //shortcuts to insert test results into the table
+            function ok(id, cls, msg){
+                return function(){
+                    var result = document.createElement("span");
+                    result.className = "good";
+                    result.innerHTML = msg;
+                    document.querySelector("#" + id + " ." + cls).appendChild(result);
+                }
+            }
+            function err(id, cls, msg, loud){
+                return function(e){
+                    if(loud){
+                        console.error("== Error from "+id+" "+cls+" "+msg+" ==");
+                        console.error(e);
+                    }
+                    var result = document.createElement("span");
+                    result.className = "bad";
+                    result.innerHTML = msg;
+                    document.querySelector("#" + id + " ." + cls).appendChild(result);
+                    return e;
+                }
+            }
+        </script>
+    </head>
+    <body>
+        <h1>Live Web Cryptography API Chart</h1>
+        <p>
+            This chart tests your browser to see which parts of WebCrypto you
+            support right now! Safe crypto in the browser is now a reality :)
+        </p>
+        <p>
+            Source code:
+            <a href="https://github.com/diafygi/webcrypto-chart" target="_blank">
+                https://github.com/diafygi/webcrypto-chart
+            </a>
+        </p>
+        <table>
+            <tr>
+                <th>Algorithm Name</th>
+                <th>encrypt</th>
+                <th>decrypt</th>
+                <th>sign</th>
+                <th>verify</th>
+                <th>digest</th>
+                <th>generateKey</th>
+                <th>deriveKey</th>
+                <th>deriveBits</th>
+                <th>importKey</th>
+                <th>exportKey</th>
+            </tr>
+
+
+            <!--
+            #############################
+            ###   RSASSA-PKCS1-v1_5   ###
+            #############################
+            -->
+            <script>
+                //Base algorithm for testing
+                window.RSASSA = {
+                    name: "RSASSA-PKCS1-v1_5",
+                    //NOTE: THIS IS A SMALL MODULUS FOR TESTING ONLY
+                    //DO NOT USE IT FOR REAL! USE AT LEAST 2048
+                    modulusLength: 1024,
+                    publicExponent: new Uint8Array([0x01, 0x00, 0x01]),
+                    hash: {name: "SHA-256"},
+                }
+            </script>
+            <tr id="rsassa-pkcs1">
+                <td class="algname"><a href="https://www.w3.org/TR/WebCryptoAPI/#rsassa-pkcs1" target="_blank">RSASSA-PKCS1-v1_5</a></td>
+                <td class="encrypt disabled"></td>
+                <td class="decrypt disabled"></td>
+                <td class="sign">
+                    <script>
+                        //sign
+                        window.crypto.subtle.generateKey(RSASSA, false, ["sign"])
+                        .then(function(key){
+                            return window.crypto.subtle.sign(RSASSA, key.privateKey, TESTBYTES);
+                        })
+                        .then(ok("rsassa-pkcs1", "sign", "Yes"))
+                        .catch(err("rsassa-pkcs1", "sign", "No"));
+                    </script>
+                </td>
+                <td class="verify">
+                    <script>
+                        //verify
+                        window.crypto.subtle.generateKey(RSASSA, false, ["sign", "verify"])
+                        .then(function(key){
+                            window.crypto.subtle.sign(RSASSA, key.privateKey, TESTBYTES)
+                            .then(function(sig){
+                                return window.crypto.subtle.verify(RSASSA, key.publicKey, sig, TESTBYTES);
+                            })
+                            .then(ok("rsassa-pkcs1", "verify", "Yes"))
+                            .catch(err("rsassa-pkcs1", "verify", "No"));
+                        })
+                        .catch(err("rsassa-pkcs1", "verify", "N/A"));
+                    </script>
+                </td>
+                <td class="digest disabled"></td>
+                <td class="generateKey">
+                    <a id="rsassa_generatKey" href="#">Test (slow)</a>
+                    <script>
+                        //generateKey
+                        document.getElementById("rsassa_generatKey").onclick = function(evt){
+                            evt.preventDefault();
+                            evt.target.style.display = "none";
+
+                            //1024 bits
+                            window.crypto.subtle.generateKey({
+                                name: "RSASSA-PKCS1-v1_5",
+                                modulusLength: 1024,
+                                publicExponent: new Uint8Array([0x01, 0x00, 0x01]),
+                                hash: {name: "SHA-256"},
+                            }, false, ["sign", "verify"])
+                            .then(ok("rsassa-pkcs1", "generateKey", "1024 bits"))
+                            .catch(err("rsassa-pkcs1", "generateKey", "1024 bits"));
+
+                            //2048 bits
+                            window.crypto.subtle.generateKey({
+                                name: "RSASSA-PKCS1-v1_5",
+                                modulusLength: 2048,
+                                publicExponent: new Uint8Array([0x01, 0x00, 0x01]),
+                                hash: {name: "SHA-256"},
+                            }, false, ["sign", "verify"])
+                            .then(ok("rsassa-pkcs1", "generateKey", "2048 bits"))
+                            .catch(err("rsassa-pkcs1", "generateKey", "2048 bits"));
+
+                            //4096 bits
+                            window.crypto.subtle.generateKey({
+                                name: "RSASSA-PKCS1-v1_5",
+                                modulusLength: 4096,
+                                publicExponent: new Uint8Array([0x01, 0x00, 0x01]),
+                                hash: {name: "SHA-256"},
+                            }, false, ["sign", "verify"])
+                            .then(ok("rsassa-pkcs1", "generateKey", "4096 bits"))
+                            .catch(err("rsassa-pkcs1", "generateKey", "4096 bits"));
+
+                        }
+                    </script>
+                </td>
+                <td class="deriveKey disabled"></td>
+                <td class="deriveBits disabled"></td>
+                <td class="importKey">
+                    <script>
+                        //importKey
+
+                        //jwk
+                        window.crypto.subtle.importKey("jwk", {
+                            kty: "RSA",
+                            e: "AQAB",
+                            n: "vGO3eU16ag9zRkJ4AK8ZUZrjbtp5xWK0LyFMNT8933evJoHeczexMUzSiXaLrEFSyQZortk81zJH3y41MBO_UFDO_X0crAquNrkjZDrf9Scc5-MdxlWU2Jl7Gc4Z18AC9aNibWVmXhgvHYkEoFdLCFG-2Sq-qIyW4KFkjan05IE",
+                            alg: "RS256",
+                            ext: true,
+                        }, RSASSA, false, ["verify"])
+                        .then(ok("rsassa-pkcs1", "importKey", "jwk-pub"))
+                        .catch(err("rsassa-pkcs1", "importKey", "jwk-pub"));
+
+                        window.crypto.subtle.importKey("jwk", {
+                            kty: "RSA",
+                            e: "AQAB",
+                            d: "n_dIVw9MD_04lANi5KnKJPoRfxKy7cGHYLG0hU5DGpsFNfx2yH0Uz9j8uU7ZARai1iHECBxcxhpi3wbckQtjmbkCUKvs4G0gKLT9UuNHcCbh0WfvadfPPec52n4z6s4zwisbgWCNbT2L-SyHt1yuFmLAYXkg0swk3y5Bt_ilA8E",
+                            dp: "2RNM_uiYEQMcATQaUu3AwdeJpenCPykbQHkwAylvXqlHB6W7m5XX0k-SutkbXAijmGTC-Oh8NexsLGHxOACb8Q",
+                            dq: "rHabkI3_XVGieLqHujpWaWe9YD03fJY0KbbQX0fIoNdNU4GcmUftzIWLSajPKKsiyfR6Xk2AEtBmBPE5qaoV6Q",
+                            n: "vGO3eU16ag9zRkJ4AK8ZUZrjbtp5xWK0LyFMNT8933evJoHeczexMUzSiXaLrEFSyQZortk81zJH3y41MBO_UFDO_X0crAquNrkjZDrf9Scc5-MdxlWU2Jl7Gc4Z18AC9aNibWVmXhgvHYkEoFdLCFG-2Sq-qIyW4KFkjan05IE",
+                            p: "5Y4ynodegqC9kgGmfZeSrojGmLyYR8HIvKVEAIjjMUQjyvKWpWsXfPg67mTdqVpjSpQLQlRfES2nUvZ27KrU6Q",
+                            q: "0hd_U9PcNpMe77nhsTgoVNgMB34cqfrfu4fPuJ-7NvvMkKIELDLy-m8qg1MBbgf2i5546A9B5Exsuj4D2Vwz2Q",
+                            qi: "R3CkCGVAESy_hChmDvUaLMT-R1xk6kK7RLIUQKXATPQbnDqWBMgm-vcawFVhKJ-ICJsPfmRUsv7Wt1bJ01wLGQ",
+                            alg: "RS256",
+                            ext: true,
+                        }, RSASSA, false, ["sign"])
+                        .then(ok("rsassa-pkcs1", "importKey", "jwk-priv"))
+                        .catch(err("rsassa-pkcs1", "importKey", "jwk-priv"));
+
+                        //spki
+                        window.crypto.subtle.importKey("spki", new Uint8Array([
+                            48,129,159,48,13,6,9,42,134,72,134,247,13,1,1,1,5,0,3,
+                            129,141,0,48,129,137,2,129,129,0,182,93,35,213,252,204,
+                            20,103,91,238,105,199,53,114,24,221,114,210,137,173,88,
+                            76,205,113,148,148,79,80,59,208,60,75,231,248,78,125,12,
+                            30,237,226,63,146,157,203,239,60,138,123,234,50,23,174,
+                            216,33,122,16,53,246,140,254,75,246,205,204,117,204,115,
+                            29,178,102,139,201,74,177,45,131,183,166,234,61,124,75,
+                            110,3,70,202,148,95,45,228,94,95,148,2,162,79,146,137,29,
+                            189,102,75,207,214,116,58,63,171,219,27,5,9,108,16,218,23,
+                            169,43,181,119,31,172,95,205,180,18,255,203,2,3,1,0,1
+                        ]), RSASSA, false, ["verify"])
+                        .then(ok("rsassa-pkcs1", "importKey", "spki-pub"))
+                        .catch(err("rsassa-pkcs1", "importKey", "spki-pub"));
+
+                        window.crypto.subtle.importKey("spki", null, RSASSA, false, ["sign"])
+                        .then(ok("rsassa-pkcs1", "importKey", "spki-priv"))
+                        .catch(err("rsassa-pkcs1", "importKey", "spki-priv*"));
+
+                        //pkcs8
+                        window.crypto.subtle.importKey("pkcs8", null, RSASSA, false, ["verify"])
+                        .then(ok("rsassa-pkcs1", "importKey", "pkcs8-pub"))
+                        .catch(err("rsassa-pkcs1", "importKey", "pkcs8-pub*"));
+
+                        window.crypto.subtle.importKey("pkcs8", new Uint8Array([
+                            48,130,2,118,2,1,0,48,13,6,9,42,134,72,134,247,13,1,1,1,5,0,4,130,2,96,48,130,2,92,2,1,0,2,129,
+                            129,0,217,78,147,218,221,152,10,66,75,127,242,108,182,142,157,44,93,58,176,193,135,103,216,179,
+                            69,72,38,115,144,244,12,139,0,245,48,115,204,234,158,193,231,127,178,240,244,203,35,229,203,245,
+                            110,215,199,19,98,183,164,223,159,203,128,123,173,26,12,172,250,99,254,35,225,221,39,51,62,3,139,
+                            35,38,164,71,238,240,73,139,214,68,172,204,253,171,244,14,186,152,159,225,133,229,140,99,50,183,
+                            242,217,248,86,233,20,117,42,136,55,8,65,124,244,65,29,15,194,255,78,31,189,146,105,161,2,3,1,0,1,
+                            2,129,128,26,88,13,82,166,52,141,97,214,23,79,195,96,42,79,225,149,247,204,127,217,179,124,48,215,
+                            128,84,177,3,236,162,44,163,212,21,168,164,57,249,63,22,154,131,141,244,143,63,237,214,217,13,51,
+                            249,125,95,37,86,70,137,239,184,198,197,136,62,183,41,78,118,234,57,195,161,219,173,234,61,11,165,
+                            109,209,9,3,22,186,114,32,135,147,74,6,106,190,214,36,208,32,220,61,12,41,105,251,247,18,159,3,198,
+                            28,228,36,44,189,125,45,72,233,199,12,72,91,106,165,246,217,58,168,53,2,65,0,241,112,53,166,98,11,
+                            38,73,58,156,84,190,118,74,247,229,85,178,83,231,53,137,237,228,246,12,32,206,157,198,152,70,11,185,
+                            234,30,112,23,115,249,68,176,159,108,247,249,207,152,145,166,246,79,176,219,163,111,243,4,49,3,239,
+                            242,63,147,2,65,0,230,105,200,1,208,201,237,225,85,27,39,216,193,1,253,168,88,15,242,166,70,106,235,
+                            2,92,24,130,66,176,176,220,238,66,12,159,26,24,40,19,213,138,98,238,98,220,65,148,116,146,21,0,25,6,
+                            177,57,216,70,51,149,244,157,153,106,123,2,64,127,92,254,48,67,80,54,102,50,240,253,19,108,59,168,1,
+                            230,239,39,171,180,102,138,132,89,247,147,230,234,252,52,159,222,215,184,85,78,52,81,13,145,218,202,
+                            127,37,97,54,205,249,39,230,143,171,112,114,11,64,91,89,176,6,7,248,217,2,65,0,220,94,95,132,29,4,
+                            132,22,247,38,185,189,125,27,66,87,55,162,73,24,238,80,99,228,37,224,234,244,141,185,26,20,101,231,
+                            92,99,192,166,212,17,112,1,158,173,190,170,154,41,195,109,130,98,109,28,35,142,205,213,152,158,19,
+                            253,30,241,2,64,15,148,8,16,189,122,55,109,203,175,173,24,222,36,130,130,179,87,189,32,141,149,30,
+                            115,211,227,79,234,78,202,253,48,173,95,167,203,20,193,160,30,146,33,109,4,221,25,212,216,183,100,
+                            18,46,184,52,65,146,249,68,225,10,84,38,98,133
+                        ]), RSASSA, false, ["sign"])
+                        .then(ok("rsassa-pkcs1", "importKey", "pkcs8-priv"))
+                        .catch(err("rsassa-pkcs1", "importKey", "pkcs8-priv"));
+                    </script>
+                </td>
+                <td class="exportKey">
+                    <script>
+                        //exportKey
+                        window.crypto.subtle.generateKey(RSASSA, true, ["sign", "verify"])
+                        .then(function(key){
+
+                            //jwk
+                            window.crypto.subtle.exportKey("jwk", key.publicKey)
+                            .then(ok("rsassa-pkcs1", "exportKey", "jwk-pub"))
+                            .catch(err("rsassa-pkcs1", "exportKey", "jwk-pub"));
+
+                            window.crypto.subtle.exportKey("jwk", key.privateKey)
+                            .then(ok("rsassa-pkcs1", "exportKey", "jwk-priv"))
+                            .catch(err("rsassa-pkcs1", "exportKey", "jwk-priv"));
+
+                            //spki
+                            window.crypto.subtle.exportKey("spki", key.publicKey)
+                            .then(ok("rsassa-pkcs1", "exportKey", "spki-pub"))
+                            .catch(err("rsassa-pkcs1", "exportKey", "spki-pub"));
+
+                            window.crypto.subtle.exportKey("spki", key.privateKey)
+                            .then(ok("rsassa-pkcs1", "exportKey", "spki-priv"))
+                            .catch(err("rsassa-pkcs1", "exportKey", "spki-priv"));
+
+                            //pkcs8
+                            window.crypto.subtle.exportKey("pkcs8", key.publicKey)
+                            .then(ok("rsassa-pkcs1", "exportKey", "pkcs8-pub"))
+                            .catch(err("rsassa-pkcs1", "exportKey", "pkcs8-pub"));
+
+                            window.crypto.subtle.exportKey("pkcs8", key.privateKey)
+                            .then(ok("rsassa-pkcs1", "exportKey", "pkcs8-priv"))
+                            .catch(err("rsassa-pkcs1", "exportKey", "pkcs8-priv"));
+
+                        })
+                        .catch(err("rsassa-pkcs1", "exportKey", "N/A"));
+                    </script>
+                </td>
+            </tr>
+
+
+            <!--
+            ###################
+            ###   RSA-PSS   ###
+            ###################
+            -->
+            <script>
+                //Base algorithm for testing
+                window.RSAPSS = {
+                    name: "RSA-PSS",
+                    //NOTE: THIS IS A SMALL MODULUS FOR TESTING ONLY
+                    //DO NOT USE IT FOR REAL! USE AT LEAST 2048
+                    modulusLength: 1024,
+                    publicExponent: new Uint8Array([0x01, 0x00, 0x01]),
+                    saltLength: 8,
+                }
+            </script>
+            <tr id="rsa-pss">
+                <td class="algname"><a href="https://www.w3.org/TR/WebCryptoAPI/#rsa-pss" target="_blank">RSA-PSS</a></td>
+                <td class="encrypt disabled"></td>
+                <td class="decrypt disabled"></td>
+                <td class="sign">
+                    <script>
+                        //sign
+                        window.crypto.subtle.generateKey(RSAPSS, false, ["sign"])
+                        .then(function(key){
+                            return window.crypto.subtle.sign(RSAPSS, key.privateKey, TESTBYTES);
+                        })
+                        .then(ok("rsa-pss", "sign", "Yes"))
+                        .catch(err("rsa-pss", "sign", "No"));
+                    </script>
+                </td>
+                <td class="verify">
+                    <script>
+                        //verify
+                        window.crypto.subtle.generateKey(RSAPSS, false, ["sign", "verify"])
+                        .then(function(key){
+                            window.crypto.subtle.sign(RSAPSS, key.privateKey, TESTBYTES)
+                            .then(function(sig){
+                                return window.crypto.subtle.verify(RSAPSS, key.publicKey, sig, TESTBYTES);
+                            })
+                            .then(ok("rsa-pss", "verify", "Yes"))
+                            .catch(err("rsa-pss", "verify", "No"));
+                        })
+                        .catch(err("rsa-pss", "verify", "N/A"));
+                    </script>
+                </td>
+                <td class="digest disabled"></td>
+                <td class="generateKey">
+                    <a id="rsapss_generatKey" href="#">Test (slow)</a>
+                    <script>
+                        //generateKey
+                        document.getElementById("rsapss_generatKey").onclick = function(evt){
+                            evt.preventDefault();
+                            evt.target.style.display = "none";
+
+                            //1024 bits
+                            window.crypto.subtle.generateKey({
+                                name: "RSA-PSS",
+                                modulusLength: 1024,
+                                publicExponent: new Uint8Array([0x01, 0x00, 0x01]),
+                                saltLength: 8,
+                            }, false, ["sign", "verify"])
+                            .then(ok("rsa-pss", "generateKey", "1024 bits"))
+                            .catch(err("rsa-pss", "generateKey", "1024 bits"));
+
+                            //2048 bits
+                            window.crypto.subtle.generateKey({
+                                name: "RSA-PSS",
+                                modulusLength: 2048,
+                                publicExponent: new Uint8Array([0x01, 0x00, 0x01]),
+                                saltLength: 8,
+                            }, false, ["sign", "verify"])
+                            .then(ok("rsa-pss", "generateKey", "2048 bits"))
+                            .catch(err("rsa-pss", "generateKey", "2048 bits"));
+
+                            //4096 bits
+                            window.crypto.subtle.generateKey({
+                                name: "RSA-PSS",
+                                modulusLength: 4096,
+                                publicExponent: new Uint8Array([0x01, 0x00, 0x01]),
+                                saltLength: 8,
+                            }, false, ["sign", "verify"])
+                            .then(ok("rsa-pss", "generateKey", "4096 bits"))
+                            .catch(err("rsa-pss", "generateKey", "4096 bits"));
+
+                        }
+                    </script>
+                </td>
+                <td class="deriveKey disabled"></td>
+                <td class="deriveBits disabled"></td>
+                <td class="importKey">
+                    <script>
+                        //importKey
+
+                        //jwk
+                        window.crypto.subtle.importKey("jwk", null, RSAPSS, false, ["verify"])
+                        .then(ok("rsa-pss", "importKey", "jwk-pub"))
+                        .catch(err("rsa-pss", "importKey", "jwk-pub*"));
+
+                        window.crypto.subtle.importKey("jwk", null, RSAPSS, false, ["sign"])
+                        .then(ok("rsa-pss", "importKey", "jwk-priv"))
+                        .catch(err("rsa-pss", "importKey", "jwk-priv*"));
+
+                        //spki
+                        window.crypto.subtle.importKey("spki", null, RSAPSS, false, ["verify"])
+                        .then(ok("rsa-pss", "importKey", "spki-pub"))
+                        .catch(err("rsa-pss", "importKey", "spki-pub*"));
+
+                        window.crypto.subtle.importKey("spki", null, RSAPSS, false, ["sign"])
+                        .then(ok("rsa-pss", "importKey", "spki-priv"))
+                        .catch(err("rsa-pss", "importKey", "spki-priv*"));
+
+                        //pkcs8
+                        window.crypto.subtle.importKey("pkcs8", null, RSAPSS, false, ["verify"])
+                        .then(ok("rsa-pss", "importKey", "pkcs8-pub"))
+                        .catch(err("rsa-pss", "importKey", "pkcs8-pub*"));
+
+                        window.crypto.subtle.importKey("pkcs8", null, RSAPSS, false, ["sign"])
+                        .then(ok("rsa-pss", "importKey", "pkcs8-priv"))
+                        .catch(err("rsa-pss", "importKey", "pkcs8-priv*"));
+                    </script>
+                </td>
+                <td class="exportKey">
+                    <script>
+                        //exportKey
+                        window.crypto.subtle.generateKey(RSAPSS, true, ["sign", "verify"])
+                        .then(function(key){
+
+                            //jwk
+                            window.crypto.subtle.exportKey("jwk", key.publicKey)
+                            .then(ok("rsa-pss", "exportKey", "jwk-pub"))
+                            .catch(err("rsa-pss", "exportKey", "jwk-pub"));
+
+                            window.crypto.subtle.exportKey("jwk", key.privateKey)
+                            .then(ok("rsa-pss", "exportKey", "jwk-priv"))
+                            .catch(err("rsa-pss", "exportKey", "jwk-priv"));
+
+                            //spki
+                            window.crypto.subtle.exportKey("spki", key.publicKey)
+                            .then(ok("rsa-pss", "exportKey", "spki-pub"))
+                            .catch(err("rsa-pss", "exportKey", "spki-pub"));
+
+                            window.crypto.subtle.exportKey("spki", key.privateKey)
+                            .then(ok("rsa-pss", "exportKey", "spki-priv"))
+                            .catch(err("rsa-pss", "exportKey", "spki-priv"));
+
+                            //pkcs8
+                            window.crypto.subtle.exportKey("pkcs8", key.publicKey)
+                            .then(ok("rsa-pss", "exportKey", "pkcs8-pub"))
+                            .catch(err("rsa-pss", "exportKey", "pkcs8-pub"));
+
+                            window.crypto.subtle.exportKey("pkcs8", key.privateKey)
+                            .then(ok("rsa-pss", "exportKey", "pkcs8-priv"))
+                            .catch(err("rsa-pss", "exportKey", "pkcs8-priv"));
+
+                        })
+                        .catch(err("rsa-pss", "exportKey", "N/A"));
+                    </script>
+                </td>
+            </tr>
+
+
+            <!--
+            ####################
+            ###   RSA-OAEP   ###
+            ####################
+            -->
+            <script>
+                //Base algorithm for testing
+                window.RSAOAEP = {
+                    name: "RSA-OAEP",
+                    //NOTE: THIS IS A SMALL MODULUS FOR TESTING ONLY
+                    //DO NOT USE IT FOR REAL! USE AT LEAST 2048
+                    modulusLength: 1024,
+                    publicExponent: new Uint8Array([0x01, 0x00, 0x01]),
+                    hash: {name: "SHA-256"},
+                }
+            </script>
+            <tr id="rsa-oaep">
+                <td class="algname"><a href="https://www.w3.org/TR/WebCryptoAPI/#rsa-oaep" target="_blank">RSA-OAEP</a></td>
+                <td class="encrypt">
+                    <script>
+                        //encrypt
+                        window.crypto.subtle.generateKey(RSAOAEP, false, ["encrypt"])
+                        .then(function(key){
+                            return window.crypto.subtle.encrypt(RSAOAEP, key.publicKey, TESTBYTES);
+                        })
+                        .then(ok("rsa-oaep", "encrypt", "Yes"))
+                        .catch(err("rsa-oaep", "encrypt", "No"));
+                    </script>
+                </td>
+                <td class="decrypt">
+                    <script>
+                        //decrypt
+                        window.crypto.subtle.generateKey(RSAOAEP, false, ["encrypt", "decrypt"])
+                        .then(function(key){
+                            window.crypto.subtle.encrypt(RSAOAEP, key.publicKey, TESTBYTES)
+                            .then(function(encrypted){
+                                return window.crypto.subtle.decrypt(RSAOAEP, key.privateKey, encrypted);
+                            })
+                            .then(ok("rsa-oaep", "decrypt", "Yes"))
+                            .catch(err("rsa-oaep", "decrypt", "No"));
+                        })
+                        .catch(err("rsa-oaep", "decrypt", "N/A"));
+                    </script>
+                </td>
+                <td class="sign disabled"></td>
+                <td class="verify disabled"></td>
+                <td class="digest disabled"></td>
+                <td class="generateKey">
+                    <a id="rsaoaep_generatKey" href="#">Test (slow)</a>
+                    <script>
+                        //generateKey
+                        document.getElementById("rsaoaep_generatKey").onclick = function(evt){
+                            evt.preventDefault();
+                            evt.target.style.display = "none";
+
+                            //1024 bits
+                            window.crypto.subtle.generateKey({
+                                name: "RSA-OAEP",
+                                modulusLength: 1024,
+                                publicExponent: new Uint8Array([0x01, 0x00, 0x01]),
+                                hash: {name: "SHA-256"},
+                            }, false, ["encrypt", "decrypt"])
+                            .then(ok("rsa-oaep", "generateKey", "1024 bits"))
+                            .catch(err("rsa-oaep", "generateKey", "1024 bits"));
+
+                            //2048 bits
+                            window.crypto.subtle.generateKey({
+                                name: "RSA-OAEP",
+                                modulusLength: 2048,
+                                publicExponent: new Uint8Array([0x01, 0x00, 0x01]),
+                                hash: {name: "SHA-256"},
+                            }, false, ["encrypt", "decrypt"])
+                            .then(ok("rsa-oaep", "generateKey", "2048 bits"))
+                            .catch(err("rsa-oaep", "generateKey", "2048 bits"));
+
+                            //4096 bits
+                            window.crypto.subtle.generateKey({
+                                name: "RSA-OAEP",
+                                modulusLength: 4096,
+                                publicExponent: new Uint8Array([0x01, 0x00, 0x01]),
+                                hash: {name: "SHA-256"},
+                            }, false, ["encrypt", "decrypt"])
+                            .then(ok("rsa-oaep", "generateKey", "4096 bits"))
+                            .catch(err("rsa-oaep", "generateKey", "4096 bits"));
+
+                        }
+                    </script>
+                </td>
+                <td class="deriveKey disabled"></td>
+                <td class="deriveBits disabled"></td>
+                <td class="importKey">
+                    <script>
+                        //importKey
+
+                        //jwk
+                        window.crypto.subtle.importKey("jwk", {
+                            kty: "RSA",
+                            e: "AQAB",
+                            n: "vGO3eU16ag9zRkJ4AK8ZUZrjbtp5xWK0LyFMNT8933evJoHeczexMUzSiXaLrEFSyQZortk81zJH3y41MBO_UFDO_X0crAquNrkjZDrf9Scc5-MdxlWU2Jl7Gc4Z18AC9aNibWVmXhgvHYkEoFdLCFG-2Sq-qIyW4KFkjan05IE",
+                            alg: "RSA-OAEP-256",
+                            ext: true,
+                        }, RSAOAEP, false, ["encrypt"])
+                        .then(ok("rsa-oaep", "importKey", "jwk-pub"))
+                        .catch(err("rsa-oaep", "importKey", "jwk-pub"));
+
+                        window.crypto.subtle.importKey("jwk", {
+                            kty: "RSA",
+                            e: "AQAB",
+                            d: "e-Nm1CB_F7j0p4Cb-T4WmFTh7RbxUthC3j8xnlXwHgWYwaPs9ZRkicgNCfmjEb-qJ-m0ho1Cz4WzlL1CtTKEdr2w0P6L_IQPvWkFYwUm0rpY9doxnOKkzq53dhP5zdc6N8aOLk4cmAcVjw4o_csc85H-0fxzQxsTP0_jhJn7SNE",
+                            dp: "JuZmXNBY9uGGfx3w3ysmFumGBLooNjMwwgMduVS6T8S-0tZkBU-iwJPzXAkKhwINEv1EnygjwmJLBdoHROeEeQ",
+                            dq: "KaKOFHxm9104WNwqTth04O9ogaDz_W0wkeHnxOxbWgdtFxsarnImiMlI3Hphv9JuHD5awzNAkaj9P7wDVew-5Q",
+                            n: "x-Do39ky8RVFrFplFfAuOQGLr-rqY3h9OiNHVMe34LoVG4Aofps11ycyw5ka3Ls_yA-oRouGmaMjaiPUoaU_Lm5-CMSoVwyeANLZ4b2S7V-srXFS-Qpe6aD7NpzoUL9knwTnZFIGZlxSXB-NXL5kq18UuO1LQGe1To16ijXKNxc",
+                            p: "4ss3ZAQMdmOk1BRQXwM9YHAoxVDkHDnSV9u89tUb3RbPXlV3fLlhRYtZ7u3FYaTzy08s8Ty2hV1KZ7xXhKEtuQ",
+                            q: "4Z5ejmIJTwsgxN5pI6mLxwXqQwFDERYDnwU9_vyToWXMEPAphWpS9ET00YrdHsgIGao1Slc0jp4OUxaLfhtzTw",
+                            qi: "R1aKNnhUiTjoCHfOVHZ6Qv5R7So-F5mtjDKCBvCi8190U3E25DiKRvDqHZ0bHMRbdQPLLknxHVnuETw6gddHUg",
+                            alg: "RSA-OAEP-256",
+                            ext: true,
+                        }, RSAOAEP, false, ["decrypt"])
+                        .then(ok("rsa-oaep", "importKey", "jwk-priv"))
+                        .catch(err("rsa-oaep", "importKey", "jwk-priv"));
+
+                        //spki
+                        window.crypto.subtle.importKey("spki", new Uint8Array([
+                            48,129,159,48,13,6,9,42,134,72,134,247,13,1,1,1,5,0,3,
+                            129,141,0,48,129,137,2,129,129,0,182,93,35,213,252,204,
+                            20,103,91,238,105,199,53,114,24,221,114,210,137,173,88,
+                            76,205,113,148,148,79,80,59,208,60,75,231,248,78,125,12,
+                            30,237,226,63,146,157,203,239,60,138,123,234,50,23,174,
+                            216,33,122,16,53,246,140,254,75,246,205,204,117,204,115,
+                            29,178,102,139,201,74,177,45,131,183,166,234,61,124,75,
+                            110,3,70,202,148,95,45,228,94,95,148,2,162,79,146,137,29,
+                            189,102,75,207,214,116,58,63,171,219,27,5,9,108,16,218,23,
+                            169,43,181,119,31,172,95,205,180,18,255,203,2,3,1,0,1
+                        ]), RSAOAEP, false, ["encrypt"])
+                        .then(ok("rsa-oaep", "importKey", "spki-pub"))
+                        .catch(err("rsa-oaep", "importKey", "spki-pub"));
+
+                        window.crypto.subtle.importKey("spki", null, RSAOAEP, false, ["decrypt"])
+                        .then(ok("rsa-oaep", "importKey", "spki-priv"))
+                        .catch(err("rsa-oaep", "importKey", "spki-priv*"));
+
+                        //pkcs8
+                        window.crypto.subtle.importKey("pkcs8", null, RSAOAEP, false, ["encrypt"])
+                        .then(ok("rsa-oaep", "importKey", "pkcs8-pub"))
+                        .catch(err("rsa-oaep", "importKey", "pkcs8-pub*"));
+
+                        window.crypto.subtle.importKey("pkcs8", new Uint8Array([
+                            48,130,2,118,2,1,0,48,13,6,9,42,134,72,134,247,13,1,1,1,5,0,4,130,2,96,48,130,2,92,2,1,0,2,129,
+                            129,0,217,78,147,218,221,152,10,66,75,127,242,108,182,142,157,44,93,58,176,193,135,103,216,179,
+                            69,72,38,115,144,244,12,139,0,245,48,115,204,234,158,193,231,127,178,240,244,203,35,229,203,245,
+                            110,215,199,19,98,183,164,223,159,203,128,123,173,26,12,172,250,99,254,35,225,221,39,51,62,3,139,
+                            35,38,164,71,238,240,73,139,214,68,172,204,253,171,244,14,186,152,159,225,133,229,140,99,50,183,
+                            242,217,248,86,233,20,117,42,136,55,8,65,124,244,65,29,15,194,255,78,31,189,146,105,161,2,3,1,0,1,
+                            2,129,128,26,88,13,82,166,52,141,97,214,23,79,195,96,42,79,225,149,247,204,127,217,179,124,48,215,
+                            128,84,177,3,236,162,44,163,212,21,168,164,57,249,63,22,154,131,141,244,143,63,237,214,217,13,51,
+                            249,125,95,37,86,70,137,239,184,198,197,136,62,183,41,78,118,234,57,195,161,219,173,234,61,11,165,
+                            109,209,9,3,22,186,114,32,135,147,74,6,106,190,214,36,208,32,220,61,12,41,105,251,247,18,159,3,198,
+                            28,228,36,44,189,125,45,72,233,199,12,72,91,106,165,246,217,58,168,53,2,65,0,241,112,53,166,98,11,
+                            38,73,58,156,84,190,118,74,247,229,85,178,83,231,53,137,237,228,246,12,32,206,157,198,152,70,11,185,
+                            234,30,112,23,115,249,68,176,159,108,247,249,207,152,145,166,246,79,176,219,163,111,243,4,49,3,239,
+                            242,63,147,2,65,0,230,105,200,1,208,201,237,225,85,27,39,216,193,1,253,168,88,15,242,166,70,106,235,
+                            2,92,24,130,66,176,176,220,238,66,12,159,26,24,40,19,213,138,98,238,98,220,65,148,116,146,21,0,25,6,
+                            177,57,216,70,51,149,244,157,153,106,123,2,64,127,92,254,48,67,80,54,102,50,240,253,19,108,59,168,1,
+                            230,239,39,171,180,102,138,132,89,247,147,230,234,252,52,159,222,215,184,85,78,52,81,13,145,218,202,
+                            127,37,97,54,205,249,39,230,143,171,112,114,11,64,91,89,176,6,7,248,217,2,65,0,220,94,95,132,29,4,
+                            132,22,247,38,185,189,125,27,66,87,55,162,73,24,238,80,99,228,37,224,234,244,141,185,26,20,101,231,
+                            92,99,192,166,212,17,112,1,158,173,190,170,154,41,195,109,130,98,109,28,35,142,205,213,152,158,19,
+                            253,30,241,2,64,15,148,8,16,189,122,55,109,203,175,173,24,222,36,130,130,179,87,189,32,141,149,30,
+                            115,211,227,79,234,78,202,253,48,173,95,167,203,20,193,160,30,146,33,109,4,221,25,212,216,183,100,
+                            18,46,184,52,65,146,249,68,225,10,84,38,98,133
+                        ]), RSAOAEP, false, ["decrypt"])
+                        .then(ok("rsa-oaep", "importKey", "pkcs8-priv"))
+                        .catch(err("rsa-oaep", "importKey", "pkcs8-priv"));
+                    </script>
+                </td>
+                <td class="exportKey">
+                    <script>
+                        //exportKey
+                        window.crypto.subtle.generateKey(RSAOAEP, true, ["encrypt", "decrypt"])
+                        .then(function(key){
+
+                            //jwk
+                            window.crypto.subtle.exportKey("jwk", key.publicKey)
+                            .then(ok("rsa-oaep", "exportKey", "jwk-pub"))
+                            .catch(err("rsa-oaep", "exportKey", "jwk-pub"));
+
+                            window.crypto.subtle.exportKey("jwk", key.privateKey)
+                            .then(ok("rsa-oaep", "exportKey", "jwk-priv"))
+                            .catch(err("rsa-oaep", "exportKey", "jwk-priv"));
+
+                            //spki
+                            window.crypto.subtle.exportKey("spki", key.publicKey)
+                            .then(ok("rsa-oaep", "exportKey", "spki-pub"))
+                            .catch(err("rsa-oaep", "exportKey", "spki-pub"));
+
+                            window.crypto.subtle.exportKey("spki", key.privateKey)
+                            .then(ok("rsa-oaep", "exportKey", "spki-priv"))
+                            .catch(err("rsa-oaep", "exportKey", "spki-priv"));
+
+                            //pkcs8
+                            window.crypto.subtle.exportKey("pkcs8", key.publicKey)
+                            .then(ok("rsa-oaep", "exportKey", "pkcs8-pub"))
+                            .catch(err("rsa-oaep", "exportKey", "pkcs8-pub"));
+
+                            window.crypto.subtle.exportKey("pkcs8", key.privateKey)
+                            .then(ok("rsa-oaep", "exportKey", "pkcs8-priv"))
+                            .catch(err("rsa-oaep", "exportKey", "pkcs8-priv"));
+
+                        })
+                        .catch(err("rsa-oaep", "exportKey", "N/A"));
+                    </script>
+                </td>
+            </tr>
+
+
+            <!--
+            #################
+            ###   ECDSA   ###
+            #################
+            -->
+            <script>
+                //Base algorithm for testing
+                window.ECDSA = {
+                    name: "ECDSA",
+                    namedCurve: "P-256",
+                    hash: {name: "SHA-256"},
+                }
+            </script>
+            <tr id="ecdsa">
+                <td class="algname"><a href="https://www.w3.org/TR/WebCryptoAPI/#ecdsa" target="_blank">ECDSA</a></td>
+                <td class="encrypt disabled"></td>
+                <td class="decrypt disabled"></td>
+                <td class="sign">
+                    <script>
+                        //sign
+                        window.crypto.subtle.generateKey(ECDSA, true, ["sign", "verify"])
+                        .then(function(key){
+                            return window.crypto.subtle.sign(ECDSA, key.privateKey, TESTBYTES);
+                        })
+                        .then(ok("ecdsa", "sign", "Yes"))
+                        .catch(err("ecdsa", "sign", "No"));
+                    </script>
+                </td>
+                <td class="verify">
+                    <script>
+                        //verify
+                        window.crypto.subtle.generateKey(ECDSA, true, ["sign", "verify"])
+                        .then(function(key){
+                            window.crypto.subtle.sign(ECDSA, key.privateKey, TESTBYTES)
+                            .then(function(sig){
+                                return window.crypto.subtle.verify(ECDSA, key.publicKey, sig, TESTBYTES);
+                            })
+                            .then(ok("ecdsa", "verify", "Yes"))
+                            .catch(err("ecdsa", "verify", "No"));
+                        })
+                        .catch(err("ecdsa", "verify", "N/A"));
+                    </script>
+                </td>
+                <td class="digest disabled"></td>
+                <td class="generateKey">
+                    <script>
+                        //generateKey
+
+                        //P-256
+                        window.crypto.subtle.generateKey({
+                            name: "ECDSA",
+                            namedCurve: "P-256",
+                            hash: {name: "SHA-256"},
+                        }, false, ["sign", "verify"])
+                        .then(ok("ecdsa", "generateKey", "P-256"))
+                        .catch(err("ecdsa", "generateKey", "P-256"));
+
+                        //P-384
+                        window.crypto.subtle.generateKey({
+                            name: "ECDSA",
+                            namedCurve: "P-384",
+                            hash: {name: "SHA-256"},
+                        }, false, ["sign", "verify"])
+                        .then(ok("ecdsa", "generateKey", "P-384"))
+                        .catch(err("ecdsa", "generateKey", "P-384"));
+
+                        //P-521
+                        window.crypto.subtle.generateKey({
+                            name: "ECDSA",
+                            namedCurve: "P-521",
+                            hash: {name: "SHA-256"},
+                        }, false, ["sign", "verify"])
+                        .then(ok("ecdsa", "generateKey", "P-521"))
+                        .catch(err("ecdsa", "generateKey", "P-521"));
+                    </script>
+                </td>
+                <td class="deriveKey disabled"></td>
+                <td class="deriveBits disabled"></td>
+                <td class="importKey">
+                    <script>
+                        //importKey
+
+                        //jwk
+                        window.crypto.subtle.importKey("jwk", null, ECDSA, false, ["verify"])
+                        .then(ok("ecdsa", "importKey", "jwk-pub"))
+                        .catch(err("ecdsa", "importKey", "jwk-pub*"));
+
+                        window.crypto.subtle.importKey("jwk", null, ECDSA, false, ["sign"])
+                        .then(ok("ecdsa", "importKey", "jwk-priv"))
+                        .catch(err("ecdsa", "importKey", "jwk-priv*"));
+
+                        //spki
+                        window.crypto.subtle.importKey("spki", null, ECDSA, false, ["verify"])
+                        .then(ok("ecdsa", "importKey", "spki-pub"))
+                        .catch(err("ecdsa", "importKey", "spki-pub*"));
+
+                        window.crypto.subtle.importKey("spki", null, ECDSA, false, ["sign"])
+                        .then(ok("ecdsa", "importKey", "spki-priv"))
+                        .catch(err("ecdsa", "importKey", "spki-priv*"));
+
+                        //pkcs8
+                        window.crypto.subtle.importKey("pkcs8", null, ECDSA, false, ["verify"])
+                        .then(ok("ecdsa", "importKey", "pkcs8-pub"))
+                        .catch(err("ecdsa", "importKey", "pkcs8-pub*"));
+
+                        window.crypto.subtle.importKey("pkcs8", null, ECDSA, false, ["sign"])
+                        .then(ok("ecdsa", "importKey", "pkcs8-priv"))
+                        .catch(err("ecdsa", "importKey", "pkcs8-priv*"));
+                    </script>
+                </td>
+                <td class="exportKey">
+                    <script>
+                        //exportKey
+                        window.crypto.subtle.generateKey(ECDSA, true, ["sign", "verify"])
+                        .then(function(key){
+
+                            //jwk
+                            window.crypto.subtle.exportKey("jwk", key.publicKey)
+                            .then(ok("ecdsa", "exportKey", "jwk-pub"))
+                            .catch(err("ecdsa", "exportKey", "jwk-pub"));
+
+                            window.crypto.subtle.exportKey("jwk", key.privateKey)
+                            .then(ok("ecdsa", "exportKey", "jwk-priv"))
+                            .catch(err("ecdsa", "exportKey", "jwk-priv"));
+
+                            //spki
+                            window.crypto.subtle.exportKey("spki", key.publicKey)
+                            .then(ok("ecdsa", "exportKey", "spki-pub"))
+                            .catch(err("ecdsa", "exportKey", "spki-pub"));
+
+                            window.crypto.subtle.exportKey("spki", key.privateKey)
+                            .then(ok("ecdsa", "exportKey", "spki-priv"))
+                            .catch(err("ecdsa", "exportKey", "spki-priv"));
+
+                            //pkcs8
+                            window.crypto.subtle.exportKey("pkcs8", key.publicKey)
+                            .then(ok("ecdsa", "exportKey", "pkcs8-pub"))
+                            .catch(err("ecdsa", "exportKey", "pkcs8-pub"));
+
+                            window.crypto.subtle.exportKey("pkcs8", key.privateKey)
+                            .then(ok("ecdsa", "exportKey", "pkcs8-priv"))
+                            .catch(err("ecdsa", "exportKey", "pkcs8-priv"));
+
+                        })
+                        .catch(err("ecdsa", "exportKey", "N/A"));
+                    </script>
+                </td>
+            </tr>
+
+
+            <!--
+            ################
+            ###   ECDH   ###
+            ################
+            -->
+            <script>
+                //Base algorithm for testing
+                window.ECDH = {
+                    name: "ECDH",
+                    namedCurve: "P-256",
+                }
+            </script>
+            <tr id="ecdh">
+                <td class="algname"><a href="https://www.w3.org/TR/WebCryptoAPI/#ecdh" target="_blank">ECDH</a></td>
+                <td class="encrypt disabled"></td>
+                <td class="decrypt disabled"></td>
+                <td class="sign disabled"></td>
+                <td class="verify disabled"></td>
+                <td class="digest disabled"></td>
+                <td class="generateKey">
+                    <script>
+                        //generateKey
+
+                        //P-256
+                        window.crypto.subtle.generateKey({
+                            name: "ECDH",
+                            namedCurve: "P-256",
+                        }, false, ["deriveBits", "deriveKey"])
+                        .then(ok("ecdh", "generateKey", "P-256"))
+                        .catch(err("ecdh", "generateKey", "P-256"));
+
+                        //P-384
+                        window.crypto.subtle.generateKey({
+                            name: "ECDH",
+                            namedCurve: "P-384",
+                        }, false, ["deriveBits", "deriveKey"])
+                        .then(ok("ecdh", "generateKey", "P-384"))
+                        .catch(err("ecdh", "generateKey", "P-384"));
+
+                        //P-521
+                        window.crypto.subtle.generateKey({
+                            name: "ECDH",
+                            namedCurve: "P-521",
+                        }, false, ["deriveBits", "deriveKey"])
+                        .then(ok("ecdh", "generateKey", "P-521"))
+                        .catch(err("ecdh", "generateKey", "P-521"));
+                    </script>
+                </td>
+                <td class="deriveKey">
+                    <script>
+                        //deriveKey
+                        window.crypto.subtle.generateKey(ECDH, false, ["deriveKey"])
+                        .then(function(key1){
+                            window.crypto.subtle.generateKey(ECDH, false, ["deriveKey"])
+                            .then(function(key2){
+
+                                window.crypto.subtle.deriveKey({
+                                    "name": "ECDH",
+                                    "namedCurve": "P-256",
+                                    "public": key2.publicKey,
+                                }, key1.privateKey, ECDH, false, ["deriveBits", "deriveKey"])
+                                .then(ok("ecdh", "deriveKey", "Yes"))
+                                .catch(err("ecdh", "deriveKey", "No"));
+
+                            })
+                            .catch(err("ecdh", "deriveKey", "N/A"));
+                        })
+                        .catch(err("ecdh", "deriveKey", "N/A"));
+                    </script>
+                </td>
+                <td class="deriveBits">
+                    <script>
+                        //deriveBits
+                        window.crypto.subtle.generateKey(ECDH, false, ["deriveBits"])
+                        .then(function(key1){
+                            window.crypto.subtle.generateKey(ECDH, false, ["deriveBits"])
+                            .then(function(key2){
+
+                                window.crypto.subtle.deriveBits({
+                                    "name": "ECDH",
+                                    "namedCurve": "P-256",
+                                    "public": key2.publicKey,
+                                }, key1.privateKey, 128)
+                                .then(ok("ecdh", "deriveBits", "Yes"))
+                                .catch(err("ecdh", "deriveBits", "No"));
+
+                            })
+                            .catch(err("ecdh", "deriveBits", "N/A"));
+                        })
+                        .catch(err("ecdh", "deriveBits", "N/A"));
+                    </script>
+                </td>
+                <td class="importKey">
+                    <script>
+                        //importKey
+
+                        //jwk
+                        window.crypto.subtle.importKey("jwk", {
+                            kty: "EC",
+                            crv: "P-256",
+                            x: "zCQ5BPHPCLZYgdpo1n-x_90P2Ij52d53YVwTh3ZdiMo",
+                            y: "pDfQTUx0-OiZc5ZuKMcA7v2Q7ZPKsQwzB58bft0JTko",
+                            ext: true,
+                        }, ECDH, false, ["deriveBits", "deriveKey"])
+                        .then(ok("ecdh", "importKey", "jwk-pub"))
+                        .catch(err("ecdh", "importKey", "jwk-pub"));
+
+                        window.crypto.subtle.importKey("jwk", null, ECDH, false, ["deriveBits", "deriveKey"])
+                        .then(ok("ecdh", "importKey", "jwk-priv"))
+                        .catch(err("ecdh", "importKey", "jwk-priv*"));
+
+                        //raw
+                        window.crypto.subtle.importKey("raw", null, ECDH, false, ["deriveBits", "deriveKey"])
+                        .then(ok("ecdh", "importKey", "raw-pub"))
+                        .catch(err("ecdh", "importKey", "raw-pub*"));
+
+                        window.crypto.subtle.importKey("raw", null, ECDH, false, ["deriveBits", "deriveKey"])
+                        .then(ok("ecdh", "importKey", "raw-priv"))
+                        .catch(err("ecdh", "importKey", "raw-priv*"));
+
+                        //spki
+                        window.crypto.subtle.importKey("spki", new Uint8Array([
+                            48,86,48,16,6,4,43,129,4,112,6,8,42,134,72,206,61,3,1,7,3,66,
+                            0,4,220,234,227,95,252,91,18,84,130,96,183,149,225,140,137,39,
+                            21,10,197,158,201,219,226,170,124,133,216,83,233,235,138,223,
+                            84,146,126,203,222,63,41,18,166,189,30,192,198,186,146,147,124,
+                            20,181,210,209,198,192,170,108,41,76,168,3,51,201,197
+                        ]), ECDH, false, ["deriveBits", "deriveKey"])
+                        .then(ok("ecdh", "importKey", "spki-pub"))
+                        .catch(err("ecdh", "importKey", "spki-pub"));
+
+                        window.crypto.subtle.importKey("spki", null, ECDH, false, ["deriveBits", "deriveKey"])
+                        .then(ok("ecdh", "importKey", "spki-priv"))
+                        .catch(err("ecdh", "importKey", "spki-priv*"));
+
+                        //pkcs8
+                        window.crypto.subtle.importKey("pkcs8", null, ECDH, false, ["deriveBits", "deriveKey"])
+                        .then(ok("ecdh", "importKey", "pkcs8-pub"))
+                        .catch(err("ecdh", "importKey", "pkcs8-pub*"));
+
+                        window.crypto.subtle.importKey("pkcs8", null, ECDH, false, ["deriveBits", "deriveKey"])
+                        .then(ok("ecdh", "importKey", "pkcs8-priv"))
+                        .catch(err("ecdh", "importKey", "pkcs8-priv*"));
+                    </script>
+                </td>
+                <td class="exportKey">
+                    <script>
+                        //exportKey
+                        window.crypto.subtle.generateKey(ECDH, true, ["deriveBits", "deriveKey"])
+                        .then(function(key){
+
+                            //jwk
+                            window.crypto.subtle.exportKey("jwk", key.publicKey)
+                            .then(ok("ecdh", "exportKey", "jwk-pub"))
+                            .catch(err("ecdh", "exportKey", "jwk-pub"));
+
+                            window.crypto.subtle.exportKey("jwk", key.privateKey)
+                            .then(ok("ecdh", "exportKey", "jwk-priv"))
+                            .catch(err("ecdh", "exportKey", "jwk-priv"));
+
+                            //raw
+                            window.crypto.subtle.exportKey("raw", key.publicKey)
+                            .then(ok("ecdh", "exportKey", "raw-pub"))
+                            .catch(err("ecdh", "exportKey", "raw-pub"));
+
+                            window.crypto.subtle.exportKey("raw", key.privateKey)
+                            .then(ok("ecdh", "exportKey", "raw-priv"))
+                            .catch(err("ecdh", "exportKey", "raw-priv"));
+
+                            //spki
+                            window.crypto.subtle.exportKey("spki", key.publicKey)
+                            .then(ok("ecdh", "exportKey", "spki-pub"))
+                            .catch(err("ecdh", "exportKey", "spki-pub"));
+
+                            window.crypto.subtle.exportKey("spki", key.privateKey)
+                            .then(ok("ecdh", "exportKey", "spki-priv"))
+                            .catch(err("ecdh", "exportKey", "spki-priv"));
+
+                            //pkcs8
+                            window.crypto.subtle.exportKey("pkcs8", key.publicKey)
+                            .then(ok("ecdh", "exportKey", "pkcs8-pub"))
+                            .catch(err("ecdh", "exportKey", "pkcs8-pub"));
+
+                            window.crypto.subtle.exportKey("pkcs8", key.privateKey)
+                            .then(ok("ecdh", "exportKey", "pkcs8-priv"))
+                            .catch(err("ecdh", "exportKey", "pkcs8-priv"));
+
+                        })
+                        .catch(err("ecdh", "exportKey", "N/A"));
+                    </script>
+                </td>
+            </tr>
+
+
+            <!--
+            ###################
+            ###   AES-CTR   ###
+            ###################
+            -->
+            <script>
+                //Base algorithm for testing
+                window.AESCTR = {
+                    name: "AES-CTR",
+                    length: 256,
+                }
+            </script>
+            <tr id="aes-ctr">
+                <td class="algname"><a href="https://www.w3.org/TR/WebCryptoAPI/#aes-ctr" target="_blank">AES-CTR</a></td>
+                <td class="encrypt">
+                    <script>
+                        //encrypt
+                        window.crypto.subtle.generateKey(AESCTR, false, ["encrypt"])
+                        .then(function(key){
+                            return window.crypto.subtle.encrypt({
+                                name: "AES-CTR",
+                                counter: window.crypto.getRandomValues(new Uint8Array(16)),
+                                length: 128, //NOTE: NOT SURE WHAT THIS SHOULD BE NORMALLY
+                            }, key, TESTBYTES);
+                        })
+                        .then(ok("aes-ctr", "encrypt", "Yes"))
+                        .catch(err("aes-ctr", "encrypt", "No"));
+                    </script>
+                </td>
+                <td class="decrypt">
+                    <script>
+                        //decrypt
+                        window.crypto.subtle.generateKey(AESCTR, false, ["encrypt", "decrypt"])
+                        .then(function(key){
+                            window.crypto.subtle.encrypt({
+                                name: "AES-CTR",
+                                counter: window.crypto.getRandomValues(new Uint8Array(16)),
+                                length: 128, //NOTE: NOT SURE WHAT THIS SHOULD BE NORMALLY
+                            }, key, TESTBYTES)
+                            .then(function(encrypted){
+                                return window.crypto.subtle.decrypt({
+                                    name: "AES-CTR",
+                                    counter: window.crypto.getRandomValues(new Uint8Array(16)),
+                                    length: 128, //NOTE: NOT SURE WHAT THIS SHOULD BE NORMALLY
+                                }, key, encrypted);
+                            })
+                            .then(ok("aes-ctr", "decrypt", "Yes"))
+                            .catch(err("aes-ctr", "decrypt", "No"));
+                        })
+                        .catch(err("aes-ctr", "decrypt", "N/A"));
+                    </script>
+                </td>
+                <td class="sign disabled"></td>
+                <td class="verify disabled"></td>
+                <td class="digest disabled"></td>
+                <td class="generateKey">
+                    <script>
+                        //generateKey
+
+                        //128 bits
+                        window.crypto.subtle.generateKey({
+                            name: "AES-CTR",
+                            length: 128,
+                        }, false, ["encrypt", "decrypt"])
+                        .then(ok("aes-ctr", "generateKey", "128 bits"))
+                        .catch(err("aes-ctr", "generateKey", "128 bits"));
+
+                        //192 bits
+                        window.crypto.subtle.generateKey({
+                            name: "AES-CTR",
+                            length: 192,
+                        }, false, ["encrypt", "decrypt"])
+                        .then(ok("aes-ctr", "generateKey", "192 bits"))
+                        .catch(err("aes-ctr", "generateKey", "192 bits"));
+
+                        //256 bits
+                        window.crypto.subtle.generateKey({
+                            name: "AES-CTR",
+                            length: 256,
+                        }, false, ["encrypt", "decrypt"])
+                        .then(ok("aes-ctr", "generateKey", "256 bits"))
+                        .catch(err("aes-ctr", "generateKey", "256 bits"));
+                    </script>
+                </td>
+                <td class="deriveKey disabled"></td>
+                <td class="deriveBits disabled"></td>
+                <td class="importKey">
+                    <script>
+                        //importKey
+
+                        //jwk
+                        window.crypto.subtle.importKey("jwk", {
+                            kty: "oct",
+                            k: "Y0zt37HgOx-BY7SQjYVmrqhPkO44Ii2Jcb9yydUDPfE",
+                            alg: "A256CTR",
+                            ext: true,
+                        }, AESCTR, false, ["encrypt", "decrypt"])
+                        .then(ok("aes-ctr", "importKey", "jwk-key"))
+                        .catch(err("aes-ctr", "importKey", "jwk-key"));
+
+                        //raw
+                        window.crypto.subtle.importKey("raw", new Uint8Array([
+                            122,94,39,230,46,23,151,80,131,230,3,101,80,234,143,9,251,
+                            152,229,228,89,222,31,135,214,104,55,68,67,59,5,51
+                        ]), AESCTR, false, ["encrypt", "decrypt"])
+                        .then(ok("aes-ctr", "importKey", "raw-key"))
+                        .catch(err("aes-ctr", "importKey", "raw-key"));
+                    </script>
+                </td>
+                <td class="exportKey">
+                    <script>
+                        //exportKey
+                        window.crypto.subtle.generateKey(AESCTR, true, ["encrypt", "decrypt"])
+                        .then(function(key){
+
+                            //jwk
+                            window.crypto.subtle.exportKey("jwk", key)
+                            .then(ok("aes-ctr", "exportKey", "jwk-key"))
+                            .catch(err("aes-ctr", "exportKey", "jwk-key"));
+
+                            //raw
+                            window.crypto.subtle.exportKey("raw", key)
+                            .then(ok("aes-ctr", "exportKey", "raw-key"))
+                            .catch(err("aes-ctr", "exportKey", "raw-key"));
+
+                        })
+                        .catch(err("aes-ctr", "exportKey", "N/A"));
+                    </script>
+                </td>
+            </tr>
+
+
+            <!--
+            ###################
+            ###   AES-CBC   ###
+            ###################
+            -->
+            <script>
+                //Base algorithm for testing
+                window.AESCBC = {
+                    name: "AES-CBC",
+                    length: 256,
+                }
+            </script>
+            <tr id="aes-cbc">
+                <td class="algname"><a href="https://www.w3.org/TR/WebCryptoAPI/#aes-cbc" target="_blank">AES-CBC</a></td>
+                <td class="encrypt">
+                    <script>
+                        //encrypt
+                        window.crypto.subtle.generateKey(AESCBC, false, ["encrypt"])
+                        .then(function(key){
+                            return window.crypto.subtle.encrypt({
+                                name: "AES-CBC",
+                                iv: window.crypto.getRandomValues(new Uint8Array(16)),
+                            }, key, TESTBYTES);
+                        })
+                        .then(ok("aes-cbc", "encrypt", "Yes"))
+                        .catch(err("aes-cbc", "encrypt", "No"));
+                    </script>
+                </td>
+                <td class="decrypt">
+                    <script>
+                        //decrypt
+                        window.crypto.subtle.generateKey(AESCBC, false, ["encrypt", "decrypt"])
+                        .then(function(key){
+                            var iv = window.crypto.getRandomValues(new Uint8Array(16));
+                            window.crypto.subtle.encrypt({
+                                name: "AES-CBC",
+                                iv: iv,
+                            }, key, TESTBYTES)
+                            .then(function(encrypted){
+                                return window.crypto.subtle.decrypt({
+                                    name: "AES-CBC",
+                                    iv: iv,
+                                }, key, encrypted);
+                            })
+                            .then(ok("aes-cbc", "decrypt", "Yes"))
+                            .catch(err("aes-cbc", "decrypt", "No"));
+                        })
+                        .catch(err("aes-cbc", "decrypt", "N/A"));
+                    </script>
+                </td>
+                <td class="sign disabled"></td>
+                <td class="verify disabled"></td>
+                <td class="digest disabled"></td>
+                <td class="generateKey">
+                    <script>
+                        //generateKey
+
+                        //128 bits
+                        window.crypto.subtle.generateKey({
+                            name: "AES-CBC",
+                            length: 128,
+                        }, false, ["encrypt", "decrypt"])
+                        .then(ok("aes-cbc", "generateKey", "128 bits"))
+                        .catch(err("aes-cbc", "generateKey", "128 bits"));
+
+                        //192 bits
+                        window.crypto.subtle.generateKey({
+                            name: "AES-CBC",
+                            length: 192,
+                        }, false, ["encrypt", "decrypt"])
+                        .then(ok("aes-cbc", "generateKey", "192 bits"))
+                        .catch(err("aes-cbc", "generateKey", "192 bits"));
+
+                        //256 bits
+                        window.crypto.subtle.generateKey({
+                            name: "AES-CBC",
+                            length: 256,
+                        }, false, ["encrypt", "decrypt"])
+                        .then(ok("aes-cbc", "generateKey", "256 bits"))
+                        .catch(err("aes-cbc", "generateKey", "256 bits"));
+                    </script>
+                </td>
+                <td class="deriveKey disabled"></td>
+                <td class="deriveBits disabled"></td>
+                <td class="importKey">
+                    <script>
+                        //importKey
+
+                        //jwk
+                        window.crypto.subtle.importKey("jwk", {
+                            kty: "oct",
+                            k: "KfKY5nueRX7eBrOddn9IerHLv1r-T7qpggaCF3MfSR4",
+                            alg: "A256CBC",
+                            ext: true,
+                        }, AESCBC, false, ["encrypt", "decrypt"])
+                        .then(ok("aes-cbc", "importKey", "jwk-key"))
+                        .catch(err("aes-cbc", "importKey", "jwk-key"));
+
+                        //raw
+                        window.crypto.subtle.importKey("raw", new Uint8Array([
+                            122,94,39,230,46,23,151,80,131,230,3,101,80,234,143,9,251,
+                            152,229,228,89,222,31,135,214,104,55,68,67,59,5,51
+                        ]), AESCBC, false, ["encrypt", "decrypt"])
+                        .then(ok("aes-cbc", "importKey", "raw-key"))
+                        .catch(err("aes-cbc", "importKey", "raw-key"));
+                    </script>
+                </td>
+                <td class="exportKey">
+                    <script>
+                        //exportKey
+                        window.crypto.subtle.generateKey(AESCBC, true, ["encrypt", "decrypt"])
+                        .then(function(key){
+
+                            //jwk
+                            window.crypto.subtle.exportKey("jwk", key)
+                            .then(ok("aes-cbc", "exportKey", "jwk-key"))
+                            .catch(err("aes-cbc", "exportKey", "jwk-key"));
+
+                            //raw
+                            window.crypto.subtle.exportKey("raw", key)
+                            .then(ok("aes-cbc", "exportKey", "raw-key"))
+                            .catch(err("aes-cbc", "exportKey", "raw-key"));
+
+                        })
+                        .catch(err("aes-cbc", "exportKey", "N/A"));
+                    </script>
+                </td>
+            </tr>
+
+
+            <!--
+            ####################
+            ###   AES-CMAC   ###
+            ####################
+            -->
+            <script>
+                //Base algorithm for testing
+                window.AESCMAC = {
+                    name: "AES-CMAC",
+                    length: 256,
+                }
+            </script>
+            <tr id="aes-cmac">
+                <td class="algname"><a href="https://www.w3.org/TR/WebCryptoAPI/#aes-cmac" target="_blank">AES-CMAC</a></td>
+                <td class="encrypt disabled"></td>
+                <td class="decrypt disabled"></td>
+                <td class="sign">
+                    <script>
+                        //sign
+                        window.crypto.subtle.generateKey(AESCMAC, false, ["sign"])
+                        .then(function(key){
+                            return window.crypto.subtle.sign({name: "AES-CMAC", lenth: 256}, key, TESTBYTES);
+                        })
+                        .then(ok("aes-cmac", "sign", "Yes"))
+                        .catch(err("aes-cmac", "sign", "No"));
+                    </script>
+                </td>
+                <td class="verify">
+                    <script>
+                        //verify
+                        window.crypto.subtle.generateKey(AESCMAC, false, ["sign", "verify"])
+                        .then(function(key){
+                            window.crypto.subtle.sign({name: "AES-CMAC", lenth: 256}, key, TESTBYTES)
+                            .then(function(sig){
+                                return window.crypto.subtle.verify({name: "AES-CMAC", lenth: 256}, key, sig, TESTBYTES);
+                            })
+                            .then(ok("aes-cmac", "verify", "Yes"))
+                            .catch(err("aes-cmac", "verify", "No"));
+                        })
+                        .catch(err("aes-cmac", "verify", "N/A"));
+                    </script>
+                </td>
+                <td class="digest disabled"></td>
+                <td class="generateKey">
+                    <script>
+                        //generateKey
+
+                        //128 bits
+                        window.crypto.subtle.generateKey({name: "AES-CMAC", length: 128}, false, ["sign", "verify"])
+                        .then(ok("aes-cmac", "generateKey", "128 bits"))
+                        .catch(err("aes-cmac", "generateKey", "128 bits"));
+
+                        //192 bits
+                        window.crypto.subtle.generateKey({name: "AES-CMAC", length: 192}, false, ["sign", "verify"])
+                        .then(ok("aes-cmac", "generateKey", "192 bits"))
+                        .catch(err("aes-cmac", "generateKey", "192 bits"));
+
+                        //256 bits
+                        window.crypto.subtle.generateKey({name: "AES-CMAC", length: 256}, false, ["sign", "verify"])
+                        .then(ok("aes-cmac", "generateKey", "256 bits"))
+                        .catch(err("aes-cmac", "generateKey", "256 bits"));
+                    </script>
+                </td>
+                <td class="deriveKey disabled"></td>
+                <td class="deriveBits disabled"></td>
+                <td class="importKey">
+                    <script>
+                        //importKey
+
+                        //jwk
+                        window.crypto.subtle.importKey("jwk", null, AESCMAC, false, ["sign", "verify"])
+                        .then(ok("aes-cmac", "importKey", "jwk-key"))
+                        .catch(err("aes-cmac", "importKey", "jwk-key*"));
+
+                        //raw
+                        window.crypto.subtle.importKey("raw", null, AESCMAC, false, ["sign", "verify"])
+                        .then(ok("aes-cmac", "importKey", "raw-key"))
+                        .catch(err("aes-cmac", "importKey", "raw-key*"));
+                    </script>
+                </td>
+                <td class="exportKey">
+                    <script>
+                        //exportKey
+                        window.crypto.subtle.generateKey(AESCMAC, true, ["sign", "verify"])
+                        .then(function(key){
+
+                            //jwk
+                            window.crypto.subtle.exportKey("jwk", key)
+                            .then(ok("aes-cmac", "exportKey", "jwk-key"))
+                            .catch(err("aes-cmac", "exportKey", "jwk-key"));
+
+                            //raw
+                            window.crypto.subtle.exportKey("raw", key)
+                            .then(ok("aes-cmac", "exportKey", "raw-key"))
+                            .catch(err("aes-cmac", "exportKey", "raw-key"));
+
+                        })
+                        .catch(err("aes-cmac", "exportKey", "N/A"));
+                    </script>
+                </td>
+            </tr>
+
+
+            <!--
+            ###################
+            ###   AES-GCM   ###
+            ###################
+            -->
+            <script>
+                //Base algorithm for testing
+                window.AESGCM = {
+                    name: "AES-GCM",
+                    length: 256,
+                }
+            </script>
+            <tr id="aes-gcm">
+                <td class="algname"><a href="https://www.w3.org/TR/WebCryptoAPI/#aes-gcm" target="_blank">AES-GCM</a></td>
+                <td class="encrypt">
+                    <script>
+                        //encrypt
+                        window.crypto.subtle.generateKey(AESGCM, false, ["encrypt"])
+                        .then(function(key){
+                            return window.crypto.subtle.encrypt({
+                                name: "AES-GCM",
+                                iv: window.crypto.getRandomValues(new Uint8Array(4096)),
+                                additionalData: window.crypto.getRandomValues(new Uint8Array(256)),
+                                tagLength: 128,
+                            }, key, TESTBYTES);
+                        })
+                        .then(ok("aes-gcm", "encrypt", "Yes"))
+                        .catch(err("aes-gcm", "encrypt", "No"));
+                    </script>
+                </td>
+                <td class="decrypt">
+                    <script>
+                        //decrypt
+                        window.crypto.subtle.generateKey(AESGCM, false, ["encrypt", "decrypt"])
+                        .then(function(key){
+                            var iv = window.crypto.getRandomValues(new Uint8Array(4096));
+                            var addtl = window.crypto.getRandomValues(new Uint8Array(256));
+                            window.crypto.subtle.encrypt({
+                                name: "AES-GCM",
+                                iv: iv,
+                                additionalData: addtl,
+                                tagLength: 128,
+                            }, key, TESTBYTES)
+                            .then(function(encrypted){
+                                return window.crypto.subtle.decrypt({
+                                    name: "AES-GCM",
+                                    iv: iv,
+                                    additionalData: addtl,
+                                    tagLength: 128,
+                                }, key, encrypted);
+                            })
+                            .then(ok("aes-gcm", "decrypt", "Yes"))
+                            .catch(err("aes-gcm", "decrypt", "No"));
+                        })
+                        .catch(err("aes-gcm", "decrypt", "N/A"));
+                    </script>
+                </td>
+                <td class="sign disabled"></td>
+                <td class="verify disabled"></td>
+                <td class="digest disabled"></td>
+                <td class="generateKey">
+                    <script>
+                        //generateKey
+
+                        //128 bits
+                        window.crypto.subtle.generateKey({
+                            name: "AES-GCM",
+                            length: 128,
+                        }, false, ["encrypt", "decrypt"])
+                        .then(ok("aes-gcm", "generateKey", "128 bits"))
+                        .catch(err("aes-gcm", "generateKey", "128 bits"));
+
+                        //192 bits
+                        window.crypto.subtle.generateKey({
+                            name: "AES-GCM",
+                            length: 192,
+                        }, false, ["encrypt", "decrypt"])
+                        .then(ok("aes-gcm", "generateKey", "192 bits"))
+                        .catch(err("aes-gcm", "generateKey", "192 bits"));
+
+                        //256 bits
+                        window.crypto.subtle.generateKey({
+                            name: "AES-GCM",
+                            length: 256,
+                        }, false, ["encrypt", "decrypt"])
+                        .then(ok("aes-gcm", "generateKey", "256 bits"))
+                        .catch(err("aes-gcm", "generateKey", "256 bits"));
+                    </script>
+                </td>
+                <td class="deriveKey disabled"></td>
+                <td class="deriveBits disabled"></td>
+                <td class="importKey">
+                    <script>
+                        //importKey
+
+                        //jwk
+                        window.crypto.subtle.importKey("jwk", {
+                            kty: "oct",
+                            k: "KfKY5nueRX7eBrOddn9IerHLv1r-T7qpggaCF3MfSR4",
+                            alg: "A256GCM",
+                            ext: true,
+                        }, AESGCM, false, ["encrypt", "decrypt"])
+                        .then(ok("aes-gcm", "importKey", "jwk-key"))
+                        .catch(err("aes-gcm", "importKey", "jwk-key"));
+
+                        //raw
+                        window.crypto.subtle.importKey("raw", new Uint8Array([
+                            122,94,39,230,46,23,151,80,131,230,3,101,80,234,143,9,251,
+                            152,229,228,89,222,31,135,214,104,55,68,67,59,5,51
+                        ]), AESGCM, false, ["encrypt", "decrypt"])
+                        .then(ok("aes-gcm", "importKey", "raw-key"))
+                        .catch(err("aes-gcm", "importKey", "raw-key"));
+                    </script>
+                </td>
+                <td class="exportKey">
+                    <script>
+                        //exportKey
+                        window.crypto.subtle.generateKey(AESGCM, true, ["encrypt", "decrypt"])
+                        .then(function(key){
+
+                            //jwk
+                            window.crypto.subtle.exportKey("jwk", key)
+                            .then(ok("aes-gcm", "exportKey", "jwk-key"))
+                            .catch(err("aes-gcm", "exportKey", "jwk-key"));
+
+                            //raw
+                            window.crypto.subtle.exportKey("raw", key)
+                            .then(ok("aes-gcm", "exportKey", "raw-key"))
+                            .catch(err("aes-gcm", "exportKey", "raw-key"));
+
+                        })
+                        .catch(err("aes-gcm", "exportKey", "N/A"));
+                    </script>
+                </td>
+            </tr>
+
+
+            <!--
+            ###################
+            ###   AES-CFB   ###
+            ###################
+            -->
+            <script>
+                //Base algorithm for testing
+                window.AESCFB = {
+                    name: "AES-CFB",
+                    length: 256,
+                }
+            </script>
+            <tr id="aes-cfb">
+                <td class="algname"><a href="https://www.w3.org/TR/WebCryptoAPI/#aes-cfb" target="_blank">AES-CFB</a></td>
+                <td class="encrypt">
+                    <script>
+                        //encrypt
+                        window.crypto.subtle.generateKey(AESCFB, false, ["encrypt"])
+                        .then(function(key){
+                            return window.crypto.subtle.encrypt({
+                                name: "AES-CFB",
+                                iv: window.crypto.getRandomValues(new Uint8Array(16)),
+                            }, key, TESTBYTES);
+                        })
+                        .then(ok("aes-cfb", "encrypt", "Yes"))
+                        .catch(err("aes-cfb", "encrypt", "No"));
+                    </script>
+                </td>
+                <td class="decrypt">
+                    <script>
+                        //decrypt
+                        window.crypto.subtle.generateKey(AESCFB, false, ["encrypt", "decrypt"])
+                        .then(function(key){
+                            var iv = window.crypto.getRandomValues(new Uint8Array(16));
+                            window.crypto.subtle.encrypt({
+                                name: "AES-CFB",
+                                iv: iv,
+                            }, key, TESTBYTES)
+                            .then(function(encrypted){
+                                return window.crypto.subtle.decrypt({
+                                    name: "AES-CFB",
+                                    iv: iv,
+                                }, key, encrypted);
+                            })
+                            .then(ok("aes-cfb", "decrypt", "Yes"))
+                            .catch(err("aes-cfb", "decrypt", "No"));
+                        })
+                        .catch(err("aes-cfb", "decrypt", "N/A"));
+                    </script>
+                </td>
+                <td class="sign disabled"></td>
+                <td class="verify disabled"></td>
+                <td class="digest disabled"></td>
+                <td class="generateKey">
+                    <script>
+                        //generateKey
+
+                        //128 bits
+                        window.crypto.subtle.generateKey({
+                            name: "AES-CFB",
+                            length: 128,
+                        }, false, ["encrypt", "decrypt"])
+                        .then(ok("aes-cfb", "generateKey", "128 bits"))
+                        .catch(err("aes-cfb", "generateKey", "128 bits"));
+
+                        //192 bits
+                        window.crypto.subtle.generateKey({
+                            name: "AES-CFB",
+                            length: 192,
+                        }, false, ["encrypt", "decrypt"])
+                        .then(ok("aes-cfb", "generateKey", "192 bits"))
+                        .catch(err("aes-cfb", "generateKey", "192 bits"));
+
+                        //256 bits
+                        window.crypto.subtle.generateKey({
+                            name: "AES-CFB",
+                            length: 256,
+                        }, false, ["encrypt", "decrypt"])
+                        .then(ok("aes-cfb", "generateKey", "256 bits"))
+                        .catch(err("aes-cfb", "generateKey", "256 bits"));
+                    </script>
+                </td>
+                <td class="deriveKey disabled"></td>
+                <td class="deriveBits disabled"></td>
+                <td class="importKey">
+                    <script>
+                        //importKey
+
+                        //jwk
+                        window.crypto.subtle.importKey("jwk", null, AESCFB, false, ["encrypt", "decrypt"])
+                        .then(ok("aes-cfb", "importKey", "jwk-key"))
+                        .catch(err("aes-cfb", "importKey", "jwk-key*"));
+
+                        //raw
+                        window.crypto.subtle.importKey("raw", null, AESCFB, false, ["encrypt", "decrypt"])
+                        .then(ok("aes-cfb", "importKey", "raw-key"))
+                        .catch(err("aes-cfb", "importKey", "raw-key*"));
+                    </script>
+                </td>
+                <td class="exportKey">
+                    <script>
+                        //exportKey
+                        window.crypto.subtle.generateKey(AESCFB, true, ["encrypt", "decrypt"])
+                        .then(function(key){
+
+                            //jwk
+                            window.crypto.subtle.exportKey("jwk", key)
+                            .then(ok("aes-cfb", "exportKey", "jwk-key"))
+                            .catch(err("aes-cfb", "exportKey", "jwk-key"));
+
+                            //raw
+                            window.crypto.subtle.exportKey("raw", key)
+                            .then(ok("aes-cfb", "exportKey", "raw-key"))
+                            .catch(err("aes-cfb", "exportKey", "raw-key"));
+
+                        })
+                        .catch(err("aes-cfb", "exportKey", "N/A"));
+                    </script>
+                </td>
+            </tr>
+
+
+            <!--
+            ##################
+            ###   AES-KW   ###
+            ##################
+            -->
+            <script>
+                //Base algorithm for testing
+                window.AESKW = {
+                    name: "AES-KW",
+                    length: 256,
+                };
+            </script>
+            <tr id="aes-kw">
+                <td class="algname"><a href="https://www.w3.org/TR/WebCryptoAPI/#aes-kw" target="_blank">AES-KW</a></td>
+                <td class="encrypt disabled"></td>
+                <td class="decrypt disabled"></td>
+                <td class="sign disabled"></td>
+                <td class="verify disabled"></td>
+                <td class="digest disabled"></td>
+                <td class="generateKey">
+                    <script>
+                        //generateKey
+
+                        //128 bits
+                        window.crypto.subtle.generateKey({
+                            name: "AES-KW",
+                            length: 128,
+                        }, false, ["wrapKey", "unwrapKey"])
+                        .then(ok("aes-kw", "generateKey", "128 bits"))
+                        .catch(err("aes-kw", "generateKey", "128 bits"));
+
+                        //192 bits
+                        window.crypto.subtle.generateKey({
+                            name: "AES-KW",
+                            length: 192,
+                        }, false, ["wrapKey", "unwrapKey"])
+                        .then(ok("aes-kw", "generateKey", "192 bits"))
+                        .catch(err("aes-kw", "generateKey", "192 bits"));
+
+                        //256 bits
+                        window.crypto.subtle.generateKey({
+                            name: "AES-KW",
+                            length: 256,
+                        }, false, ["wrapKey", "unwrapKey"])
+                        .then(ok("aes-kw", "generateKey", "256 bits"))
+                        .catch(err("aes-kw", "generateKey", "256 bits"));
+                    </script>
+                </td>
+                <td class="deriveKey disabled"></td>
+                <td class="deriveBits disabled"></td>
+                <td class="importKey">
+                    <script>
+                        //importKey
+
+                        //jwk
+                        window.crypto.subtle.importKey("jwk", {
+                            kty: "oct",
+                            k: "KfKY5nueRX7eBrOddn9IerHLv1r-T7qpggaCF3MfSR4",
+                            alg: "A256KW",
+                            ext: true,
+                        }, AESKW, false, ["wrapKey", "unwrapKey"])
+                        .then(ok("aes-kw", "importKey", "jwk-key"))
+                        .catch(err("aes-kw", "importKey", "jwk-key"));
+
+                        //raw
+                        window.crypto.subtle.importKey("raw", new Uint8Array([
+                            122,94,39,230,46,23,151,80,131,230,3,101,80,234,143,9,251,
+                            152,229,228,89,222,31,135,214,104,55,68,67,59,5,51
+                        ]), AESKW, false, ["wrapKey", "unwrapKey"])
+                        .then(ok("aes-kw", "importKey", "raw-key"))
+                        .catch(err("aes-kw", "importKey", "raw-key"));
+                    </script>
+                </td>
+                <td class="exportKey">
+                    <script>
+                        //exportKey
+                        window.crypto.subtle.generateKey(AESKW, true, ["wrapKey", "unwrapKey"])
+                        .then(function(key){
+
+                            //jwk
+                            window.crypto.subtle.exportKey("jwk", key)
+                            .then(ok("aes-kw", "exportKey", "jwk-key"))
+                            .catch(err("aes-kw", "exportKey", "jwk-key"));
+
+                            //raw
+                            window.crypto.subtle.exportKey("raw", key)
+                            .then(ok("aes-kw", "exportKey", "raw-key"))
+                            .catch(err("aes-kw", "exportKey", "raw-key"));
+
+                        })
+                        .catch(err("aes-kw", "exportKey", "N/A"));
+                    </script>
+                </td>
+            </tr>
+
+
+            <!--
+            ################
+            ###   HMAC   ###
+            ################
+            -->
+            <script>
+                //Base algorithm for testing
+                window.HMAC = {
+                    name: "HMAC",
+                    length: 256,
+                    hash: {name: "SHA-256"},
+                }
+            </script>
+            <tr id="hmac">
+                <td class="algname"><a href="https://www.w3.org/TR/WebCryptoAPI/#hmac" target="_blank">HMAC</a></td>
+                <td class="encrypt disabled"></td>
+                <td class="decrypt disabled"></td>
+                <td class="sign">
+                    <script>
+                        //sign
+                        window.crypto.subtle.generateKey(HMAC, false, ["sign"])
+                        .then(function(key){
+                            return window.crypto.subtle.sign(HMAC, key, TESTBYTES);
+                        })
+                        .then(ok("hmac", "sign", "Yes"))
+                        .catch(err("hmac", "sign", "No"));
+                    </script>
+                </td>
+                <td class="verify">
+                    <script>
+                        //verify
+                        window.crypto.subtle.generateKey(HMAC, false, ["sign", "verify"])
+                        .then(function(key){
+                            window.crypto.subtle.sign(HMAC, key, TESTBYTES)
+                            .then(function(sig){
+                                return window.crypto.subtle.verify(HMAC, key, sig, TESTBYTES);
+                            })
+                            .then(ok("hmac", "verify", "Yes"))
+                            .catch(err("hmac", "verify", "No"));
+                        })
+                        .catch(err("hmac", "verify", "N/A"));
+                    </script>
+                </td>
+                <td class="digest disabled"></td>
+                <td class="generateKey">
+                    <script>
+                        //generateKey
+
+                        //sha-1
+                        window.crypto.subtle.generateKey({
+                            name: "HMAC",
+                            length: 256,
+                            hash: {name: "SHA-1"},
+                        }, false, ["sign", "verify"])
+                        .then(ok("hmac", "generateKey", "SHA-1"))
+                        .catch(err("hmac", "generateKey", "SHA-1"));
+
+                        //sha-256
+                        window.crypto.subtle.generateKey({
+                            name: "HMAC",
+                            length: 256,
+                            hash: {name: "SHA-256"},
+                        }, false, ["sign", "verify"])
+                        .then(ok("hmac", "generateKey", "SHA-256"))
+                        .catch(err("hmac", "generateKey", "SHA-256"));
+
+                        //sha-384
+                        window.crypto.subtle.generateKey({
+                            name: "HMAC",
+                            length: 256,
+                            hash: {name: "SHA-384"},
+                        }, false, ["sign", "verify"])
+                        .then(ok("hmac", "generateKey", "SHA-384"))
+                        .catch(err("hmac", "generateKey", "SHA-384"));
+
+                        //sha-512
+                        window.crypto.subtle.generateKey({
+                            name: "HMAC",
+                            length: 256,
+                            hash: {name: "SHA-512"},
+                        }, false, ["sign", "verify"])
+                        .then(ok("hmac", "generateKey", "SHA-512"))
+                        .catch(err("hmac", "generateKey", "SHA-512"));
+                    </script>
+                </td>
+                <td class="deriveKey disabled"></td>
+                <td class="deriveBits disabled"></td>
+                <td class="importKey">
+                    <script>
+                        //importKey
+
+                        //jwk
+                        window.crypto.subtle.importKey("jwk", {
+                            kty: "oct",
+                            k: "KfKY5nueRX7eBrOddn9IerHLv1r-T7qpggaCF3MfSR4",
+                            alg: "HS256",
+                            ext: true,
+                        }, HMAC, false, ["sign", "verify"])
+                        .then(ok("hmac", "importKey", "jwk-key"))
+                        .catch(err("hmac", "importKey", "jwk-key"));
+
+                        //raw
+                        window.crypto.subtle.importKey("raw", new Uint8Array([
+                            122,94,39,230,46,23,151,80,131,230,3,101,80,234,143,9,251,
+                            152,229,228,89,222,31,135,214,104,55,68,67,59,5,51
+                        ]), HMAC, false, ["sign", "verify"])
+                        .then(ok("hmac", "importKey", "raw-key"))
+                        .catch(err("hmac", "importKey", "raw-key"));
+                    </script>
+                </td>
+                <td class="exportKey">
+                    <script>
+                        //exportKey
+                        window.crypto.subtle.generateKey(HMAC, true, ["sign", "verify"])
+                        .then(function(key){
+
+                            //jwk
+                            window.crypto.subtle.exportKey("jwk", key)
+                            .then(ok("hmac", "exportKey", "jwk-key"))
+                            .catch(err("hmac", "exportKey", "jwk-key"));
+
+                            //raw
+                            window.crypto.subtle.exportKey("raw", key)
+                            .then(ok("hmac", "exportKey", "raw-key"))
+                            .catch(err("hmac", "exportKey", "raw-key"));
+
+                        })
+                        .catch(err("hmac", "exportKey", "N/A"));
+                    </script>
+                </td>
+            </tr>
+
+
+            <!--
+            ##############
+            ###   DH   ###
+            ##############
+            -->
+            <script>
+                //Base algorithm for testing
+                window.DH = {
+                    name: "DH",
+                    //NOTE: THIS IS A SMALL PRIME FOR TESTING ONLY
+                    //DO NOT USE IT FOR REAL!
+                    //See http://datatracker.ietf.org/doc/rfc3526/ for better primes
+                    prime: new Uint8Array([
+                        255,255,255,255,255,255,255,255,201,15,218,162,33,104,194,52,196,198,98,139,
+                        128,220,28,209,41,2,78,8,138,103,204,116,2,11,190,166,59,19,155,34,81,74,8,
+                        121,142,52,4,221,239,149,25,179,205,58,67,27,48,43,10,109,242,95,20,55,79,225,
+                        53,109,109,81,194,69,228,133,181,118,98,94,126,198,244,76,66,233,166,55,237,
+                        107,11,255,92,182,244,6,183,237,238,56,107,251,90,137,159,165,174,159,36,17,
+                        124,75,31,230,73,40,102,81,236,228,91,61,194,0,124,184,161,99,191,5,152,218,
+                        72,54,28,85,211,154,105,22,63,168,253,36,207,95,131,101,93,35,220,163,173,
+                        150,28,98,243,86,32,133,82,187,158,213,41,7,112,150,150,109,103,12,53,78,74,
+                        188,152,4,241,116,108,8,202,35,115,39,255,255,255,255,255,255,255,255
+                    ]),
+                    generator: new Uint8Array([2]),
+                }
+            </script>
+            <tr id="dh">
+                <td class="algname"><a href="https://www.w3.org/TR/WebCryptoAPI/#dh" target="_blank">DH</a></td>
+                <td class="encrypt disabled"></td>
+                <td class="decrypt disabled"></td>
+                <td class="sign disabled"></td>
+                <td class="verify disabled"></td>
+                <td class="digest disabled"></td>
+                <td class="generateKey">
+                    <script>
+                        //generateKey
+                        window.crypto.subtle.generateKey(DH, false, ["deriveBits", "deriveKey"])
+                        .then(ok("dh", "generateKey", "Yes"))
+                        .catch(err("dh", "generateKey", "No"));
+                    </script>
+                </td>
+                <td class="deriveKey">
+                    <script>
+                        //deriveKey
+                        window.crypto.subtle.generateKey(DH, false, ["deriveKey"])
+                        .then(function(key1){
+                            window.crypto.subtle.generateKey(DH, false, ["deriveKey"])
+                            .then(function(key2){
+
+                                window.crypto.subtle.deriveKey({
+                                    "name": "DH",
+                                    "prime": new Uint8Array([23]),
+                                    "generator": new Uint8Array([5]),
+                                    "public": key2.publicKey,
+                                }, key1.privateKey, AESCBC, false, ["encrypt", "decrypt"])
+                                .then(ok("dh", "deriveKey", "Yes"))
+                                .catch(err("dh", "deriveKey", "No"));
+
+                            })
+                            .catch(err("dh", "deriveKey", "N/A"));
+                        })
+                        .catch(err("dh", "deriveKey", "N/A"));
+                    </script>
+                </td>
+                <td class="deriveBits">
+                    <script>
+                        //deriveBits
+                        window.crypto.subtle.generateKey(DH, false, ["deriveBits"])
+                        .then(function(key1){
+                            window.crypto.subtle.generateKey(DH, false, ["deriveBits"])
+                            .then(function(key2){
+
+                                window.crypto.subtle.deriveBits({
+                                    "name": "DH",
+                                    "prime": new Uint8Array([23]),
+                                    "generator": new Uint8Array([5]),
+                                    "public": key2.publicKey,
+                                }, key1.privateKey, 128)
+                                .then(ok("dh", "deriveBits", "Yes"))
+                                .catch(err("dh", "deriveBits", "No"));
+
+                            })
+                            .catch(err("dh", "deriveBits", "N/A"));
+                        })
+                        .catch(err("dh", "deriveBits", "N/A"));
+                    </script>
+                </td>
+                <td class="importKey">
+                    <script>
+                        //importKey
+
+                        //raw
+                        window.crypto.subtle.importKey("raw", new Uint8Array([
+                            203,25,0,203,43,75,46,159,217,37,185,181,25,220,71,187,112,195,251,233,152,56,206,
+                            93,18,96,87,132,17,113,166,110,123,190,194,168,100,147,21,174,131,80,8,247,125,35,
+                            210,70,103,141,152,173,99,74,34,132,92,134,216,55,171,186,89,167,189,217,164,119,
+                            22,139,55,26,239,242,30,241,140,139,202,116,174,137,77,11,29,4,30,47,118,170,84,243,
+                            97,132,86,58,24,82,36,149,45,185,23,172,67,162,48,43,110,251,175,20,102,237,113,148,
+                            5,242,29,209,34,173,52,72,251,254,84,86,226,151,202,110,61,145,198,244,80,227,65,
+                            203,118,217,91,45,58,172,165,224,122,230,50,135,120,124,37,190,186,204,103,218,19,
+                            91,246,115,6,199,45,121,156,149,6,208,85,26,94,171,165,228,58,200,49,82,210,170,243,
+                            154,190,15,2,225,143,159
+                        ]), DH, false, ["deriveBits", "deriveKey"])
+                        .then(ok("dh", "importKey", "raw-pub"))
+                        .catch(err("dh", "importKey", "raw-pub*"));
+
+                        window.crypto.subtle.importKey("raw", null, DH, false, ["deriveBits", "deriveKey"])
+                        .then(ok("dh", "importKey", "raw-priv"))
+                        .catch(err("dh", "importKey", "raw-priv*"));
+
+                        //spki
+                        window.crypto.subtle.importKey("spki", new Uint8Array([
+                            48,130,1,160,48,129,214,6,9,42,134,72,134,247,13,1,3,1,48,129,200,2,129,192,
+                            255,255,255,255,255,255,255,255,201,15,218,162,33,104,194,52,196,198,98,139,
+                            128,220,28,209,41,2,78,8,138,103,204,116,2,11,190,166,59,19,155,34,81,74,8,
+                            121,142,52,4,221,239,149,25,179,205,58,67,27,48,43,10,109,242,95,20,55,79,225,
+                            53,109,109,81,194,69,228,133,181,118,98,94,126,198,244,76,66,233,166,55,237,
+                            107,11,255,92,182,244,6,183,237,238,56,107,251,90,137,159,165,174,159,36,17,124,
+                            75,31,230,73,40,102,81,236,228,91,61,194,0,124,184,161,99,191,5,152,218,72,54,28,
+                            85,211,154,105,22,63,168,253,36,207,95,131,101,93,35,220,163,173,150,28,98,243,86,
+                            32,133,82,187,158,213,41,7,112,150,150,109,103,12,53,78,74,188,152,4,241,116,108,
+                            8,202,35,115,39,255,255,255,255,255,255,255,255,2,1,2,0,0,3,129,196,0,2,129,192,
+                            61,22,25,226,248,22,78,27,133,3,35,106,70,232,225,214,34,227,153,152,178,190,166,
+                            169,89,183,204,182,23,57,51,45,109,48,202,225,204,249,235,29,124,219,90,121,139,
+                            79,103,11,140,254,228,231,151,2,202,176,243,156,174,156,101,51,180,252,65,229,158,
+                            91,136,53,117,197,27,62,186,115,252,72,106,24,219,24,43,19,221,6,208,98,239,43,
+                            217,57,149,157,219,47,116,87,202,62,90,42,75,252,46,27,11,179,245,254,34,159,115,
+                            198,154,106,45,151,46,163,226,44,57,158,57,47,77,241,66,90,189,42,250,77,148,241,
+                            197,29,246,201,146,241,249,123,67,52,67,24,167,232,249,3,191,254,50,249,76,14,237,
+                            1,116,7,157,11,248,166,79,140,76,241,191,184,146,143,52,91,164,209,63,124,116,6,
+                            150,123,68,137,168,229,210,250,198,7
+                        ]), DH, false, ["deriveBits", "deriveKey"])
+                        .then(ok("dh", "importKey", "spki-pub"))
+                        .catch(err("dh", "importKey", "spki-pub"));
+
+                        window.crypto.subtle.importKey("spki", null, DH, false, ["deriveBits", "deriveKey"])
+                        .then(ok("dh", "importKey", "spki-priv"))
+                        .catch(err("dh", "importKey", "spki-priv*"));
+
+                        //pkcs8
+                        window.crypto.subtle.importKey("pkcs8", null, DH, false, ["deriveBits", "deriveKey"])
+                        .then(ok("dh", "importKey", "pkcs8-pub"))
+                        .catch(err("dh", "importKey", "pkcs8-pub*"));
+
+                        window.crypto.subtle.importKey("pkcs8", null, DH, false, ["deriveBits", "deriveKey"])
+                        .then(ok("dh", "importKey", "pkcs8-priv"))
+                        .catch(err("dh", "importKey", "pkcs8-priv*"));
+                    </script>
+                </td>
+                <td class="exportKey">
+                    <script>
+                        //exportKey
+                        window.crypto.subtle.generateKey(DH, true, ["deriveBits", "deriveKey"])
+                        .then(function(key){
+
+                            //raw
+                            window.crypto.subtle.exportKey("raw", key.publicKey)
+                            .then(ok("dh", "exportKey", "raw-pub"))
+                            .catch(err("dh", "exportKey", "raw-pub"));
+
+                            window.crypto.subtle.exportKey("raw", key.privateKey)
+                            .then(ok("dh", "exportKey", "raw-priv"))
+                            .catch(err("dh", "exportKey", "raw-priv"));
+
+                            //spki
+                            window.crypto.subtle.exportKey("spki", key.publicKey)
+                            .then(ok("dh", "exportKey", "spki-pub"))
+                            .catch(err("dh", "exportKey", "spki-pub"));
+
+                            window.crypto.subtle.exportKey("spki", key.privateKey)
+                            .then(ok("dh", "exportKey", "spki-priv"))
+                            .catch(err("dh", "exportKey", "spki-priv"));
+
+                            //pkcs8
+                            window.crypto.subtle.exportKey("pkcs8", key.publicKey)
+                            .then(ok("dh", "exportKey", "pkcs8-pub"))
+                            .catch(err("dh", "exportKey", "pkcs8-pub"));
+
+                            window.crypto.subtle.exportKey("pkcs8", key.privateKey)
+                            .then(ok("dh", "exportKey", "pkcs8-priv"))
+                            .catch(err("dh", "exportKey", "pkcs8-priv"));
+
+                        })
+                        .catch(err("dh", "exportKey", "N/A"));
+                    </script>
+                </td>
+            </tr>
+
+
+            <!--
+            #################
+            ###   SHA-1   ###
+            #################
+            -->
+            <tr id="sha-1">
+                <td class="algname"><a href="https://www.w3.org/TR/WebCryptoAPI/#sha" target="_blank">SHA-1</a></td>
+                <td class="encrypt disabled"></td>
+                <td class="decrypt disabled"></td>
+                <td class="sign disabled"></td>
+                <td class="verify disabled"></td>
+                <td class="digest">
+                    <script>
+                        //digest
+                        window.crypto.subtle.digest({name: "SHA-1"}, TESTBYTES)
+                        .then(ok("sha-1", "digest", "Yes"))
+                        .catch(err("sha-1", "digest", "No"));
+                    </script>
+                </td>
+                <td class="generateKey disabled"></td>
+                <td class="deriveKey disabled"></td>
+                <td class="deriveBits disabled"></td>
+                <td class="importKey disabled"></td>
+                <td class="exportKey disabled"></td>
+            </tr>
+
+
+            <!--
+            ###################
+            ###   SHA-256   ###
+            ###################
+            -->
+            <tr id="sha-256">
+                <td class="algname"><a href="https://www.w3.org/TR/WebCryptoAPI/#sha" target="_blank">SHA-256</a></td>
+                <td class="encrypt disabled"></td>
+                <td class="decrypt disabled"></td>
+                <td class="sign disabled"></td>
+                <td class="verify disabled"></td>
+                <td class="digest">
+                    <script>
+                        //digest
+                        window.crypto.subtle.digest({name: "SHA-256"}, TESTBYTES)
+                        .then(ok("sha-256", "digest", "Yes"))
+                        .catch(err("sha-256", "digest", "No"));
+                    </script>
+                </td>
+                <td class="generateKey disabled"></td>
+                <td class="deriveKey disabled"></td>
+                <td class="deriveBits disabled"></td>
+                <td class="importKey disabled"></td>
+                <td class="exportKey disabled"></td>
+            </tr>
+
+
+            <!--
+            ###################
+            ###   SHA-384   ###
+            ###################
+            -->
+            <tr id="sha-384">
+                <td class="algname"><a href="https://www.w3.org/TR/WebCryptoAPI/#sha" target="_blank">SHA-384</a></td>
+                <td class="encrypt disabled"></td>
+                <td class="decrypt disabled"></td>
+                <td class="sign disabled"></td>
+                <td class="verify disabled"></td>
+                <td class="digest">
+                    <script>
+                        //digest
+                        window.crypto.subtle.digest({name: "SHA-384"}, TESTBYTES)
+                        .then(ok("sha-384", "digest", "Yes"))
+                        .catch(err("sha-384", "digest", "No"));
+                    </script>
+                </td>
+                <td class="generateKey disabled"></td>
+                <td class="deriveKey disabled"></td>
+                <td class="deriveBits disabled"></td>
+                <td class="importKey disabled"></td>
+                <td class="exportKey disabled"></td>
+            </tr>
+
+
+            <!--
+            ###################
+            ###   SHA-512   ###
+            ###################
+            -->
+            <tr id="sha-512">
+                <td class="algname"><a href="https://www.w3.org/TR/WebCryptoAPI/#sha" target="_blank">SHA-512</a></td>
+                <td class="encrypt disabled"></td>
+                <td class="decrypt disabled"></td>
+                <td class="sign disabled"></td>
+                <td class="verify disabled"></td>
+                <td class="digest">
+                    <script>
+                        //digest
+                        window.crypto.subtle.digest({name: "SHA-512"}, TESTBYTES)
+                        .then(ok("sha-512", "digest", "Yes"))
+                        .catch(err("sha-512", "digest", "No"));
+                    </script>
+                </td>
+                <td class="generateKey disabled"></td>
+                <td class="deriveKey disabled"></td>
+                <td class="deriveBits disabled"></td>
+                <td class="importKey disabled"></td>
+                <td class="exportKey disabled"></td>
+            </tr>
+
+
+            <!--
+            ##################
+            ###   CONCAT   ###
+            ##################
+            -->
+            <tr id="concatkdf">
+                <td class="algname"><a href="https://www.w3.org/TR/WebCryptoAPI/#concatkdf" target="_blank">CONCAT</a></td>
+                <td class="encrypt disabled"></td>
+                <td class="decrypt disabled"></td>
+                <td class="sign disabled"></td>
+                <td class="verify disabled"></td>
+                <td class="digest disabled"></td>
+                <td class="generateKey disabled"></td>
+                <td class="deriveKey">
+                    <script>
+                        //deriveKey
+                        window.crypto.subtle.deriveBits({
+                            name: "CONCAT",
+                            algorithmId: "?????",
+                            partyUInfo: "?????",
+                            partyVInfo: "?????",
+                            publicInfo: "?????",
+                            privateInfo: "?????",
+                            hash: {name: "SHA-256"},
+                        }, "?????", AESCBC, false, ["encrypt", "decrypt"])
+                        .then(ok("concatkdf", "deriveKey", "Yes"))
+                        .catch(err("concatkdf", "deriveKey", "No"));
+                    </script>
+                </td>
+                <td class="deriveBits">
+                    <script>
+                        //deriveBits
+                        window.crypto.subtle.deriveBits({
+                            name: "CONCAT",
+                            algorithmId: "?????",
+                            partyUInfo: "?????",
+                            partyVInfo: "?????",
+                            publicInfo: "?????",
+                            privateInfo: "?????",
+                            hash: {name: "SHA-256"},
+                        }, "?????", 128)
+                        .then(ok("concatkdf", "deriveBits", "Yes"))
+                        .catch(err("concatkdf", "deriveBits", "No"));
+                    </script>
+                </td>
+                <td class="importKey">
+                    <script>
+                        //importKey
+
+                        //raw
+                        window.crypto.subtle.importKey("raw", null, {
+                            name: "CONCAT",
+                            algorithmId: "?????",
+                            partyUInfo: "?????",
+                            partyVInfo: "?????",
+                            publicInfo: "?????",
+                            privateInfo: "?????",
+                            hash: {name: "SHA-256"},
+                        }, false, ["deriveBits", "deriveKey"])
+                        .then(ok("concatkdf", "importKey", "raw"))
+                        .catch(err("concatkdf", "importKey", "raw*"));
+                    </script>
+                </td>
+                <td class="exportKey disabled"></td>
+            </tr>
+
+
+            <!--
+            ####################
+            ###   HKDF-CTR   ###
+            ####################
+            -->
+            <tr id="hkdf-ctr">
+                <td class="algname"><a href="https://www.w3.org/TR/WebCryptoAPI/#hkdf-ctr" target="_blank">HKDF-CTR</a></td>
+                <td class="encrypt disabled"></td>
+                <td class="decrypt disabled"></td>
+                <td class="sign disabled"></td>
+                <td class="verify disabled"></td>
+                <td class="digest disabled"></td>
+                <td class="generateKey disabled"></td>
+                <td class="deriveKey">
+                    <script>
+                        //deriveKey
+                        window.crypto.subtle.deriveBits({
+                            name: "HKDF-CTR",
+                            label: "?????",
+                            context: "?????",
+                            hash: {name: "SHA-256"},
+                        }, "?????", AESCBC, false, ["encrypt", "decrypt"])
+                        .then(ok("hkdf-ctr", "deriveKey", "Yes"))
+                        .catch(err("hkdf-ctr", "deriveKey", "No"));
+                    </script>
+                </td>
+                <td class="deriveBits">
+                    <script>
+                        //deriveBits
+                        window.crypto.subtle.deriveBits({
+                            name: "HKDF-CTR",
+                            label: "?????",
+                            context: "?????",
+                            hash: {name: "SHA-256"},
+                        }, "?????", 128)
+                        .then(ok("hkdf-ctr", "deriveBits", "Yes"))
+                        .catch(err("hkdf-ctr", "deriveBits", "No"));
+                    </script>
+                </td>
+                <td class="importKey">
+                    <script>
+                        //importKey
+
+                        //raw
+                        window.crypto.subtle.importKey("raw", null, {
+                            name: "HKDF-CTR",
+                            label: "?????",
+                            context: "?????",
+                            hash: {name: "SHA-256"},
+                        }, false, ["deriveBits", "deriveKey"])
+                        .then(ok("hkdf-ctr", "importKey", "raw"))
+                        .catch(err("hkdf-ctr", "importKey", "raw*"));
+                    </script>
+                </td>
+                <td class="exportKey disabled"></td>
+            </tr>
+
+
+            <!--
+            ##################
+            ###   PBKDF2   ###
+            ##################
+            -->
+            <tr id="pbkdf2">
+                <td class="algname"><a href="https://www.w3.org/TR/WebCryptoAPI/#pbkdf2" target="_blank">PBKDF2</a></td>
+                <td class="encrypt disabled"></td>
+                <td class="decrypt disabled"></td>
+                <td class="sign disabled"></td>
+                <td class="verify disabled"></td>
+                <td class="digest disabled"></td>
+                <td class="generateKey">
+                    <script>
+                        //generateKey
+                        window.crypto.subtle.generateKey({name: "PBKDF2"}, false, ["deriveBits", "deriveKey"])
+                        .then(ok("pbkdf2", "generateKey", "Yes"))
+                        .catch(err("pbkdf2", "generateKey", "No"));
+                    </script>
+                </td>
+                <td class="deriveKey">
+                    <script>
+                        //deriveKey
+                        window.crypto.subtle.importKey("raw", TESTBYTES, {name: "PBKDF2"}, false, ["deriveBits", "deriveKey"])
+                        .then(function(key){
+
+                            return window.crypto.subtle.deriveKey({
+                                name: "PBKDF2",
+                                salt: window.crypto.getRandomValues(new Uint8Array(16)),
+                                iterations: 1000,
+                                hash: {name: "SHA-256"},
+                            }, key, AESCBC, false, ["encrypt", "decrypt"])
+
+                        })
+                        .then(ok("pbkdf2", "deriveKey", "Yes"))
+                        .catch(err("pbkdf2", "deriveKey", "No"));
+                    </script>
+                </td>
+                <td class="deriveBits">
+                    <script>
+                        //deriveBits
+                        window.crypto.subtle.importKey("raw", TESTBYTES, {name: "PBKDF2"}, false, ["deriveBits", "deriveKey"])
+                        .then(function(key){
+
+                            return window.crypto.subtle.deriveBits({
+                                "name": "PBKDF2",
+                                salt: window.crypto.getRandomValues(new Uint8Array(16)),
+                                iterations: 1000,
+                                hash: {name: "SHA-256"},
+                            }, key, 128);
+
+                        })
+                        .then(ok("pbkdf2", "deriveBits", "Yes"))
+                        .catch(err("pbkdf2", "deriveBits", "No"));
+                    </script>
+                </td>
+                <td class="importKey">
+                    <script>
+                        //importKey
+
+                        //raw
+                        window.crypto.subtle.importKey("raw", TESTBYTES, {name: "PBKDF2"}, false, ["deriveBits", "deriveKey"])
+                        .then(ok("pbkdf2", "importKey", "raw"))
+                        .catch(err("pbkdf2", "importKey", "raw"));
+                    </script>
+                </td>
+                <td class="exportKey disabled"></td>
+            </tr>
+
+
+            <!--
+            ########################################
+            ###   You're at the end! Congrats!   ###
+            ########################################
+            -->
+        </table>
+        <p>
+            ( <span class="disabled"></span> = not applicable )
+        </p>
+        <p>
+            *I don't have an example to test importKey. Pull requests welcome!
+        </p>
+        <p>
+            Source code:
+            <a href="https://github.com/diafygi/webcrypto-chart" target="_blank">
+                https://github.com/diafygi/webcrypto-chart
+            </a>
+        </p>
+    </body>
+</html>
+
