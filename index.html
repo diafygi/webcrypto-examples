@@ -735,7 +735,6 @@
                         window.crypto.subtle.generateKey({
                             name: "ECDSA",
                             namedCurve: "P-256",
-                            hash: {name: "SHA-256"},
                         }, false, ["sign", "verify"])
                         .then(ok("ecdsa", "generateKey", "P-256"))
                         .catch(err("ecdsa", "generateKey", "P-256"));
@@ -744,7 +743,6 @@
                         window.crypto.subtle.generateKey({
                             name: "ECDSA",
                             namedCurve: "P-384",
-                            hash: {name: "SHA-256"},
                         }, false, ["sign", "verify"])
                         .then(ok("ecdsa", "generateKey", "P-384"))
                         .catch(err("ecdsa", "generateKey", "P-384"));
@@ -753,7 +751,6 @@
                         window.crypto.subtle.generateKey({
                             name: "ECDSA",
                             namedCurve: "P-521",
-                            hash: {name: "SHA-256"},
                         }, false, ["sign", "verify"])
                         .then(ok("ecdsa", "generateKey", "P-521"))
                         .catch(err("ecdsa", "generateKey", "P-521"));
@@ -766,16 +763,28 @@
                         //importKey
 
                         //jwk
-                        window.crypto.subtle.importKey("jwk", null, ECDSA, false, ["verify"])
+                        window.crypto.subtle.importKey("jwk", {
+                            kty: "EC",
+                            crv: "P-256",
+                            x: "zCQ5BPHPCLZYgdpo1n-x_90P2Ij52d53YVwTh3ZdiMo",
+                            y: "pDfQTUx0-OiZc5ZuKMcA7v2Q7ZPKsQwzB58bft0JTko",
+                            ext: true,
+                        }, ECDSA, false, ["verify"])
                         .then(ok("ecdsa", "importKey", "jwk-pub"))
-                        .catch(err("ecdsa", "importKey", "jwk-pub*"));
+                        .catch(err("ecdsa", "importKey", "jwk-pub"));
 
                         window.crypto.subtle.importKey("jwk", null, ECDSA, false, ["sign"])
                         .then(ok("ecdsa", "importKey", "jwk-priv"))
                         .catch(err("ecdsa", "importKey", "jwk-priv*"));
 
                         //spki
-                        window.crypto.subtle.importKey("spki", null, ECDSA, false, ["verify"])
+                        window.crypto.subtle.importKey("spki", new Uint8Array([
+                            48,86,48,16,6,4,43,129,4,112,6,8,42,134,72,206,61,3,1,7,3,66,
+                            0,4,220,234,227,95,252,91,18,84,130,96,183,149,225,140,137,39,
+                            21,10,197,158,201,219,226,170,124,133,216,83,233,235,138,223,
+                            84,146,126,203,222,63,41,18,166,189,30,192,198,186,146,147,124,
+                            20,181,210,209,198,192,170,108,41,76,168,3,51,201,197
+                        ]), ECDSA, false, ["verify"])
                         .then(ok("ecdsa", "importKey", "spki-pub"))
                         .catch(err("ecdsa", "importKey", "spki-pub*"));
 

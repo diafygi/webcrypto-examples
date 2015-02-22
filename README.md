@@ -177,7 +177,7 @@ window.crypto.subtle.sign(
     {
         name: "RSASSA-PKCS1-v1_5",
     },
-    privateKey,
+    privateKey, //from generateKey or importKey above
     data //ArrayBuffer of data you want to sign
 )
 .then(function(signature){
@@ -194,7 +194,7 @@ window.crypto.subtle.verify(
     {
         name: "RSASSA-PKCS1-v1_5",
     },
-    publicKey,
+    publicKey, //from generateKey or importKey above
     signature, //ArrayBuffer of the signature
     data //ArrayBuffer of the data
 )
@@ -209,10 +209,104 @@ window.crypto.subtle.verify(
 
 ##RSA-PSS
 ###generateKey
+```javascript
+window.crypto.subtle.generateKey(
+    {
+        name: "RSA-PSS",
+        modulusLength: 2048, //can be 1024, 2048, or 4096
+        publicExponent: new Uint8Array([0x01, 0x00, 0x01]),
+        hash: {name: "SHA-256"}, //can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
+    },
+    false, //whether the key is extractable (i.e. can be used in exportKey)
+    ["sign", "verify"] //can be any combination of "sign" and "verify"
+)
+.then(function(key){
+    //returns a keypair object
+    console.log(key);
+    console.log(key.publicKey);
+    console.log(key.privateKey);
+})
+.catch(function(err){
+    console.error(err);
+});
+```
 ###importKey
+```javascript
+window.crypto.subtle.importKey(
+    "jwk", //can be "jwk", "spki", or "pkcs8"
+    {   //this is an example jwk key, other key types like "spki" are Uint8Array objects
+        kty: "RSA",
+        e: "AQAB",
+        n: "vGO3eU16ag9zRkJ4AK8ZUZrjbtp5xWK0LyFMNT8933evJoHeczexMUzSiXaLrEFSyQZortk81zJH3y41MBO_UFDO_X0crAquNrkjZDrf9Scc5-MdxlWU2Jl7Gc4Z18AC9aNibWVmXhgvHYkEoFdLCFG-2Sq-qIyW4KFkjan05IE",
+        alg: "PS256",
+        ext: true,
+    },
+    {   //these are the algorithm options
+        name: "RSA-PSS",
+        hash: {name: "SHA-256"}, //can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
+    },
+    false, //whether the key is extractable (i.e. can be used in exportKey)
+    ["verify"] //"verify" for public key import, "sign" for private key imports
+)
+.then(function(publicKey){
+    //returns a publicKey (or privateKey if you are importing a private key)
+    console.log(publicKey);
+})
+.catch(function(err){
+    console.error(err);
+});
+```
 ###exportKey
+```javascript
+window.crypto.subtle.exportKey(
+    "jwk", //can be "jwk", "spki", or "pkcs8"
+    publicKey //can be a publicKey or privateKey, as long as extractable was true
+)
+.then(function(data){
+    //returns the exported key data
+    console.log(data);
+})
+.catch(function(err){
+    console.error(err);
+});
+```
 ###sign
+```javascript
+window.crypto.subtle.sign(
+    {
+        name: "RSA-PSS",
+        saltLength: 128, //the length of the salt
+    },
+    privateKey, //from generateKey or importKey above
+    data //ArrayBuffer of data you want to sign
+)
+.then(function(signature){
+    //returns an ArrayBuffer containing the signature
+    console.log(new Uint8Array(signature));
+})
+.catch(function(err){
+    console.error(err);
+});
+```
 ###verify
+```javascript
+window.crypto.subtle.verify(
+    {
+        name: "RSA-PSS",
+        saltLength: 128, //the length of the salt
+    },
+    publicKey, //from generateKey or importKey above
+    signature, //ArrayBuffer of the signature
+    data //ArrayBuffer of the data
+)
+.then(function(isvalid){
+    //returns a boolean on whether the signature is true or not
+    console.log(isvalid);
+})
+.catch(function(err){
+    console.error(err);
+});
+```
 
 ##RSA-OAEP
 ###generateKey
@@ -223,10 +317,102 @@ window.crypto.subtle.verify(
 
 ##ECDSA
 ###generateKey
+```javascript
+window.crypto.subtle.generateKey(
+    {
+        name: "ECDSA",
+        namedCurve: "P-256", //can be "P-256", "P-384", or "P-521"
+    },
+    false, //whether the key is extractable (i.e. can be used in exportKey)
+    ["sign", "verify"] //can be any combination of "sign" and "verify"
+)
+.then(function(key){
+    //returns a keypair object
+    console.log(key);
+    console.log(key.publicKey);
+    console.log(key.privateKey);
+})
+.catch(function(err){
+    console.error(err);
+});
+```
 ###importKey
+```javascript
+window.crypto.subtle.importKey(
+    "jwk", //can be "jwk", "spki", or "pkcs8"
+    {   //this is an example jwk key, other key types like "spki" are Uint8Array objects
+        kty: "EC",
+        crv: "P-256",
+        x: "zCQ5BPHPCLZYgdpo1n-x_90P2Ij52d53YVwTh3ZdiMo",
+        y: "pDfQTUx0-OiZc5ZuKMcA7v2Q7ZPKsQwzB58bft0JTko",
+        ext: true,
+    },
+    {   //these are the algorithm options
+        name: "ECDSA",
+        namedCurve: "P-256", //can be "P-256", "P-384", or "P-521"
+    },
+    false, //whether the key is extractable (i.e. can be used in exportKey)
+    ["verify"] //"verify" for public key import, "sign" for private key imports
+)
+.then(function(publicKey){
+    //returns a publicKey (or privateKey if you are importing a private key)
+    console.log(publicKey);
+})
+.catch(function(err){
+    console.error(err);
+});
+```
 ###exportKey
+```javascript
+window.crypto.subtle.exportKey(
+    "jwk", //can be "jwk", "spki", or "pkcs8"
+    publicKey //can be a publicKey or privateKey, as long as extractable was true
+)
+.then(function(data){
+    //returns the exported key data
+    console.log(data);
+})
+.catch(function(err){
+    console.error(err);
+});
+```
 ###sign
+```javascript
+window.crypto.subtle.sign(
+    {
+        name: "ECDSA",
+        hash: {name: "SHA-256"}, //can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
+    },
+    privateKey, //from generateKey or importKey above
+    data //ArrayBuffer of data you want to sign
+)
+.then(function(signature){
+    //returns an ArrayBuffer containing the signature
+    console.log(new Uint8Array(signature));
+})
+.catch(function(err){
+    console.error(err);
+});
+```
 ###verify
+```javascript
+window.crypto.subtle.verify(
+    {
+        name: "ECDSA",
+        hash: {name: "SHA-256"}, //can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
+    },
+    publicKey, //from generateKey or importKey above
+    signature, //ArrayBuffer of the signature
+    data //ArrayBuffer of the data
+)
+.then(function(isvalid){
+    //returns a boolean on whether the signature is true or not
+    console.log(isvalid);
+})
+.catch(function(err){
+    console.error(err);
+});
+```
 
 ##ECDH
 ###generateKey
