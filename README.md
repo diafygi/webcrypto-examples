@@ -1,6 +1,6 @@
 # Web Cryptography API Live Chart
 
-Live Chart: https://diafygi.github.io/webcrypto-chart
+Live Chart: https://diafygi.github.io/webcrypto-live-chart
 
 I couldn't find anywhere that clear had examples of using WebCrytoAPI, so I
 wrote examples and made a live chart with them. You can see the examples below
