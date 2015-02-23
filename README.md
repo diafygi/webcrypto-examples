@@ -94,17 +94,11 @@ wrote examples and made a live table with them. Pull requests welcome!
 [deriveKey](#dh---derivekey) | 
 [deriveBits](#dh---derivebits)
 
-14. [SHA-1](#sha-1)
-  * [digest](#sha-1---digest)
-
-15. [SHA-256](#sha-256)
-  * [digest](#sha-256---digest)
-
-16. [SHA-384](#sha-384)
-  * [digest](#sha-384---digest)
-
-17. [SHA-512](#sha-512)
-  * [digest](#sha-512---digest)
+14. [SHA](#sha-1)
+  * [SHA-1 digest](#sha-1---digest) | 
+[SHA-256 digest](#sha-256---digest) | 
+[SHA-384 digest](#sha-256---digest) | 
+[SHA-512 digest](#sha-256---digest) | 
 
 18. [CONCAT](#concat)
   * [importKey](#concat---importkey) | 
@@ -1430,7 +1424,7 @@ window.crypto.subtle.deriveBits(
 });
 ```
 
-##SHA-1
+##SHA
 ####SHA-1 - digest
 ```javascript
 window.crypto.subtle.digest(
@@ -1448,7 +1442,6 @@ window.crypto.subtle.digest(
 });
 ```
 
-##SHA-256
 ####SHA-256 - digest
 ```javascript
 window.crypto.subtle.digest(
@@ -1466,7 +1459,6 @@ window.crypto.subtle.digest(
 });
 ```
 
-##SHA-384
 ####SHA-384 - digest
 ```javascript
 window.crypto.subtle.digest(
@@ -1484,7 +1476,6 @@ window.crypto.subtle.digest(
 });
 ```
 
-##SHA-512
 ####SHA-512 - digest
 ```javascript
 window.crypto.subtle.digest(
