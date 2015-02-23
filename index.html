@@ -776,8 +776,8 @@
                         window.crypto.subtle.importKey("jwk", {
                             kty: "EC",
                             crv: "P-256",
-                            x: "zCQ5BPHPCLZYgdpo1n-x_90P2Ij52d53YVwTh3ZdiMo",
-                            y: "pDfQTUx0-OiZc5ZuKMcA7v2Q7ZPKsQwzB58bft0JTko",
+                            x: "A5fQnBdBSgBhTjMr1Atpzvh5SKYQ4aQRJ9WTCG5U4m4",
+                            y: "8YF98byzMljHX3T5ORLYTDbcwG-_eq3f23JtTE6lOe0",
                             ext: true,
                         }, ECDSA, false, ["verify"])
                         .then(ok("ecdsa", "importKey", "jwk-pub"))
@@ -786,9 +786,9 @@
                         window.crypto.subtle.importKey("jwk", {
                             kty: "EC",
                             crv: "P-256",
-                            x: "zCQ5BPHPCLZYgdpo1n-x_90P2Ij52d53YVwTh3ZdiMo",
-                            y: "pDfQTUx0-OiZc5ZuKMcA7v2Q7ZPKsQwzB58bft0JTko",
-                            d: "MTIzNDU2Nzg5MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTI",
+                            x: "A5fQnBdBSgBhTjMr1Atpzvh5SKYQ4aQRJ9WTCG5U4m4",
+                            y: "8YF98byzMljHX3T5ORLYTDbcwG-_eq3f23JtTE6lOe0",
+                            d: "4DvC-hxpv8myZLNeMY-8nq55MhdfA4obM1lGG3hF_yo",
                             ext: true,
                         }, ECDSA, false, ["sign"])
                         .then(ok("ecdsa", "importKey", "jwk-priv"))
@@ -796,19 +796,25 @@
 
                         //spki
                         window.crypto.subtle.importKey("spki", new Uint8Array([
-                            48,86,48,16,6,4,43,129,4,112,6,8,42,134,72,206,61,3,1,7,3,66,
-                            0,4,220,234,227,95,252,91,18,84,130,96,183,149,225,140,137,39,
-                            21,10,197,158,201,219,226,170,124,133,216,83,233,235,138,223,
-                            84,146,126,203,222,63,41,18,166,189,30,192,198,186,146,147,124,
-                            20,181,210,209,198,192,170,108,41,76,168,3,51,201,197
+                            48,89,48,19,6,7,42,134,72,206,61,2,1,6,8,42,134,72,206,61,3,1,7,3,66,0,4,3,151,
+                            208,156,23,65,74,0,97,78,51,43,212,11,105,206,248,121,72,166,16,225,164,17,39,
+                            213,147,8,110,84,226,110,241,129,125,241,188,179,50,88,199,95,116,249,57,18,216,
+                            76,54,220,192,111,191,122,173,223,219,114,109,76,78,165,57,237
                         ]), ECDSA, false, ["verify"])
                         .then(ok("ecdsa", "importKey", "spki-pub"))
-                        .catch(err("ecdsa", "importKey", "spki-pub*"));
+                        .catch(err("ecdsa", "importKey", "spki-pub"));
 
                         //pkcs8
-                        window.crypto.subtle.importKey("pkcs8", null, ECDSA, false, ["sign"])
+                        window.crypto.subtle.importKey("pkcs8", new Uint8Array([
+                            48,129,135,2,1,0,48,19,6,7,42,134,72,206,61,2,1,6,8,42,134,72,206,61,3,1,7,4,109,48,
+                            107,2,1,1,4,32,224,59,194,250,28,105,191,201,178,100,179,94,49,143,188,158,174,121,50,
+                            23,95,3,138,27,51,89,70,27,120,69,255,42,161,68,3,66,0,4,3,151,208,156,23,65,74,0,97,
+                            78,51,43,212,11,105,206,248,121,72,166,16,225,164,17,39,213,147,8,110,84,226,110,241,
+                            129,125,241,188,179,50,88,199,95,116,249,57,18,216,76,54,220,192,111,191,122,173,223,
+                            219,114,109,76,78,165,57,237
+                        ]), ECDSA, false, ["sign"])
                         .then(ok("ecdsa", "importKey", "pkcs8-priv"))
-                        .catch(err("ecdsa", "importKey", "pkcs8-priv*"));
+                        .catch(err("ecdsa", "importKey", "pkcs8-priv"));
                     </script>
                 </td>
                 <td class="exportKey">
@@ -943,8 +949,8 @@
                         window.crypto.subtle.importKey("jwk", {
                             kty: "EC",
                             crv: "P-256",
-                            x: "zCQ5BPHPCLZYgdpo1n-x_90P2Ij52d53YVwTh3ZdiMo",
-                            y: "pDfQTUx0-OiZc5ZuKMcA7v2Q7ZPKsQwzB58bft0JTko",
+                            x: "kgR_PqO07L8sZOBbw6rvv7O_f7clqDeiE3WnMkb5EoI",
+                            y: "djI-XqCqSyO9GFk_QT_stROMCAROIvU8KOORBgQUemE",
                             ext: true,
                         }, ECDH, false, ["deriveBits", "deriveKey"])
                         .then(ok("ecdh", "importKey", "jwk-pub"))
@@ -953,9 +959,9 @@
                         window.crypto.subtle.importKey("jwk", {
                             kty: "EC",
                             crv: "P-256",
-                            x: "zCQ5BPHPCLZYgdpo1n-x_90P2Ij52d53YVwTh3ZdiMo",
-                            y: "pDfQTUx0-OiZc5ZuKMcA7v2Q7ZPKsQwzB58bft0JTko",
-                            d: "MTIzNDU2Nzg5MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTI",
+                            x: "kgR_PqO07L8sZOBbw6rvv7O_f7clqDeiE3WnMkb5EoI",
+                            y: "djI-XqCqSyO9GFk_QT_stROMCAROIvU8KOORBgQUemE",
+                            d: "5aPFSt0UFVXYGu-ZKyC9FQIUOAMmnjzdIwkxCMe3Iok",
                             ext: true,
                         }, ECDH, false, ["deriveBits", "deriveKey"])
                         .then(ok("ecdh", "importKey", "jwk-priv"))
@@ -968,19 +974,24 @@
 
                         //spki
                         window.crypto.subtle.importKey("spki", new Uint8Array([
-                            48,86,48,16,6,4,43,129,4,112,6,8,42,134,72,206,61,3,1,7,3,66,
-                            0,4,220,234,227,95,252,91,18,84,130,96,183,149,225,140,137,39,
-                            21,10,197,158,201,219,226,170,124,133,216,83,233,235,138,223,
-                            84,146,126,203,222,63,41,18,166,189,30,192,198,186,146,147,124,
-                            20,181,210,209,198,192,170,108,41,76,168,3,51,201,197
+                            48,89,48,19,6,7,42,134,72,206,61,2,1,6,8,42,134,72,206,61,3,1,7,3,66,0,4,146,4,127,62,
+                            163,180,236,191,44,100,224,91,195,170,239,191,179,191,127,183,37,168,55,162,19,117,167,
+                            50,70,249,18,130,118,50,62,94,160,170,75,35,189,24,89,63,65,63,236,181,19,140,8,4,78,
+                            34,245,60,40,227,145,6,4,20,122,97
                         ]), ECDH, false, ["deriveBits", "deriveKey"])
                         .then(ok("ecdh", "importKey", "spki-pub"))
                         .catch(err("ecdh", "importKey", "spki-pub"));
 
                         //pkcs8
-                        window.crypto.subtle.importKey("pkcs8", null, ECDH, false, ["deriveBits", "deriveKey"])
+                        window.crypto.subtle.importKey("pkcs8", new Uint8Array([
+                            48,129,135,2,1,0,48,19,6,7,42,134,72,206,61,2,1,6,8,42,134,72,206,61,3,1,7,4,109,48,107,2,
+                            1,1,4,32,229,163,197,74,221,20,21,85,216,26,239,153,43,32,189,21,2,20,56,3,38,158,60,221,35,
+                            9,49,8,199,183,34,137,161,68,3,66,0,4,146,4,127,62,163,180,236,191,44,100,224,91,195,170,239,
+                            191,179,191,127,183,37,168,55,162,19,117,167,50,70,249,18,130,118,50,62,94,160,170,75,35,189,
+                            24,89,63,65,63,236,181,19,140,8,4,78,34,245,60,40,227,145,6,4,20,122,97
+                        ]), ECDH, false, ["deriveBits", "deriveKey"])
                         .then(ok("ecdh", "importKey", "pkcs8-priv"))
-                        .catch(err("ecdh", "importKey", "pkcs8-priv*"));
+                        .catch(err("ecdh", "importKey", "pkcs8-priv"));
                     </script>
                 </td>
                 <td class="exportKey">
@@ -2014,7 +2025,7 @@
                             154,190,15,2,225,143,159
                         ]), DH, false, ["deriveBits", "deriveKey"])
                         .then(ok("dh", "importKey", "raw-pub"))
-                        .catch(err("dh", "importKey", "raw-pub*"));
+                        .catch(err("dh", "importKey", "raw-pub"));
 
                         //spki
                         window.crypto.subtle.importKey("spki", new Uint8Array([
