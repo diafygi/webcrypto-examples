@@ -1394,14 +1394,22 @@
                         //importKey
 
                         //jwk
-                        window.crypto.subtle.importKey("jwk", null, AESCMAC, false, ["sign", "verify"])
+                        window.crypto.subtle.importKey("jwk", {
+                            kty: "oct",
+                            k: "Y0zt37HgOx-BY7SQjYVmrqhPkO44Ii2Jcb9yydUDPfE",
+                            alg: "A256CMAC",
+                            ext: true,
+                        }, AESCMAC, false, ["sign", "verify"])
                         .then(ok("aes-cmac", "importKey", "jwk-key"))
-                        .catch(err("aes-cmac", "importKey", "jwk-key*"));
+                        .catch(err("aes-cmac", "importKey", "jwk-key"));
 
                         //raw
-                        window.crypto.subtle.importKey("raw", null, AESCMAC, false, ["sign", "verify"])
+                        window.crypto.subtle.importKey("raw", new Uint8Array([
+                            122,94,39,230,46,23,151,80,131,230,3,101,80,234,143,9,251,
+                            152,229,228,89,222,31,135,214,104,55,68,67,59,5,51
+                        ]), AESCMAC, false, ["sign", "verify"])
                         .then(ok("aes-cmac", "importKey", "raw-key"))
-                        .catch(err("aes-cmac", "importKey", "raw-key*"));
+                        .catch(err("aes-cmac", "importKey", "raw-key"));
                     </script>
                 </td>
                 <td class="exportKey">
@@ -1653,14 +1661,22 @@
                         //importKey
 
                         //jwk
-                        window.crypto.subtle.importKey("jwk", null, AESCFB, false, ["encrypt", "decrypt"])
+                        window.crypto.subtle.importKey("jwk", {
+                            kty: "oct",
+                            k: "Y0zt37HgOx-BY7SQjYVmrqhPkO44Ii2Jcb9yydUDPfE",
+                            alg: "A256CFB8",
+                            ext: true,
+                        }, AESCFB, false, ["encrypt", "decrypt"])
                         .then(ok("aes-cfb", "importKey", "jwk-key"))
-                        .catch(err("aes-cfb", "importKey", "jwk-key*"));
+                        .catch(err("aes-cfb", "importKey", "jwk-key"));
 
                         //raw
-                        window.crypto.subtle.importKey("raw", null, AESCFB, false, ["encrypt", "decrypt"])
+                        window.crypto.subtle.importKey("raw", new Uint8Array([
+                            122,94,39,230,46,23,151,80,131,230,3,101,80,234,143,9,251,
+                            152,229,228,89,222,31,135,214,104,55,68,67,59,5,51
+                        ]), AESCFB, false, ["encrypt", "decrypt"])
                         .then(ok("aes-cfb", "importKey", "raw-key"))
-                        .catch(err("aes-cfb", "importKey", "raw-key*"));
+                        .catch(err("aes-cfb", "importKey", "raw-key"));
                     </script>
                 </td>
                 <td class="exportKey">
