@@ -142,7 +142,7 @@ window.crypto.subtle.generateKey(
 ####RSASSA-PKCS1-v1_5 - importKey
 ```javascript
 window.crypto.subtle.importKey(
-    "jwk", //can be "jwk", "spki", or "pkcs8"
+    "jwk", //can be "jwk" (public or private), "spki" (public only), or "pkcs8" (private only)
     {   //this is an example jwk key, other key types are Uint8Array objects
         kty: "RSA",
         e: "AQAB",
@@ -168,7 +168,7 @@ window.crypto.subtle.importKey(
 ####RSASSA-PKCS1-v1_5 - exportKey
 ```javascript
 window.crypto.subtle.exportKey(
-    "jwk", //can be "jwk", "spki", or "pkcs8"
+    "jwk", //can be "jwk" (public or private), "spki" (public only), or "pkcs8" (private only)
     publicKey //can be a publicKey or privateKey, as long as extractable was true
 )
 .then(function(keydata){
@@ -241,7 +241,7 @@ window.crypto.subtle.generateKey(
 ####RSA-PSS - importKey
 ```javascript
 window.crypto.subtle.importKey(
-    "jwk", //can be "jwk", "spki", or "pkcs8"
+    "jwk", //can be "jwk" (public or private), "spki" (public only), or "pkcs8" (private only)
     {   //this is an example jwk key, other key types are Uint8Array objects
         kty: "RSA",
         e: "AQAB",
@@ -267,7 +267,7 @@ window.crypto.subtle.importKey(
 ####RSA-PSS - exportKey
 ```javascript
 window.crypto.subtle.exportKey(
-    "jwk", //can be "jwk", "spki", or "pkcs8"
+    "jwk", //can be "jwk" (public or private), "spki" (public only), or "pkcs8" (private only)
     publicKey //can be a publicKey or privateKey, as long as extractable was true
 )
 .then(function(keydata){
@@ -342,7 +342,7 @@ window.crypto.subtle.generateKey(
 ####RSA-OAEP - importKey
 ```javascript
 window.crypto.subtle.importKey(
-    "jwk", //can be "jwk", "spki", or "pkcs8"
+    "jwk", //can be "jwk" (public or private), "spki" (public only), or "pkcs8" (private only)
     {   //this is an example jwk key, other key types are Uint8Array objects
         kty: "RSA",
         e: "AQAB",
@@ -368,7 +368,7 @@ window.crypto.subtle.importKey(
 ####RSA-OAEP - exportKey
 ```javascript
 window.crypto.subtle.exportKey(
-    "jwk", //can be "jwk", "spki", or "pkcs8"
+    "jwk", //can be "jwk" (public or private), "spki" (public only), or "pkcs8" (private only)
     publicKey //can be a publicKey or privateKey, as long as extractable was true
 )
 .then(function(keydata){
@@ -440,7 +440,7 @@ window.crypto.subtle.generateKey(
 ####ECDSA - importKey
 ```javascript
 window.crypto.subtle.importKey(
-    "jwk", //can be "jwk", "spki", or "pkcs8"
+    "jwk", //can be "jwk" (public or private), "spki" (public only), or "pkcs8" (private only)
     {   //this is an example jwk key, other key types are Uint8Array objects
         kty: "EC",
         crv: "P-256",
@@ -466,7 +466,7 @@ window.crypto.subtle.importKey(
 ####ECDSA - exportKey
 ```javascript
 window.crypto.subtle.exportKey(
-    "jwk", //can be "jwk", "spki", or "pkcs8"
+    "jwk", //can be "jwk" (public or private), "spki" (public only), or "pkcs8" (private only)
     publicKey //can be a publicKey or privateKey, as long as extractable was true
 )
 .then(function(keydata){
@@ -539,7 +539,7 @@ window.crypto.subtle.generateKey(
 ####ECDH - importKey
 ```javascript
 window.crypto.subtle.importKey(
-    "jwk", //can be "jwk", "spki", "pkcs8", or "raw"
+    "jwk", //can be "jwk" (public or private), "raw" (public only), "spki" (public only), or "pkcs8" (private only)
     {   //this is an example jwk key, other key types are Uint8Array objects
         kty: "EC",
         crv: "P-256",
@@ -555,7 +555,7 @@ window.crypto.subtle.importKey(
     ["deriveKey", "deriveBits"] //can be any combination of "deriveKey" and "deriveBits"
 )
 .then(function(publicKey){
-    //returns a publicKey (private keys cannot be imported)
+    //returns a publicKey (or privateKey if you are importing a private key)
     console.log(publicKey);
 })
 .catch(function(err){
@@ -565,11 +565,11 @@ window.crypto.subtle.importKey(
 ####ECDH - exportKey
 ```javascript
 window.crypto.subtle.exportKey(
-    "jwk", //can be "jwk", "spki", "pkcs8", or "raw"
-    publicKey //public key (private keys cannot be exported)
+    "jwk", //can be "jwk" (public or private), "raw" (public only), "spki" (public only), or "pkcs8" (private only)
+    publicKey //can be a publicKey or privateKey, as long as extractable was true
 )
 .then(function(keydata){
-    //returns the exported public key data
+    //returns the exported key data
     console.log(keydata);
 })
 .catch(function(err){
@@ -1299,7 +1299,7 @@ window.crypto.subtle.generateKey(
 ####DH - importKey
 ```javascript
 window.crypto.subtle.importKey(
-    "raw", //can be "spki", "pkcs8", or "raw"
+    "raw", //can be "raw" (public only), "spki" (public only), or "pkcs8" (private only)
     new Uint8Array([ //this is an example raw key, "raw" would be an ArrayBuffer
         203,25,0,203,43,75,46,159,217,37,185,181,25,220,71,187,112,195,251,233,152,56,206,
         93,18,96,87,132,17,113,166,110,123,190,194,168,100,147,21,174,131,80,8,247,125,35,
@@ -1332,7 +1332,7 @@ window.crypto.subtle.importKey(
     ["deriveKey", "deriveBits"] //can be any combination of "deriveKey" and "deriveBits"
 )
 .then(function(publicKey){
-    //returns a publicKey (private keys cannot be imported)
+    //returns a publicKey (or privateKey if you are importing a private key)
     console.log(publicKey);
 })
 .catch(function(err){
@@ -1342,11 +1342,11 @@ window.crypto.subtle.importKey(
 ####DH - exportKey
 ```javascript
 window.crypto.subtle.exportKey(
-    "jwk", //can be "spki", "pkcs8", or "raw"
-    publicKey //public key (private keys cannot be exported)
+    "jwk", //can be "raw" (public or private), "spki" (public only), or "pkcs8" (private only)
+    publicKey //can be a publicKey or privateKey, as long as extractable was true
 )
 .then(function(keydata){
-    //returns the exported public key data
+    //returns the exported key data
     console.log(keydata);
 })
 .catch(function(err){

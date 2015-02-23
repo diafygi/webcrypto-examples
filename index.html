@@ -228,15 +228,7 @@
                         .then(ok("rsassa-pkcs1", "importKey", "spki-pub"))
                         .catch(err("rsassa-pkcs1", "importKey", "spki-pub"));
 
-                        window.crypto.subtle.importKey("spki", null, RSASSA, false, ["sign"])
-                        .then(ok("rsassa-pkcs1", "importKey", "spki-priv"))
-                        .catch(err("rsassa-pkcs1", "importKey", "spki-priv*"));
-
                         //pkcs8
-                        window.crypto.subtle.importKey("pkcs8", null, RSASSA, false, ["verify"])
-                        .then(ok("rsassa-pkcs1", "importKey", "pkcs8-pub"))
-                        .catch(err("rsassa-pkcs1", "importKey", "pkcs8-pub*"));
-
                         window.crypto.subtle.importKey("pkcs8", new Uint8Array([
                             48,130,2,118,2,1,0,48,13,6,9,42,134,72,134,247,13,1,1,1,5,0,4,130,2,96,48,130,2,92,2,1,0,2,129,
                             129,0,217,78,147,218,221,152,10,66,75,127,242,108,182,142,157,44,93,58,176,193,135,103,216,179,
@@ -286,15 +278,7 @@
                             .then(ok("rsassa-pkcs1", "exportKey", "spki-pub"))
                             .catch(err("rsassa-pkcs1", "exportKey", "spki-pub"));
 
-                            window.crypto.subtle.exportKey("spki", key.privateKey)
-                            .then(ok("rsassa-pkcs1", "exportKey", "spki-priv"))
-                            .catch(err("rsassa-pkcs1", "exportKey", "spki-priv"));
-
                             //pkcs8
-                            window.crypto.subtle.exportKey("pkcs8", key.publicKey)
-                            .then(ok("rsassa-pkcs1", "exportKey", "pkcs8-pub"))
-                            .catch(err("rsassa-pkcs1", "exportKey", "pkcs8-pub"));
-
                             window.crypto.subtle.exportKey("pkcs8", key.privateKey)
                             .then(ok("rsassa-pkcs1", "exportKey", "pkcs8-priv"))
                             .catch(err("rsassa-pkcs1", "exportKey", "pkcs8-priv"));
@@ -446,15 +430,7 @@
                         .then(ok("rsa-pss", "importKey", "spki-pub"))
                         .catch(err("rsa-pss", "importKey", "spki-pub"));
 
-                        window.crypto.subtle.importKey("spki", null, RSAPSS, false, ["sign"])
-                        .then(ok("rsa-pss", "importKey", "spki-priv"))
-                        .catch(err("rsa-pss", "importKey", "spki-priv*"));
-
                         //pkcs8
-                        window.crypto.subtle.importKey("pkcs8", null, RSAPSS, false, ["verify"])
-                        .then(ok("rsa-pss", "importKey", "pkcs8-pub"))
-                        .catch(err("rsa-pss", "importKey", "pkcs8-pub*"));
-
                         window.crypto.subtle.importKey("pkcs8", new Uint8Array([
                             48,130,2,119,2,1,0,48,13,6,9,42,134,72,134,247,13,1,1,1,5,0,4,130,2,97,48,130,2,93,2,1,0,
                             2,129,129,0,180,31,227,200,37,227,65,238,23,91,226,130,51,32,165,245,1,24,244,5,184,42,181,
@@ -506,15 +482,7 @@
                             .then(ok("rsa-pss", "exportKey", "spki-pub"))
                             .catch(err("rsa-pss", "exportKey", "spki-pub"));
 
-                            window.crypto.subtle.exportKey("spki", key.privateKey)
-                            .then(ok("rsa-pss", "exportKey", "spki-priv"))
-                            .catch(err("rsa-pss", "exportKey", "spki-priv"));
-
                             //pkcs8
-                            window.crypto.subtle.exportKey("pkcs8", key.publicKey)
-                            .then(ok("rsa-pss", "exportKey", "pkcs8-pub"))
-                            .catch(err("rsa-pss", "exportKey", "pkcs8-pub"));
-
                             window.crypto.subtle.exportKey("pkcs8", key.privateKey)
                             .then(ok("rsa-pss", "exportKey", "pkcs8-priv"))
                             .catch(err("rsa-pss", "exportKey", "pkcs8-priv"));
@@ -663,15 +631,7 @@
                         .then(ok("rsa-oaep", "importKey", "spki-pub"))
                         .catch(err("rsa-oaep", "importKey", "spki-pub"));
 
-                        window.crypto.subtle.importKey("spki", null, RSAOAEP, false, ["decrypt"])
-                        .then(ok("rsa-oaep", "importKey", "spki-priv"))
-                        .catch(err("rsa-oaep", "importKey", "spki-priv*"));
-
                         //pkcs8
-                        window.crypto.subtle.importKey("pkcs8", null, RSAOAEP, false, ["encrypt"])
-                        .then(ok("rsa-oaep", "importKey", "pkcs8-pub"))
-                        .catch(err("rsa-oaep", "importKey", "pkcs8-pub*"));
-
                         window.crypto.subtle.importKey("pkcs8", new Uint8Array([
                             48,130,2,118,2,1,0,48,13,6,9,42,134,72,134,247,13,1,1,1,5,0,4,130,2,96,48,130,2,92,2,1,0,2,129,
                             129,0,217,78,147,218,221,152,10,66,75,127,242,108,182,142,157,44,93,58,176,193,135,103,216,179,
@@ -721,15 +681,7 @@
                             .then(ok("rsa-oaep", "exportKey", "spki-pub"))
                             .catch(err("rsa-oaep", "exportKey", "spki-pub"));
 
-                            window.crypto.subtle.exportKey("spki", key.privateKey)
-                            .then(ok("rsa-oaep", "exportKey", "spki-priv"))
-                            .catch(err("rsa-oaep", "exportKey", "spki-priv"));
-
                             //pkcs8
-                            window.crypto.subtle.exportKey("pkcs8", key.publicKey)
-                            .then(ok("rsa-oaep", "exportKey", "pkcs8-pub"))
-                            .catch(err("rsa-oaep", "exportKey", "pkcs8-pub"));
-
                             window.crypto.subtle.exportKey("pkcs8", key.privateKey)
                             .then(ok("rsa-oaep", "exportKey", "pkcs8-priv"))
                             .catch(err("rsa-oaep", "exportKey", "pkcs8-priv"));
@@ -831,9 +783,16 @@
                         .then(ok("ecdsa", "importKey", "jwk-pub"))
                         .catch(err("ecdsa", "importKey", "jwk-pub"));
 
-                        window.crypto.subtle.importKey("jwk", null, ECDSA, false, ["sign"])
+                        window.crypto.subtle.importKey("jwk", {
+                            kty: "EC",
+                            crv: "P-256",
+                            x: "zCQ5BPHPCLZYgdpo1n-x_90P2Ij52d53YVwTh3ZdiMo",
+                            y: "pDfQTUx0-OiZc5ZuKMcA7v2Q7ZPKsQwzB58bft0JTko",
+                            d: "MTIzNDU2Nzg5MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTI",
+                            ext: true,
+                        }, ECDSA, false, ["sign"])
                         .then(ok("ecdsa", "importKey", "jwk-priv"))
-                        .catch(err("ecdsa", "importKey", "jwk-priv*"));
+                        .catch(err("ecdsa", "importKey", "jwk-priv"));
 
                         //spki
                         window.crypto.subtle.importKey("spki", new Uint8Array([
@@ -846,15 +805,7 @@
                         .then(ok("ecdsa", "importKey", "spki-pub"))
                         .catch(err("ecdsa", "importKey", "spki-pub*"));
 
-                        window.crypto.subtle.importKey("spki", null, ECDSA, false, ["sign"])
-                        .then(ok("ecdsa", "importKey", "spki-priv"))
-                        .catch(err("ecdsa", "importKey", "spki-priv*"));
-
                         //pkcs8
-                        window.crypto.subtle.importKey("pkcs8", null, ECDSA, false, ["verify"])
-                        .then(ok("ecdsa", "importKey", "pkcs8-pub"))
-                        .catch(err("ecdsa", "importKey", "pkcs8-pub*"));
-
                         window.crypto.subtle.importKey("pkcs8", null, ECDSA, false, ["sign"])
                         .then(ok("ecdsa", "importKey", "pkcs8-priv"))
                         .catch(err("ecdsa", "importKey", "pkcs8-priv*"));
@@ -880,15 +831,7 @@
                             .then(ok("ecdsa", "exportKey", "spki-pub"))
                             .catch(err("ecdsa", "exportKey", "spki-pub"));
 
-                            window.crypto.subtle.exportKey("spki", key.privateKey)
-                            .then(ok("ecdsa", "exportKey", "spki-priv"))
-                            .catch(err("ecdsa", "exportKey", "spki-priv"));
-
                             //pkcs8
-                            window.crypto.subtle.exportKey("pkcs8", key.publicKey)
-                            .then(ok("ecdsa", "exportKey", "pkcs8-pub"))
-                            .catch(err("ecdsa", "exportKey", "pkcs8-pub"));
-
                             window.crypto.subtle.exportKey("pkcs8", key.privateKey)
                             .then(ok("ecdsa", "exportKey", "pkcs8-priv"))
                             .catch(err("ecdsa", "exportKey", "pkcs8-priv"));
@@ -1007,6 +950,17 @@
                         .then(ok("ecdh", "importKey", "jwk-pub"))
                         .catch(err("ecdh", "importKey", "jwk-pub"));
 
+                        window.crypto.subtle.importKey("jwk", {
+                            kty: "EC",
+                            crv: "P-256",
+                            x: "zCQ5BPHPCLZYgdpo1n-x_90P2Ij52d53YVwTh3ZdiMo",
+                            y: "pDfQTUx0-OiZc5ZuKMcA7v2Q7ZPKsQwzB58bft0JTko",
+                            d: "MTIzNDU2Nzg5MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTI",
+                            ext: true,
+                        }, ECDH, false, ["deriveBits", "deriveKey"])
+                        .then(ok("ecdh", "importKey", "jwk-priv"))
+                        .catch(err("ecdh", "importKey", "jwk-priv"));
+
                         //raw
                         window.crypto.subtle.importKey("raw", null, ECDH, false, ["deriveBits", "deriveKey"])
                         .then(ok("ecdh", "importKey", "raw-pub"))
@@ -1025,8 +979,8 @@
 
                         //pkcs8
                         window.crypto.subtle.importKey("pkcs8", null, ECDH, false, ["deriveBits", "deriveKey"])
-                        .then(ok("ecdh", "importKey", "pkcs8-pub"))
-                        .catch(err("ecdh", "importKey", "pkcs8-pub*"));
+                        .then(ok("ecdh", "importKey", "pkcs8-priv"))
+                        .catch(err("ecdh", "importKey", "pkcs8-priv*"));
                     </script>
                 </td>
                 <td class="exportKey">
@@ -1040,6 +994,10 @@
                             .then(ok("ecdh", "exportKey", "jwk-pub"))
                             .catch(err("ecdh", "exportKey", "jwk-pub"));
 
+                            window.crypto.subtle.exportKey("jwk", key.privateKey)
+                            .then(ok("ecdh", "exportKey", "jwk-priv"))
+                            .catch(err("ecdh", "exportKey", "jwk-priv"));
+
                             //raw
                             window.crypto.subtle.exportKey("raw", key.publicKey)
                             .then(ok("ecdh", "exportKey", "raw-pub"))
@@ -1051,9 +1009,9 @@
                             .catch(err("ecdh", "exportKey", "spki-pub"));
 
                             //pkcs8
-                            window.crypto.subtle.exportKey("pkcs8", key.publicKey)
-                            .then(ok("ecdh", "exportKey", "pkcs8-pub"))
-                            .catch(err("ecdh", "exportKey", "pkcs8-pub"));
+                            window.crypto.subtle.exportKey("pkcs8", key.privateKey)
+                            .then(ok("ecdh", "exportKey", "pkcs8-priv"))
+                            .catch(err("ecdh", "exportKey", "pkcs8-priv"));
 
                         })
                         .catch(err("ecdh", "exportKey", "N/A"));
@@ -2085,8 +2043,8 @@
 
                         //pkcs8
                         window.crypto.subtle.importKey("pkcs8", null, DH, false, ["deriveBits", "deriveKey"])
-                        .then(ok("dh", "importKey", "pkcs8-pub"))
-                        .catch(err("dh", "importKey", "pkcs8-pub*"));
+                        .then(ok("dh", "importKey", "pkcs8-priv"))
+                        .catch(err("dh", "importKey", "pkcs8-priv*"));
                     </script>
                 </td>
                 <td class="exportKey">
@@ -2100,15 +2058,19 @@
                             .then(ok("dh", "exportKey", "raw-pub"))
                             .catch(err("dh", "exportKey", "raw-pub"));
 
+                            window.crypto.subtle.exportKey("raw", key.privateKey)
+                            .then(ok("dh", "exportKey", "raw-priv"))
+                            .catch(err("dh", "exportKey", "raw-priv"));
+
                             //spki
                             window.crypto.subtle.exportKey("spki", key.publicKey)
                             .then(ok("dh", "exportKey", "spki-pub"))
                             .catch(err("dh", "exportKey", "spki-pub"));
 
                             //pkcs8
-                            window.crypto.subtle.exportKey("pkcs8", key.publicKey)
-                            .then(ok("dh", "exportKey", "pkcs8-pub"))
-                            .catch(err("dh", "exportKey", "pkcs8-pub"));
+                            window.crypto.subtle.exportKey("pkcs8", key.privateKey)
+                            .then(ok("dh", "exportKey", "pkcs8-priv"))
+                            .catch(err("dh", "exportKey", "pkcs8-priv"));
 
                         })
                         .catch(err("dh", "exportKey", "N/A"));
