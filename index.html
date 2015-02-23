@@ -405,18 +405,46 @@
                         //importKey
 
                         //jwk
-                        window.crypto.subtle.importKey("jwk", null, RSAPSS, false, ["verify"])
+                        window.crypto.subtle.importKey("jwk", {
+                            kty: "RSA",
+                            e: "AQAB",
+                            n: "vGO3eU16ag9zRkJ4AK8ZUZrjbtp5xWK0LyFMNT8933evJoHeczexMUzSiXaLrEFSyQZortk81zJH3y41MBO_UFDO_X0crAquNrkjZDrf9Scc5-MdxlWU2Jl7Gc4Z18AC9aNibWVmXhgvHYkEoFdLCFG-2Sq-qIyW4KFkjan05IE",
+                            alg: "PS256",
+                            ext: true,
+                        }, RSAPSS, false, ["verify"])
                         .then(ok("rsa-pss", "importKey", "jwk-pub"))
-                        .catch(err("rsa-pss", "importKey", "jwk-pub*"));
+                        .catch(err("rsa-pss", "importKey", "jwk-pub"));
 
-                        window.crypto.subtle.importKey("jwk", null, RSAPSS, false, ["sign"])
+                        window.crypto.subtle.importKey("jwk", {
+                            kty: "RSA",
+                            e: "AQAB",
+                            d: "n_dIVw9MD_04lANi5KnKJPoRfxKy7cGHYLG0hU5DGpsFNfx2yH0Uz9j8uU7ZARai1iHECBxcxhpi3wbckQtjmbkCUKvs4G0gKLT9UuNHcCbh0WfvadfPPec52n4z6s4zwisbgWCNbT2L-SyHt1yuFmLAYXkg0swk3y5Bt_ilA8E",
+                            dp: "2RNM_uiYEQMcATQaUu3AwdeJpenCPykbQHkwAylvXqlHB6W7m5XX0k-SutkbXAijmGTC-Oh8NexsLGHxOACb8Q",
+                            dq: "rHabkI3_XVGieLqHujpWaWe9YD03fJY0KbbQX0fIoNdNU4GcmUftzIWLSajPKKsiyfR6Xk2AEtBmBPE5qaoV6Q",
+                            n: "vGO3eU16ag9zRkJ4AK8ZUZrjbtp5xWK0LyFMNT8933evJoHeczexMUzSiXaLrEFSyQZortk81zJH3y41MBO_UFDO_X0crAquNrkjZDrf9Scc5-MdxlWU2Jl7Gc4Z18AC9aNibWVmXhgvHYkEoFdLCFG-2Sq-qIyW4KFkjan05IE",
+                            p: "5Y4ynodegqC9kgGmfZeSrojGmLyYR8HIvKVEAIjjMUQjyvKWpWsXfPg67mTdqVpjSpQLQlRfES2nUvZ27KrU6Q",
+                            q: "0hd_U9PcNpMe77nhsTgoVNgMB34cqfrfu4fPuJ-7NvvMkKIELDLy-m8qg1MBbgf2i5546A9B5Exsuj4D2Vwz2Q",
+                            qi: "R3CkCGVAESy_hChmDvUaLMT-R1xk6kK7RLIUQKXATPQbnDqWBMgm-vcawFVhKJ-ICJsPfmRUsv7Wt1bJ01wLGQ",
+                            alg: "PS256",
+                            ext: true,
+                        }, RSAPSS, false, ["sign"])
                         .then(ok("rsa-pss", "importKey", "jwk-priv"))
-                        .catch(err("rsa-pss", "importKey", "jwk-priv*"));
+                        .catch(err("rsa-pss", "importKey", "jwk-priv"));
 
                         //spki
-                        window.crypto.subtle.importKey("spki", null, RSAPSS, false, ["verify"])
+                        window.crypto.subtle.importKey("spki", new Uint8Array([
+                            48,129,159,48,13,6,9,42,134,72,134,247,13,1,1,1,5,0,3,129,141,0,
+                            48,129,137,2,129,129,0,180,31,227,200,37,227,65,238,23,91,226,130,
+                            51,32,165,245,1,24,244,5,184,42,181,155,23,142,249,220,222,131,
+                            175,54,117,135,64,232,120,90,160,221,18,31,200,41,23,174,18,172,
+                            247,166,90,37,156,229,2,70,169,165,93,246,120,117,59,202,3,102,
+                            44,119,154,54,28,198,111,39,144,73,69,251,179,74,41,215,115,186,
+                            124,200,105,75,104,158,156,158,238,214,14,81,95,130,155,146,114,
+                            125,88,158,212,44,65,236,228,194,105,96,211,155,60,71,134,90,151,
+                            202,68,20,228,105,249,202,170,155,2,3,1,0,1
+                        ]), RSAPSS, false, ["verify"])
                         .then(ok("rsa-pss", "importKey", "spki-pub"))
-                        .catch(err("rsa-pss", "importKey", "spki-pub*"));
+                        .catch(err("rsa-pss", "importKey", "spki-pub"));
 
                         window.crypto.subtle.importKey("spki", null, RSAPSS, false, ["sign"])
                         .then(ok("rsa-pss", "importKey", "spki-priv"))
@@ -427,9 +455,35 @@
                         .then(ok("rsa-pss", "importKey", "pkcs8-pub"))
                         .catch(err("rsa-pss", "importKey", "pkcs8-pub*"));
 
-                        window.crypto.subtle.importKey("pkcs8", null, RSAPSS, false, ["sign"])
+                        window.crypto.subtle.importKey("pkcs8", new Uint8Array([
+                            48,130,2,119,2,1,0,48,13,6,9,42,134,72,134,247,13,1,1,1,5,0,4,130,2,97,48,130,2,93,2,1,0,
+                            2,129,129,0,180,31,227,200,37,227,65,238,23,91,226,130,51,32,165,245,1,24,244,5,184,42,181,
+                            155,23,142,249,220,222,131,175,54,117,135,64,232,120,90,160,221,18,31,200,41,23,174,18,172,
+                            247,166,90,37,156,229,2,70,169,165,93,246,120,117,59,202,3,102,44,119,154,54,28,198,111,39,
+                            144,73,69,251,179,74,41,215,115,186,124,200,105,75,104,158,156,158,238,214,14,81,95,130,
+                            155,146,114,125,88,158,212,44,65,236,228,194,105,96,211,155,60,71,134,90,151,202,68,20,228,
+                            105,249,202,170,155,2,3,1,0,1,2,129,128,102,251,236,161,220,119,168,148,86,42,164,192,200,
+                            54,156,108,14,42,148,42,72,247,178,73,112,24,192,230,245,25,217,45,139,216,190,213,171,42,
+                            53,218,239,167,216,43,22,108,226,36,158,155,47,227,93,102,217,252,72,182,81,152,191,154,87,
+                            137,219,194,236,53,200,123,61,10,59,231,41,18,116,77,148,50,170,116,221,110,170,190,158,108,
+                            217,38,73,84,183,51,122,179,217,143,255,87,82,80,223,188,84,134,146,150,169,64,30,168,104,8,
+                            123,162,46,59,47,232,0,35,202,42,195,141,6,1,2,65,0,237,171,148,110,241,19,152,216,206,77,
+                            109,215,21,144,110,96,34,61,46,214,148,70,238,119,206,128,32,24,136,197,185,254,209,35,235,
+                            231,122,246,167,183,117,176,51,133,169,47,130,178,40,225,145,219,48,56,21,46,198,18,85,218,
+                            194,150,141,27,2,65,0,194,4,41,152,43,246,147,7,229,244,215,110,143,7,184,187,22,166,113,217,
+                            81,52,205,54,73,202,244,24,24,219,254,243,230,230,212,172,225,218,112,95,118,103,144,223,248,
+                            164,19,228,204,204,64,91,76,77,4,206,89,173,154,162,134,113,176,129,2,64,58,4,78,97,158,155,
+                            200,13,244,158,86,23,208,253,198,211,212,199,214,173,46,216,249,209,105,41,65,172,123,134,184,
+                            214,137,59,25,149,18,33,47,227,202,232,206,74,236,119,218,145,159,5,33,83,190,59,146,128,46,
+                            125,191,83,125,120,190,205,2,65,0,134,6,204,25,20,29,180,250,90,207,229,214,185,53,211,86,98,
+                            210,62,137,170,128,120,86,205,105,71,112,50,20,31,174,171,206,192,18,97,191,61,171,164,166,
+                            236,188,220,13,180,180,117,9,144,87,193,128,223,22,17,123,76,252,131,53,156,129,2,65,0,178,29,
+                            141,176,179,203,180,190,224,34,134,226,151,73,139,163,47,17,179,117,167,200,255,174,67,114,
+                            158,96,195,176,163,241,96,24,72,35,38,18,132,176,76,235,8,29,225,138,155,191,97,158,3,22,114,
+                            133,176,213,207,120,33,55,52,135,79,161
+                        ]), RSAPSS, false, ["sign"])
                         .then(ok("rsa-pss", "importKey", "pkcs8-priv"))
-                        .catch(err("rsa-pss", "importKey", "pkcs8-priv*"));
+                        .catch(err("rsa-pss", "importKey", "pkcs8-priv"));
                     </script>
                 </td>
                 <td class="exportKey">
