@@ -320,6 +320,7 @@
                     modulusLength: 1024,
                     publicExponent: new Uint8Array([0x01, 0x00, 0x01]),
                     saltLength: 8,
+                    hash: {name: "SHA-256"},
                 }
             </script>
             <tr id="rsa-pss">
@@ -367,6 +368,7 @@
                                 modulusLength: 1024,
                                 publicExponent: new Uint8Array([0x01, 0x00, 0x01]),
                                 saltLength: 8,
+                                hash: {name: "SHA-256"},
                             }, false, ["sign", "verify"])
                             .then(ok("rsa-pss", "generateKey", "1024 bits"))
                             .catch(err("rsa-pss", "generateKey", "1024 bits"));
@@ -377,6 +379,7 @@
                                 modulusLength: 2048,
                                 publicExponent: new Uint8Array([0x01, 0x00, 0x01]),
                                 saltLength: 8,
+                                hash: {name: "SHA-256"},
                             }, false, ["sign", "verify"])
                             .then(ok("rsa-pss", "generateKey", "2048 bits"))
                             .catch(err("rsa-pss", "generateKey", "2048 bits"));
@@ -387,6 +390,7 @@
                                 modulusLength: 4096,
                                 publicExponent: new Uint8Array([0x01, 0x00, 0x01]),
                                 saltLength: 8,
+                                hash: {name: "SHA-256"},
                             }, false, ["sign", "verify"])
                             .then(ok("rsa-pss", "generateKey", "4096 bits"))
                             .catch(err("rsa-pss", "generateKey", "4096 bits"));
