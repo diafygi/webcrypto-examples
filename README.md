@@ -543,8 +543,9 @@ window.crypto.subtle.importKey(
     {   //this is an example jwk key, other key types are Uint8Array objects
         kty: "EC",
         crv: "P-256",
-        x: "zCQ5BPHPCLZYgdpo1n-x_90P2Ij52d53YVwTh3ZdiMo",
-        y: "pDfQTUx0-OiZc5ZuKMcA7v2Q7ZPKsQwzB58bft0JTko",
+        x: "kgR_PqO07L8sZOBbw6rvv7O_f7clqDeiE3WnMkb5EoI",
+        y: "djI-XqCqSyO9GFk_QT_stROMCAROIvU8KOORBgQUemE",
+        d: "5aPFSt0UFVXYGu-ZKyC9FQIUOAMmnjzdIwkxCMe3Iok",
         ext: true,
     },
     {   //these are the algorithm options
@@ -552,11 +553,11 @@ window.crypto.subtle.importKey(
         namedCurve: "P-256", //can be "P-256", "P-384", or "P-521"
     },
     false, //whether the key is extractable (i.e. can be used in exportKey)
-    ["deriveKey", "deriveBits"] //"deriveKey" and/or "deriveBits" for private keys only
+    ["deriveKey", "deriveBits"] //"deriveKey" and/or "deriveBits" for private keys only (just put an empty list if importing a public key)
 )
-.then(function(publicKey){
-    //returns a publicKey (or privateKey if you are importing a private key)
-    console.log(publicKey);
+.then(function(privateKey){
+    //returns a privateKey (or publicKey if you are importing a public key)
+    console.log(privateKey);
 })
 .catch(function(err){
     console.error(err);
@@ -1329,7 +1330,7 @@ window.crypto.subtle.importKey(
         generator: new Uint8Array([2]),
     },
     false, //whether the key is extractable (i.e. can be used in exportKey)
-    ["deriveKey", "deriveBits"] //"deriveKey" and/or "deriveBits" for private keys only
+    [] //use ["deriveKey", "deriveBits"] if importing a private key
 )
 .then(function(publicKey){
     //returns a publicKey (or privateKey if you are importing a private key)
