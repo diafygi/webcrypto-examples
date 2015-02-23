@@ -16,10 +16,10 @@
     Written by Daniel Roesler
     License: GPLv2
     Pull requests welcome!
-    https://github.com/diafygi/webcrypto-chart
+    https://github.com/diafygi/webcrypto-examples
     -->
     <head>
-        <title>WebCryptoAPI Live Chart</title>
+        <title>WebCryptoAPI Live Table</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <style>
             body{font-family:sans-serif;}
@@ -64,10 +64,10 @@
         </script>
     </head>
     <body>
-        <h1>Web Cryptography API Live Chart</h1>
+        <h1>Web Cryptography API Live Table</h1>
         <p>
-            This chart tests your browser to see which parts of WebCrypto you
-            support right now! Safe crypto in the browser is now a reality :)
+            This table is live! Every ✓ or ✗ on this page is a test to see if
+            your browser supports that method in <a href="http://www.w3.org/TR/WebCryptoAPI/" target="_blank">WebCryptoAPI</a>.
         </p>
         <p>
             Source code and examples:
@@ -176,7 +176,7 @@
                             .then(ok("rsassa-pkcs1", "generateKey", "4096 bits"))
                             .catch(err("rsassa-pkcs1", "generateKey", "4096 bits"));
 
-                        }
+                        };
                     </script>
                 </td>
                 <td class="deriveKey disabled"></td>
@@ -391,7 +391,7 @@
                             .then(ok("rsa-pss", "generateKey", "4096 bits"))
                             .catch(err("rsa-pss", "generateKey", "4096 bits"));
 
-                        }
+                        };
                     </script>
                 </td>
                 <td class="deriveKey disabled"></td>
@@ -553,7 +553,7 @@
                             .then(ok("rsa-oaep", "generateKey", "4096 bits"))
                             .catch(err("rsa-oaep", "generateKey", "4096 bits"));
 
-                        }
+                        };
                     </script>
                 </td>
                 <td class="deriveKey disabled"></td>
@@ -902,7 +902,7 @@
                                     "name": "ECDH",
                                     "namedCurve": "P-256",
                                     "public": key2.publicKey,
-                                }, key1.privateKey, ECDH, false, ["deriveBits", "deriveKey"])
+                                }, key1.privateKey, AESCBC, false, ["encrypt", "decrypt"])
                                 .then(ok("ecdh", "deriveKey", "Yes"))
                                 .catch(err("ecdh", "deriveKey", "No"));
 
@@ -949,18 +949,10 @@
                         .then(ok("ecdh", "importKey", "jwk-pub"))
                         .catch(err("ecdh", "importKey", "jwk-pub"));
 
-                        window.crypto.subtle.importKey("jwk", null, ECDH, false, ["deriveBits", "deriveKey"])
-                        .then(ok("ecdh", "importKey", "jwk-priv"))
-                        .catch(err("ecdh", "importKey", "jwk-priv*"));
-
                         //raw
                         window.crypto.subtle.importKey("raw", null, ECDH, false, ["deriveBits", "deriveKey"])
                         .then(ok("ecdh", "importKey", "raw-pub"))
                         .catch(err("ecdh", "importKey", "raw-pub*"));
-
-                        window.crypto.subtle.importKey("raw", null, ECDH, false, ["deriveBits", "deriveKey"])
-                        .then(ok("ecdh", "importKey", "raw-priv"))
-                        .catch(err("ecdh", "importKey", "raw-priv*"));
 
                         //spki
                         window.crypto.subtle.importKey("spki", new Uint8Array([
@@ -973,18 +965,10 @@
                         .then(ok("ecdh", "importKey", "spki-pub"))
                         .catch(err("ecdh", "importKey", "spki-pub"));
 
-                        window.crypto.subtle.importKey("spki", null, ECDH, false, ["deriveBits", "deriveKey"])
-                        .then(ok("ecdh", "importKey", "spki-priv"))
-                        .catch(err("ecdh", "importKey", "spki-priv*"));
-
                         //pkcs8
                         window.crypto.subtle.importKey("pkcs8", null, ECDH, false, ["deriveBits", "deriveKey"])
                         .then(ok("ecdh", "importKey", "pkcs8-pub"))
                         .catch(err("ecdh", "importKey", "pkcs8-pub*"));
-
-                        window.crypto.subtle.importKey("pkcs8", null, ECDH, false, ["deriveBits", "deriveKey"])
-                        .then(ok("ecdh", "importKey", "pkcs8-priv"))
-                        .catch(err("ecdh", "importKey", "pkcs8-priv*"));
                     </script>
                 </td>
                 <td class="exportKey">
@@ -998,36 +982,20 @@
                             .then(ok("ecdh", "exportKey", "jwk-pub"))
                             .catch(err("ecdh", "exportKey", "jwk-pub"));
 
-                            window.crypto.subtle.exportKey("jwk", key.privateKey)
-                            .then(ok("ecdh", "exportKey", "jwk-priv"))
-                            .catch(err("ecdh", "exportKey", "jwk-priv"));
-
                             //raw
                             window.crypto.subtle.exportKey("raw", key.publicKey)
                             .then(ok("ecdh", "exportKey", "raw-pub"))
                             .catch(err("ecdh", "exportKey", "raw-pub"));
-
-                            window.crypto.subtle.exportKey("raw", key.privateKey)
-                            .then(ok("ecdh", "exportKey", "raw-priv"))
-                            .catch(err("ecdh", "exportKey", "raw-priv"));
 
                             //spki
                             window.crypto.subtle.exportKey("spki", key.publicKey)
                             .then(ok("ecdh", "exportKey", "spki-pub"))
                             .catch(err("ecdh", "exportKey", "spki-pub"));
 
-                            window.crypto.subtle.exportKey("spki", key.privateKey)
-                            .then(ok("ecdh", "exportKey", "spki-priv"))
-                            .catch(err("ecdh", "exportKey", "spki-priv"));
-
                             //pkcs8
                             window.crypto.subtle.exportKey("pkcs8", key.publicKey)
                             .then(ok("ecdh", "exportKey", "pkcs8-pub"))
                             .catch(err("ecdh", "exportKey", "pkcs8-pub"));
-
-                            window.crypto.subtle.exportKey("pkcs8", key.privateKey)
-                            .then(ok("ecdh", "exportKey", "pkcs8-priv"))
-                            .catch(err("ecdh", "exportKey", "pkcs8-priv"));
 
                         })
                         .catch(err("ecdh", "exportKey", "N/A"));
@@ -1546,7 +1514,7 @@
             <script>
                 //Base algorithm for testing
                 window.AESCFB = {
-                    name: "AES-CFB",
+                    name: "AES-CFB-8",
                     length: 256,
                 }
             </script>
@@ -1558,7 +1526,7 @@
                         window.crypto.subtle.generateKey(AESCFB, false, ["encrypt"])
                         .then(function(key){
                             return window.crypto.subtle.encrypt({
-                                name: "AES-CFB",
+                                name: "AES-CFB-8",
                                 iv: window.crypto.getRandomValues(new Uint8Array(16)),
                             }, key, TESTBYTES);
                         })
@@ -1573,12 +1541,12 @@
                         .then(function(key){
                             var iv = window.crypto.getRandomValues(new Uint8Array(16));
                             window.crypto.subtle.encrypt({
-                                name: "AES-CFB",
+                                name: "AES-CFB-8",
                                 iv: iv,
                             }, key, TESTBYTES)
                             .then(function(encrypted){
                                 return window.crypto.subtle.decrypt({
-                                    name: "AES-CFB",
+                                    name: "AES-CFB-8",
                                     iv: iv,
                                 }, key, encrypted);
                             })
@@ -1597,7 +1565,7 @@
 
                         //128 bits
                         window.crypto.subtle.generateKey({
-                            name: "AES-CFB",
+                            name: "AES-CFB-8",
                             length: 128,
                         }, false, ["encrypt", "decrypt"])
                         .then(ok("aes-cfb", "generateKey", "128 bits"))
@@ -1605,7 +1573,7 @@
 
                         //192 bits
                         window.crypto.subtle.generateKey({
-                            name: "AES-CFB",
+                            name: "AES-CFB-8",
                             length: 192,
                         }, false, ["encrypt", "decrypt"])
                         .then(ok("aes-cfb", "generateKey", "192 bits"))
@@ -1613,7 +1581,7 @@
 
                         //256 bits
                         window.crypto.subtle.generateKey({
-                            name: "AES-CFB",
+                            name: "AES-CFB-8",
                             length: 256,
                         }, false, ["encrypt", "decrypt"])
                         .then(ok("aes-cfb", "generateKey", "256 bits"))
@@ -1765,7 +1733,6 @@
                 //Base algorithm for testing
                 window.HMAC = {
                     name: "HMAC",
-                    length: 256,
                     hash: {name: "SHA-256"},
                 }
             </script>
@@ -1807,7 +1774,6 @@
                         //sha-1
                         window.crypto.subtle.generateKey({
                             name: "HMAC",
-                            length: 256,
                             hash: {name: "SHA-1"},
                         }, false, ["sign", "verify"])
                         .then(ok("hmac", "generateKey", "SHA-1"))
@@ -1816,7 +1782,6 @@
                         //sha-256
                         window.crypto.subtle.generateKey({
                             name: "HMAC",
-                            length: 256,
                             hash: {name: "SHA-256"},
                         }, false, ["sign", "verify"])
                         .then(ok("hmac", "generateKey", "SHA-256"))
@@ -1825,7 +1790,6 @@
                         //sha-384
                         window.crypto.subtle.generateKey({
                             name: "HMAC",
-                            length: 256,
                             hash: {name: "SHA-384"},
                         }, false, ["sign", "verify"])
                         .then(ok("hmac", "generateKey", "SHA-384"))
@@ -1834,7 +1798,6 @@
                         //sha-512
                         window.crypto.subtle.generateKey({
                             name: "HMAC",
-                            length: 256,
                             hash: {name: "SHA-512"},
                         }, false, ["sign", "verify"])
                         .then(ok("hmac", "generateKey", "SHA-512"))
@@ -1940,8 +1903,21 @@
 
                                 window.crypto.subtle.deriveKey({
                                     "name": "DH",
-                                    "prime": new Uint8Array([23]),
-                                    "generator": new Uint8Array([5]),
+                                    //NOTE: THIS IS A SMALL PRIME FOR TESTING ONLY
+                                    //DO NOT USE IT FOR REAL!
+                                    //See http://datatracker.ietf.org/doc/rfc3526/ for better primes
+                                    "prime": new Uint8Array([
+                                        255,255,255,255,255,255,255,255,201,15,218,162,33,104,194,52,196,198,98,139,
+                                        128,220,28,209,41,2,78,8,138,103,204,116,2,11,190,166,59,19,155,34,81,74,8,
+                                        121,142,52,4,221,239,149,25,179,205,58,67,27,48,43,10,109,242,95,20,55,79,225,
+                                        53,109,109,81,194,69,228,133,181,118,98,94,126,198,244,76,66,233,166,55,237,
+                                        107,11,255,92,182,244,6,183,237,238,56,107,251,90,137,159,165,174,159,36,17,
+                                        124,75,31,230,73,40,102,81,236,228,91,61,194,0,124,184,161,99,191,5,152,218,
+                                        72,54,28,85,211,154,105,22,63,168,253,36,207,95,131,101,93,35,220,163,173,
+                                        150,28,98,243,86,32,133,82,187,158,213,41,7,112,150,150,109,103,12,53,78,74,
+                                        188,152,4,241,116,108,8,202,35,115,39,255,255,255,255,255,255,255,255
+                                    ]),
+                                    "generator": new Uint8Array([2]),
                                     "public": key2.publicKey,
                                 }, key1.privateKey, AESCBC, false, ["encrypt", "decrypt"])
                                 .then(ok("dh", "deriveKey", "Yes"))
@@ -1963,8 +1939,21 @@
 
                                 window.crypto.subtle.deriveBits({
                                     "name": "DH",
-                                    "prime": new Uint8Array([23]),
-                                    "generator": new Uint8Array([5]),
+                                    //NOTE: THIS IS A SMALL PRIME FOR TESTING ONLY
+                                    //DO NOT USE IT FOR REAL!
+                                    //See http://datatracker.ietf.org/doc/rfc3526/ for better primes
+                                    "prime": new Uint8Array([
+                                        255,255,255,255,255,255,255,255,201,15,218,162,33,104,194,52,196,198,98,139,
+                                        128,220,28,209,41,2,78,8,138,103,204,116,2,11,190,166,59,19,155,34,81,74,8,
+                                        121,142,52,4,221,239,149,25,179,205,58,67,27,48,43,10,109,242,95,20,55,79,225,
+                                        53,109,109,81,194,69,228,133,181,118,98,94,126,198,244,76,66,233,166,55,237,
+                                        107,11,255,92,182,244,6,183,237,238,56,107,251,90,137,159,165,174,159,36,17,
+                                        124,75,31,230,73,40,102,81,236,228,91,61,194,0,124,184,161,99,191,5,152,218,
+                                        72,54,28,85,211,154,105,22,63,168,253,36,207,95,131,101,93,35,220,163,173,
+                                        150,28,98,243,86,32,133,82,187,158,213,41,7,112,150,150,109,103,12,53,78,74,
+                                        188,152,4,241,116,108,8,202,35,115,39,255,255,255,255,255,255,255,255
+                                    ]),
+                                    "generator": new Uint8Array([2]),
                                     "public": key2.publicKey,
                                 }, key1.privateKey, 128)
                                 .then(ok("dh", "deriveBits", "Yes"))
@@ -1995,10 +1984,6 @@
                         .then(ok("dh", "importKey", "raw-pub"))
                         .catch(err("dh", "importKey", "raw-pub*"));
 
-                        window.crypto.subtle.importKey("raw", null, DH, false, ["deriveBits", "deriveKey"])
-                        .then(ok("dh", "importKey", "raw-priv"))
-                        .catch(err("dh", "importKey", "raw-priv*"));
-
                         //spki
                         window.crypto.subtle.importKey("spki", new Uint8Array([
                             48,130,1,160,48,129,214,6,9,42,134,72,134,247,13,1,3,1,48,129,200,2,129,192,
@@ -2024,18 +2009,10 @@
                         .then(ok("dh", "importKey", "spki-pub"))
                         .catch(err("dh", "importKey", "spki-pub"));
 
-                        window.crypto.subtle.importKey("spki", null, DH, false, ["deriveBits", "deriveKey"])
-                        .then(ok("dh", "importKey", "spki-priv"))
-                        .catch(err("dh", "importKey", "spki-priv*"));
-
                         //pkcs8
                         window.crypto.subtle.importKey("pkcs8", null, DH, false, ["deriveBits", "deriveKey"])
                         .then(ok("dh", "importKey", "pkcs8-pub"))
                         .catch(err("dh", "importKey", "pkcs8-pub*"));
-
-                        window.crypto.subtle.importKey("pkcs8", null, DH, false, ["deriveBits", "deriveKey"])
-                        .then(ok("dh", "importKey", "pkcs8-priv"))
-                        .catch(err("dh", "importKey", "pkcs8-priv*"));
                     </script>
                 </td>
                 <td class="exportKey">
@@ -2049,27 +2026,15 @@
                             .then(ok("dh", "exportKey", "raw-pub"))
                             .catch(err("dh", "exportKey", "raw-pub"));
 
-                            window.crypto.subtle.exportKey("raw", key.privateKey)
-                            .then(ok("dh", "exportKey", "raw-priv"))
-                            .catch(err("dh", "exportKey", "raw-priv"));
-
                             //spki
                             window.crypto.subtle.exportKey("spki", key.publicKey)
                             .then(ok("dh", "exportKey", "spki-pub"))
                             .catch(err("dh", "exportKey", "spki-pub"));
 
-                            window.crypto.subtle.exportKey("spki", key.privateKey)
-                            .then(ok("dh", "exportKey", "spki-priv"))
-                            .catch(err("dh", "exportKey", "spki-priv"));
-
                             //pkcs8
                             window.crypto.subtle.exportKey("pkcs8", key.publicKey)
                             .then(ok("dh", "exportKey", "pkcs8-pub"))
                             .catch(err("dh", "exportKey", "pkcs8-pub"));
-
-                            window.crypto.subtle.exportKey("pkcs8", key.privateKey)
-                            .then(ok("dh", "exportKey", "pkcs8-priv"))
-                            .catch(err("dh", "exportKey", "pkcs8-priv"));
 
                         })
                         .catch(err("dh", "exportKey", "N/A"));
@@ -2202,33 +2167,47 @@
                 <td class="deriveKey">
                     <script>
                         //deriveKey
-                        window.crypto.subtle.deriveBits({
-                            name: "CONCAT",
-                            algorithmId: "?????",
-                            partyUInfo: "?????",
-                            partyVInfo: "?????",
-                            publicInfo: "?????",
-                            privateInfo: "?????",
-                            hash: {name: "SHA-256"},
-                        }, "?????", AESCBC, false, ["encrypt", "decrypt"])
-                        .then(ok("concatkdf", "deriveKey", "Yes"))
-                        .catch(err("concatkdf", "deriveKey", "No"));
+                        var keydata = window.crypto.getRandomValues(new Uint8Array(16));
+                        window.crypto.subtle.importKey("raw", keydata, {name: "CONCAT"}, false, ["deriveBits", "deriveKey"])
+                        .then(function(key){
+
+                            window.crypto.subtle.deriveBits({
+                                name: "CONCAT",
+                                algorithmId: "?????",
+                                partyUInfo: "?????",
+                                partyVInfo: "?????",
+                                publicInfo: "?????",
+                                privateInfo: "?????",
+                                hash: {name: "SHA-1"},
+                            }, key, AESCBC, false, ["encrypt", "decrypt"])
+                            .then(ok("concatkdf", "deriveKey", "Yes"))
+                            .catch(err("concatkdf", "deriveKey", "No"));
+
+                        })
+                        .catch(err("concatkdf", "deriveKey", "N/A"));
                     </script>
                 </td>
                 <td class="deriveBits">
                     <script>
                         //deriveBits
-                        window.crypto.subtle.deriveBits({
-                            name: "CONCAT",
-                            algorithmId: "?????",
-                            partyUInfo: "?????",
-                            partyVInfo: "?????",
-                            publicInfo: "?????",
-                            privateInfo: "?????",
-                            hash: {name: "SHA-256"},
-                        }, "?????", 128)
-                        .then(ok("concatkdf", "deriveBits", "Yes"))
-                        .catch(err("concatkdf", "deriveBits", "No"));
+                        var keydata = window.crypto.getRandomValues(new Uint8Array(16));
+                        window.crypto.subtle.importKey("raw", keydata, {name: "CONCAT"}, false, ["deriveBits", "deriveKey"])
+                        .then(function(key){
+
+                            window.crypto.subtle.deriveBits({
+                                name: "CONCAT",
+                                algorithmId: "?????",
+                                partyUInfo: "?????",
+                                partyVInfo: "?????",
+                                publicInfo: "?????",
+                                privateInfo: "?????",
+                                hash: {name: "SHA-1"},
+                            }, key, 128)
+                            .then(ok("concatkdf", "deriveBits", "Yes"))
+                            .catch(err("concatkdf", "deriveBits", "No"));
+
+                        })
+                        .catch(err("concatkdf", "deriveBits", "N/A"));
                     </script>
                 </td>
                 <td class="importKey">
@@ -2236,15 +2215,8 @@
                         //importKey
 
                         //raw
-                        window.crypto.subtle.importKey("raw", null, {
-                            name: "CONCAT",
-                            algorithmId: "?????",
-                            partyUInfo: "?????",
-                            partyVInfo: "?????",
-                            publicInfo: "?????",
-                            privateInfo: "?????",
-                            hash: {name: "SHA-256"},
-                        }, false, ["deriveBits", "deriveKey"])
+                        var keydata = window.crypto.getRandomValues(new Uint8Array(16));
+                        window.crypto.subtle.importKey("raw", keydata, {name: "CONCAT"}, false, ["deriveBits", "deriveKey"])
                         .then(ok("concatkdf", "importKey", "raw"))
                         .catch(err("concatkdf", "importKey", "raw*"));
                     </script>
@@ -2269,27 +2241,41 @@
                 <td class="deriveKey">
                     <script>
                         //deriveKey
-                        window.crypto.subtle.deriveBits({
-                            name: "HKDF-CTR",
-                            label: "?????",
-                            context: "?????",
-                            hash: {name: "SHA-256"},
-                        }, "?????", AESCBC, false, ["encrypt", "decrypt"])
-                        .then(ok("hkdf-ctr", "deriveKey", "Yes"))
-                        .catch(err("hkdf-ctr", "deriveKey", "No"));
+                        var keydata = window.crypto.getRandomValues(new Uint8Array(16));
+                        window.crypto.subtle.importKey("raw", keydata, {name: "HKDF-CTR"}, false, ["deriveBits", "deriveKey"])
+                        .then(function(key){
+
+                            window.crypto.subtle.deriveBits({
+                                name: "HKDF-CTR",
+                                label: "?????",
+                                context: "?????",
+                                hash: {name: "SHA-1"},
+                            }, "?????", AESCBC, false, ["encrypt", "decrypt"])
+                            .then(ok("hkdf-ctr", "deriveKey", "Yes"))
+                            .catch(err("hkdf-ctr", "deriveKey", "No"));
+
+                        })
+                        .catch(err("hkdf-ctr", "deriveKey", "N/A"));
                     </script>
                 </td>
                 <td class="deriveBits">
                     <script>
                         //deriveBits
-                        window.crypto.subtle.deriveBits({
-                            name: "HKDF-CTR",
-                            label: "?????",
-                            context: "?????",
-                            hash: {name: "SHA-256"},
-                        }, "?????", 128)
-                        .then(ok("hkdf-ctr", "deriveBits", "Yes"))
-                        .catch(err("hkdf-ctr", "deriveBits", "No"));
+                        var keydata = window.crypto.getRandomValues(new Uint8Array(16));
+                        window.crypto.subtle.importKey("raw", keydata, {name: "HKDF-CTR"}, false, ["deriveBits", "deriveKey"])
+                        .then(function(key){
+
+                            window.crypto.subtle.deriveBits({
+                                name: "HKDF-CTR",
+                                label: "?????",
+                                context: "?????",
+                                hash: {name: "SHA-1"},
+                            }, "?????", 128)
+                            .then(ok("hkdf-ctr", "deriveBits", "Yes"))
+                            .catch(err("hkdf-ctr", "deriveBits", "No"));
+
+                        })
+                        .catch(err("hkdf-ctr", "deriveBits", "N/A"));
                     </script>
                 </td>
                 <td class="importKey">
@@ -2297,12 +2283,8 @@
                         //importKey
 
                         //raw
-                        window.crypto.subtle.importKey("raw", null, {
-                            name: "HKDF-CTR",
-                            label: "?????",
-                            context: "?????",
-                            hash: {name: "SHA-256"},
-                        }, false, ["deriveBits", "deriveKey"])
+                        var keydata = window.crypto.getRandomValues(new Uint8Array(16));
+                        window.crypto.subtle.importKey("raw", keydata, {name: "HKDF-CTR"}, false, ["deriveBits", "deriveKey"])
                         .then(ok("hkdf-ctr", "importKey", "raw"))
                         .catch(err("hkdf-ctr", "importKey", "raw*"));
                     </script>
@@ -2324,47 +2306,119 @@
                 <td class="verify disabled"></td>
                 <td class="digest disabled"></td>
                 <td class="generateKey">
+                    <a id="pbkdf2_generatKey" href="#">Test (prompt)</a>
                     <script>
                         //generateKey
-                        window.crypto.subtle.generateKey({name: "PBKDF2"}, false, ["deriveBits", "deriveKey"])
-                        .then(ok("pbkdf2", "generateKey", "Yes"))
-                        .catch(err("pbkdf2", "generateKey", "No"));
+                        document.getElementById("pbkdf2_generatKey").onclick = function(evt){
+                            evt.preventDefault();
+                            evt.target.style.display = "none";
+
+                            window.crypto.subtle.generateKey({name: "PBKDF2"}, false, ["deriveBits", "deriveKey"])
+                            .then(ok("pbkdf2", "generateKey", "Yes"))
+                            .catch(err("pbkdf2", "generateKey", "No"));
+                        };
                     </script>
                 </td>
                 <td class="deriveKey">
                     <script>
                         //deriveKey
-                        window.crypto.subtle.importKey("raw", TESTBYTES, {name: "PBKDF2"}, false, ["deriveBits", "deriveKey"])
+                        var password = window.crypto.getRandomValues(new Uint8Array(16));
+                        window.crypto.subtle.importKey("raw", password, {name: "PBKDF2"}, false, ["deriveBits", "deriveKey"])
                         .then(function(key){
 
-                            return window.crypto.subtle.deriveKey({
+                            //sha-1
+                            window.crypto.subtle.deriveKey({
+                                name: "PBKDF2",
+                                salt: window.crypto.getRandomValues(new Uint8Array(16)),
+                                iterations: 1000,
+                                hash: {name: "SHA-1"},
+                            }, key, AESCBC, false, ["encrypt", "decrypt"])
+                            .then(ok("pbkdf2", "deriveKey", "SHA-1"))
+                            .catch(err("pbkdf2", "deriveKey", "SHA-1"));
+
+                            //sha-256
+                            window.crypto.subtle.deriveKey({
                                 name: "PBKDF2",
                                 salt: window.crypto.getRandomValues(new Uint8Array(16)),
                                 iterations: 1000,
                                 hash: {name: "SHA-256"},
                             }, key, AESCBC, false, ["encrypt", "decrypt"])
+                            .then(ok("pbkdf2", "deriveKey", "SHA-256"))
+                            .catch(err("pbkdf2", "deriveKey", "SHA-256"));
+
+                            //sha-384
+                            window.crypto.subtle.deriveKey({
+                                name: "PBKDF2",
+                                salt: window.crypto.getRandomValues(new Uint8Array(16)),
+                                iterations: 1000,
+                                hash: {name: "SHA-384"},
+                            }, key, AESCBC, false, ["encrypt", "decrypt"])
+                            .then(ok("pbkdf2", "deriveKey", "SHA-384"))
+                            .catch(err("pbkdf2", "deriveKey", "SHA-384"));
+
+                            //sha-512
+                            window.crypto.subtle.deriveKey({
+                                name: "PBKDF2",
+                                salt: window.crypto.getRandomValues(new Uint8Array(16)),
+                                iterations: 1000,
+                                hash: {name: "SHA-512"},
+                            }, key, AESCBC, false, ["encrypt", "decrypt"])
+                            .then(ok("pbkdf2", "deriveKey", "SHA-512"))
+                            .catch(err("pbkdf2", "deriveKey", "SHA-512"));
 
                         })
-                        .then(ok("pbkdf2", "deriveKey", "Yes"))
-                        .catch(err("pbkdf2", "deriveKey", "No"));
+                        .catch(err("pbkdf2", "deriveKey", "N/A"));
                     </script>
                 </td>
                 <td class="deriveBits">
                     <script>
                         //deriveBits
-                        window.crypto.subtle.importKey("raw", TESTBYTES, {name: "PBKDF2"}, false, ["deriveBits", "deriveKey"])
+                        var password = window.crypto.getRandomValues(new Uint8Array(16));
+                        window.crypto.subtle.importKey("raw", password, {name: "PBKDF2"}, false, ["deriveBits", "deriveKey"])
                         .then(function(key){
 
-                            return window.crypto.subtle.deriveBits({
+                            //sha-1
+                            window.crypto.subtle.deriveBits({
+                                "name": "PBKDF2",
+                                salt: window.crypto.getRandomValues(new Uint8Array(16)),
+                                iterations: 1000,
+                                hash: {name: "SHA-1"},
+                            }, key, 128)
+                            .then(ok("pbkdf2", "deriveBits", "SHA-1"))
+                            .catch(err("pbkdf2", "deriveBits", "SHA-1"));
+
+                            //sha-256
+                            window.crypto.subtle.deriveBits({
                                 "name": "PBKDF2",
                                 salt: window.crypto.getRandomValues(new Uint8Array(16)),
                                 iterations: 1000,
                                 hash: {name: "SHA-256"},
-                            }, key, 128);
+                            }, key, 128)
+                            .then(ok("pbkdf2", "deriveBits", "SHA-256"))
+                            .catch(err("pbkdf2", "deriveBits", "SHA-256"));
+
+                            //sha-384
+                            window.crypto.subtle.deriveBits({
+                                "name": "PBKDF2",
+                                salt: window.crypto.getRandomValues(new Uint8Array(16)),
+                                iterations: 1000,
+                                hash: {name: "SHA-384"},
+                            }, key, 128)
+                            .then(ok("pbkdf2", "deriveBits", "SHA-384"))
+                            .catch(err("pbkdf2", "deriveBits", "SHA-384"));
+
+                            //sha-512
+                            window.crypto.subtle.deriveBits({
+                                "name": "PBKDF2",
+                                salt: window.crypto.getRandomValues(new Uint8Array(16)),
+                                iterations: 1000,
+                                hash: {name: "SHA-384"},
+                            }, key, 128)
+                            .then(ok("pbkdf2", "deriveBits", "SHA-512"))
+                            .catch(err("pbkdf2", "deriveBits", "SHA-512"));
 
                         })
-                        .then(ok("pbkdf2", "deriveBits", "Yes"))
-                        .catch(err("pbkdf2", "deriveBits", "No"));
+                        .catch(err("pbkdf2", "deriveBits", "N/A"));
                     </script>
                 </td>
                 <td class="importKey">
@@ -2372,7 +2426,8 @@
                         //importKey
 
                         //raw
-                        window.crypto.subtle.importKey("raw", TESTBYTES, {name: "PBKDF2"}, false, ["deriveBits", "deriveKey"])
+                        var password = window.crypto.getRandomValues(new Uint8Array(16));
+                        window.crypto.subtle.importKey("raw", password, {name: "PBKDF2"}, false, ["deriveBits", "deriveKey"])
                         .then(ok("pbkdf2", "importKey", "raw"))
                         .catch(err("pbkdf2", "importKey", "raw"));
                     </script>
