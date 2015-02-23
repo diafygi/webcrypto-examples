@@ -6,105 +6,105 @@ I couldn't find anywhere that had clear examples of WebCrytoAPI, so I
 wrote examples and made a live table with them. Pull requests welcome!
 
 1. [RSASSA-PKCS1-v1_5](#rsassa-pkcs1-v1_5)
-    * [generateKey](#rsassa-pkcs1-v1_5_generatekey)
-    * [importKey](#rsassa-pkcs1-v1_5_importkey)
-    * [exportKey](#rsassa-pkcs1-v1_5_exportkey)
-    * [sign](#rsassa-pkcs1-v1_5_sign)
-    * [verify](#rsassa-pkcs1-v1_5_verify)
+    * [generateKey](#rsassa-pkcs1-v1_5-generatekey)
+    * [importKey](#rsassa-pkcs1-v1_5-importkey)
+    * [exportKey](#rsassa-pkcs1-v1_5-exportkey)
+    * [sign](#rsassa-pkcs1-v1_5-sign)
+    * [verify](#rsassa-pkcs1-v1_5-verify)
 2. [RSA-PSS](#rsa-pss)
-    * [generateKey](#rsa-pss_generatekey)
-    * [importKey](#rsa-pss_importkey)
-    * [exportKey](#rsa-pss_exportkey)
-    * [sign](#rsa-pss_sign)
-    * [verify](#rsa-pss_verify)
+    * [generateKey](#rsa-pss-generatekey)
+    * [importKey](#rsa-pss-importkey)
+    * [exportKey](#rsa-pss-exportkey)
+    * [sign](#rsa-pss-sign)
+    * [verify](#rsa-pss-verify)
 3. [RSA-OAEP](#rsa-oaep)
-    * [generateKey](#rsa-oaep_generatekey)
-    * [importKey](#rsa-oaep_importkey)
-    * [exportKey](#rsa-oaep_exportkey)
-    * [encrypt](#rsa-oaep_encrypt)
-    * [decrypt](#rsa-oaep_decrypt)
+    * [generateKey](#rsa-oaep-generatekey)
+    * [importKey](#rsa-oaep-importkey)
+    * [exportKey](#rsa-oaep-exportkey)
+    * [encrypt](#rsa-oaep-encrypt)
+    * [decrypt](#rsa-oaep-decrypt)
 4. [ECDSA](#ecdsa)
-    * [generateKey](#ecdsa_generatekey)
-    * [importKey](#ecdsa_importkey)
-    * [exportKey](#ecdsa_exportkey)
-    * [sign](#ecdsa_sign)
-    * [verify](#ecdsa_verify)
+    * [generateKey](#ecdsa-generatekey)
+    * [importKey](#ecdsa-importkey)
+    * [exportKey](#ecdsa-exportkey)
+    * [sign](#ecdsa-sign)
+    * [verify](#ecdsa-verify)
 5. [ECDH](#ecdh)
-    * [generateKey](#ecdh_generatekey)
-    * [importKey](#ecdh_importkey)
-    * [exportKey](#ecdh_exportkey)
-    * [deriveBits](#ecdh_derivebits)
-    * [deriveKey](#ecdh_derivekey)
+    * [generateKey](#ecdh-generatekey)
+    * [importKey](#ecdh-importkey)
+    * [exportKey](#ecdh-exportkey)
+    * [deriveBits](#ecdh-derivebits)
+    * [deriveKey](#ecdh-derivekey)
 6. [AES-CTR](#aes-ctr)
-    * [generateKey](#aes-ctr_generatekey)
-    * [importKey](#aes-ctr_importkey)
-    * [exportKey](#aes-ctr_exportkey)
-    * [encrypt](#aes-ctr_encrypt)
-    * [decrypt](#aes-ctr_decrypt)
+    * [generateKey](#aes-ctr-generatekey)
+    * [importKey](#aes-ctr-importkey)
+    * [exportKey](#aes-ctr-exportkey)
+    * [encrypt](#aes-ctr-encrypt)
+    * [decrypt](#aes-ctr-decrypt)
 7. [AES-CBC](#aes-cbc)
-    * [generateKey](#aes-cbc_generatekey)
-    * [importKey](#aes-cbc_importkey)
-    * [exportKey](#aes-cbc_exportkey)
-    * [encrypt](#aes-cbc_encrypt)
-    * [decrypt](#aes-cbc_decrypt)
+    * [generateKey](#aes-cbc-generatekey)
+    * [importKey](#aes-cbc-importkey)
+    * [exportKey](#aes-cbc-exportkey)
+    * [encrypt](#aes-cbc-encrypt)
+    * [decrypt](#aes-cbc-decrypt)
 8. [AES-CMAC](#aes-cmac)
-    * [generateKey](#aes-cmac_generatekey)
-    * [importKey](#aes-cmac_importkey)
-    * [exportKey](#aes-cmac_exportkey)
-    * [sign](#aes-cmac_sign)
-    * [verify](#aes-cmac_verify)
+    * [generateKey](#aes-cmac-generatekey)
+    * [importKey](#aes-cmac-importkey)
+    * [exportKey](#aes-cmac-exportkey)
+    * [sign](#aes-cmac-sign)
+    * [verify](#aes-cmac-verify)
 9. [AES-GCM](#aes-gcm)
-    * [generateKey](#aes-gcm_generatekey)
-    * [importKey](#aes-gcm_importkey)
-    * [exportKey](#aes-gcm_exportkey)
-    * [encrypt](#aes-gcm_encrypt)
-    * [decrypt](#aes-gcm_decrypt)
+    * [generateKey](#aes-gcm-generatekey)
+    * [importKey](#aes-gcm-importkey)
+    * [exportKey](#aes-gcm-exportkey)
+    * [encrypt](#aes-gcm-encrypt)
+    * [decrypt](#aes-gcm-decrypt)
 10. [AES-CFB](#aes-cfb)
-    * [generateKey](#aes-cfb_generatekey)
-    * [importKey](#aes-cfb_importkey)
-    * [exportKey](#aes-cfb_exportkey)
-    * [encrypt](#aes-cfb_encrypt)
-    * [decrypt](#aes-cfb_decrypt)
+    * [generateKey](#aes-cfb-generatekey)
+    * [importKey](#aes-cfb-importkey)
+    * [exportKey](#aes-cfb-exportkey)
+    * [encrypt](#aes-cfb-encrypt)
+    * [decrypt](#aes-cfb-decrypt)
 11. [AES-KW](#aes-kw)
     * [generateKey](#generatekey)
     * [importKey](#importkey)
     * [exportKey](#exportkey)
 12. [HMAC](#hmac)
-    * [generateKey](#hmac_generatekey)
-    * [importKey](#hmac_importkey)
-    * [exportKey](#hmac_exportkey)
-    * [sign](#hmac_sign)
-    * [verify](#hmac_verify)
+    * [generateKey](#hmac-generatekey)
+    * [importKey](#hmac-importkey)
+    * [exportKey](#hmac-exportkey)
+    * [sign](#hmac-sign)
+    * [verify](#hmac-verify)
 13. [DH](#dh)
-    * [generateKey](#dh_generatekey)
-    * [importKey](#dh_importkey)
-    * [exportKey](#dh_exportkey)
-    * [deriveBits](#dh_derivebits)
-    * [deriveKey](#dh_derivekey)
+    * [generateKey](#dh-generatekey)
+    * [importKey](#dh-importkey)
+    * [exportKey](#dh-exportkey)
+    * [deriveBits](#dh-derivebits)
+    * [deriveKey](#dh-derivekey)
 14. [SHA-1](#sha-1)
-    * [digest](#sha-1_digest)
+    * [digest](#sha-1-digest)
 15. [SHA-256](#sha-256)
-    * [digest](#sha-256_digest)
+    * [digest](#sha-256-digest)
 16. [SHA-384](#sha-384)
-    * [digest](#sha-384_diges)
+    * [digest](#sha-384-digest)
 17. [SHA-512](#sha-512)
-    * [digest](#sha-512_digest)
+    * [digest](#sha-512-digest)
 18. [CONCAT](#concat)
-    * [importKey](#concat_importkey)
-    * [deriveBits](#concat_derivebits)
-    * [deriveKey](#concat_derivekey)
+    * [importKey](#concat-importkey)
+    * [deriveBits](#concat-derivebits)
+    * [deriveKey](#concat-derivekey)
 19. [HKDF-CTR](#hkdf-ctr)
-    * [importKey](#hkdf-ctr_importkey)
-    * [deriveBits](#hkdf-ctr_derivebits)
-    * [deriveKey](#hkdf-ctr_derivekey)
+    * [importKey](#hkdf-ctr-importkey)
+    * [deriveBits](#hkdf-ctr-derivebits)
+    * [deriveKey](#hkdf-ctr-derivekey)
 20. [PBKDF2](#pbkdf2)
-    * [generateKey](#pbkdf2_generatekey)
-    * [importKey](#pbkdf2_importkey)
-    * [deriveBits](#pbkdf2_derivebits)
-    * [deriveKey](#pbkdf2_derivekey)
+    * [generateKey](#pbkdf2-generatekey)
+    * [importKey](#pbkdf2-importkey)
+    * [deriveBits](#pbkdf2-derivebits)
+    * [deriveKey](#pbkdf2-derivekey)
 
 ##RSASSA-PKCS1-v1_5
-####RSASSA-PKCS1-v1_5.generateKey
+####RSASSA-PKCS1-v1_5 - generateKey
 ```javascript
 window.crypto.subtle.generateKey(
     {
@@ -126,7 +126,7 @@ window.crypto.subtle.generateKey(
     console.error(err);
 });
 ```
-####RSASSA-PKCS1-v1_5.importKey
+####RSASSA-PKCS1-v1_5 - importKey
 ```javascript
 window.crypto.subtle.importKey(
     "jwk", //can be "jwk", "spki", or "pkcs8"
@@ -152,7 +152,7 @@ window.crypto.subtle.importKey(
     console.error(err);
 });
 ```
-####RSASSA-PKCS1-v1_5.exportKey
+####RSASSA-PKCS1-v1_5 - exportKey
 ```javascript
 window.crypto.subtle.exportKey(
     "jwk", //can be "jwk", "spki", or "pkcs8"
@@ -166,7 +166,7 @@ window.crypto.subtle.exportKey(
     console.error(err);
 });
 ```
-####RSASSA-PKCS1-v1_5.sign
+####RSASSA-PKCS1-v1_5 - sign
 ```javascript
 window.crypto.subtle.sign(
     {
@@ -183,7 +183,7 @@ window.crypto.subtle.sign(
     console.error(err);
 });
 ```
-####RSASSA-PKCS1-v1_5.verify
+####RSASSA-PKCS1-v1_5 - verify
 ```javascript
 window.crypto.subtle.verify(
     {
@@ -203,7 +203,7 @@ window.crypto.subtle.verify(
 ```
 
 ##RSA-PSS
-####RSA-PSS.generateKey
+####RSA-PSS - generateKey
 ```javascript
 window.crypto.subtle.generateKey(
     {
@@ -225,7 +225,7 @@ window.crypto.subtle.generateKey(
     console.error(err);
 });
 ```
-####RSA-PSS.importKey
+####RSA-PSS - importKey
 ```javascript
 window.crypto.subtle.importKey(
     "jwk", //can be "jwk", "spki", or "pkcs8"
@@ -251,7 +251,7 @@ window.crypto.subtle.importKey(
     console.error(err);
 });
 ```
-####RSA-PSS.exportKey
+####RSA-PSS - exportKey
 ```javascript
 window.crypto.subtle.exportKey(
     "jwk", //can be "jwk", "spki", or "pkcs8"
@@ -265,7 +265,7 @@ window.crypto.subtle.exportKey(
     console.error(err);
 });
 ```
-####RSA-PSS.sign
+####RSA-PSS - sign
 ```javascript
 window.crypto.subtle.sign(
     {
@@ -283,7 +283,7 @@ window.crypto.subtle.sign(
     console.error(err);
 });
 ```
-####RSA-PSS.verify
+####RSA-PSS - verify
 ```javascript
 window.crypto.subtle.verify(
     {
@@ -304,7 +304,7 @@ window.crypto.subtle.verify(
 ```
 
 ##RSA-OAEP
-####RSA-OAEP.generateKey
+####RSA-OAEP - generateKey
 ```javascript
 window.crypto.subtle.generateKey(
     {
@@ -326,7 +326,7 @@ window.crypto.subtle.generateKey(
     console.error(err);
 });
 ```
-####RSA-OAEP.importKey
+####RSA-OAEP - importKey
 ```javascript
 window.crypto.subtle.importKey(
     "jwk", //can be "jwk", "spki", or "pkcs8"
@@ -352,7 +352,7 @@ window.crypto.subtle.importKey(
     console.error(err);
 });
 ```
-####RSA-OAEP.exportKey
+####RSA-OAEP - exportKey
 ```javascript
 window.crypto.subtle.exportKey(
     "jwk", //can be "jwk", "spki", or "pkcs8"
@@ -366,7 +366,7 @@ window.crypto.subtle.exportKey(
     console.error(err);
 });
 ```
-####RSA-OAEP.encrypt
+####RSA-OAEP - encrypt
 ```javascript
 window.crypto.subtle.encrypt(
     {
@@ -384,7 +384,7 @@ window.crypto.subtle.encrypt(
     console.error(err);
 });
 ```
-####RSA-OAEP.decrypt
+####RSA-OAEP - decrypt
 ```javascript
 window.crypto.subtle.decrypt(
     {
@@ -404,7 +404,7 @@ window.crypto.subtle.decrypt(
 ```
 
 ##ECDSA
-####ECDSA.generateKey
+####ECDSA - generateKey
 ```javascript
 window.crypto.subtle.generateKey(
     {
@@ -424,7 +424,7 @@ window.crypto.subtle.generateKey(
     console.error(err);
 });
 ```
-####ECDSA.importKey
+####ECDSA - importKey
 ```javascript
 window.crypto.subtle.importKey(
     "jwk", //can be "jwk", "spki", or "pkcs8"
@@ -450,7 +450,7 @@ window.crypto.subtle.importKey(
     console.error(err);
 });
 ```
-####ECDSA.exportKey
+####ECDSA - exportKey
 ```javascript
 window.crypto.subtle.exportKey(
     "jwk", //can be "jwk", "spki", or "pkcs8"
@@ -464,7 +464,7 @@ window.crypto.subtle.exportKey(
     console.error(err);
 });
 ```
-####ECDSA.sign
+####ECDSA - sign
 ```javascript
 window.crypto.subtle.sign(
     {
@@ -482,7 +482,7 @@ window.crypto.subtle.sign(
     console.error(err);
 });
 ```
-####ECDSA.verify
+####ECDSA - verify
 ```javascript
 window.crypto.subtle.verify(
     {
@@ -503,7 +503,7 @@ window.crypto.subtle.verify(
 ```
 
 ##ECDH
-####ECDH.generateKey
+####ECDH - generateKey
 ```javascript
 window.crypto.subtle.generateKey(
     {
@@ -523,7 +523,7 @@ window.crypto.subtle.generateKey(
     console.error(err);
 });
 ```
-####ECDH.importKey
+####ECDH - importKey
 ```javascript
 window.crypto.subtle.importKey(
     "jwk", //can be "jwk", "spki", "pkcs8", or "raw"
@@ -549,7 +549,7 @@ window.crypto.subtle.importKey(
     console.error(err);
 });
 ```
-####ECDH.exportKey
+####ECDH - exportKey
 ```javascript
 window.crypto.subtle.exportKey(
     "jwk", //can be "jwk", "spki", "pkcs8", or "raw"
@@ -563,7 +563,7 @@ window.crypto.subtle.exportKey(
     console.error(err);
 });
 ```
-####ECDH.deriveKey
+####ECDH - deriveKey
 ```javascript
 window.crypto.subtle.deriveKey(
     {
@@ -588,7 +588,7 @@ window.crypto.subtle.deriveKey(
     console.error(err);
 });
 ```
-####ECDH.deriveBits
+####ECDH - deriveBits
 ```javascript
 window.crypto.subtle.deriveBits(
     {
@@ -609,7 +609,7 @@ window.crypto.subtle.deriveBits(
 ```
 
 ##AES-CTR
-####AES-CTR.generateKey
+####AES-CTR - generateKey
 ```javascript
 window.crypto.subtle.generateKey(
     {
@@ -627,7 +627,7 @@ window.crypto.subtle.generateKey(
     console.error(err);
 });
 ```
-####AES-CTR.importKey
+####AES-CTR - importKey
 ```javascript
 window.crypto.subtle.importKey(
     "jwk", //can be "jwk" or "raw"
@@ -651,7 +651,7 @@ window.crypto.subtle.importKey(
     console.error(err);
 });
 ```
-####AES-CTR.exportKey
+####AES-CTR - exportKey
 ```javascript
 window.crypto.subtle.exportKey(
     "jwk", //can be "jwk" or "raw"
@@ -665,7 +665,7 @@ window.crypto.subtle.exportKey(
     console.error(err);
 });
 ```
-####AES-CTR.encrypt
+####AES-CTR - encrypt
 ```javascript
 window.crypto.subtle.encrypt(
     {
@@ -684,7 +684,7 @@ window.crypto.subtle.encrypt(
     console.error(err);
 });
 ```
-####AES-CTR.decrypt
+####AES-CTR - decrypt
 ```javascript
 window.crypto.subtle.decrypt(
     {
@@ -705,7 +705,7 @@ window.crypto.subtle.decrypt(
 ```
 
 ##AES-CBC
-####AES-CBC.generateKey
+####AES-CBC - generateKey
 ```javascript
 window.crypto.subtle.generateKey(
     {
@@ -723,7 +723,7 @@ window.crypto.subtle.generateKey(
     console.error(err);
 });
 ```
-####AES-CBC.importKey
+####AES-CBC - importKey
 ```javascript
 window.crypto.subtle.importKey(
     "jwk", //can be "jwk" or "raw"
@@ -747,7 +747,7 @@ window.crypto.subtle.importKey(
     console.error(err);
 });
 ```
-####AES-CBC.exportKey
+####AES-CBC - exportKey
 ```javascript
 window.crypto.subtle.exportKey(
     "jwk", //can be "jwk" or "raw"
@@ -761,7 +761,7 @@ window.crypto.subtle.exportKey(
     console.error(err);
 });
 ```
-####AES-CBC.encrypt
+####AES-CBC - encrypt
 ```javascript
 window.crypto.subtle.encrypt(
     {
@@ -781,7 +781,7 @@ window.crypto.subtle.encrypt(
     console.error(err);
 });
 ```
-####AES-CBC.decrypt
+####AES-CBC - decrypt
 ```javascript
 window.crypto.subtle.decrypt(
     {
@@ -801,7 +801,7 @@ window.crypto.subtle.decrypt(
 ```
 
 ##AES-CMAC
-####AES-CMAC.generateKey
+####AES-CMAC - generateKey
 ```javascript
 window.crypto.subtle.generateKey(
     {
@@ -819,7 +819,7 @@ window.crypto.subtle.generateKey(
     console.error(err);
 });
 ```
-####AES-CMAC.importKey
+####AES-CMAC - importKey
 ```javascript
 window.crypto.subtle.importKey(
     "jwk", //can be "jwk" or "raw"
@@ -843,7 +843,7 @@ window.crypto.subtle.importKey(
     console.error(err);
 });
 ```
-####AES-CMAC.exportKey
+####AES-CMAC - exportKey
 ```javascript
 window.crypto.subtle.exportKey(
     "jwk", //can be "jwk" or "raw"
@@ -857,7 +857,7 @@ window.crypto.subtle.exportKey(
     console.error(err);
 });
 ```
-####AES-CMAC.sign
+####AES-CMAC - sign
 ```javascript
 window.crypto.subtle.sign(
     {
@@ -875,7 +875,7 @@ window.crypto.subtle.sign(
     console.error(err);
 });
 ```
-####AES-CMAC.verify
+####AES-CMAC - verify
 ```javascript
 window.crypto.subtle.verify(
     {
@@ -896,7 +896,7 @@ window.crypto.subtle.verify(
 ```
 
 ##AES-GCM
-####AES-GCM.generateKey
+####AES-GCM - generateKey
 ```javascript
 window.crypto.subtle.generateKey(
     {
@@ -914,7 +914,7 @@ window.crypto.subtle.generateKey(
     console.error(err);
 });
 ```
-####AES-GCM.importKey
+####AES-GCM - importKey
 ```javascript
 window.crypto.subtle.importKey(
     "jwk", //can be "jwk" or "raw"
@@ -938,7 +938,7 @@ window.crypto.subtle.importKey(
     console.error(err);
 });
 ```
-####AES-GCM.exportKey
+####AES-GCM - exportKey
 ```javascript
 window.crypto.subtle.exportKey(
     "jwk", //can be "jwk" or "raw"
@@ -952,7 +952,7 @@ window.crypto.subtle.exportKey(
     console.error(err);
 });
 ```
-####AES-GCM.encrypt
+####AES-GCM - encrypt
 ```javascript
 window.crypto.subtle.encrypt(
     {
@@ -978,7 +978,7 @@ window.crypto.subtle.encrypt(
     console.error(err);
 });
 ```
-####AES-GCM.decrypt
+####AES-GCM - decrypt
 ```javascript
 window.crypto.subtle.decrypt(
     {
@@ -1000,7 +1000,7 @@ window.crypto.subtle.decrypt(
 ```
 
 ##AES-CFB
-####AES-CFB.generateKey
+####AES-CFB - generateKey
 ```javascript
 window.crypto.subtle.generateKey(
     {
@@ -1018,7 +1018,7 @@ window.crypto.subtle.generateKey(
     console.error(err);
 });
 ```
-####AES-CFB.importKey
+####AES-CFB - importKey
 ```javascript
 window.crypto.subtle.importKey(
     "jwk", //can be "jwk" or "raw"
@@ -1042,7 +1042,7 @@ window.crypto.subtle.importKey(
     console.error(err);
 });
 ```
-####AES-CFB.exportKey
+####AES-CFB - exportKey
 ```javascript
 window.crypto.subtle.exportKey(
     "jwk", //can be "jwk" or "raw"
@@ -1056,7 +1056,7 @@ window.crypto.subtle.exportKey(
     console.error(err);
 });
 ```
-####AES-CFB.encrypt
+####AES-CFB - encrypt
 ```javascript
 window.crypto.subtle.encrypt(
     {
@@ -1076,7 +1076,7 @@ window.crypto.subtle.encrypt(
     console.error(err);
 });
 ```
-####AES-CFB.decrypt
+####AES-CFB - decrypt
 ```javascript
 window.crypto.subtle.decrypt(
     {
@@ -1096,7 +1096,7 @@ window.crypto.subtle.decrypt(
 ```
 
 ##AES-KW
-####AES-KW.generateKey
+####AES-KW - generateKey
 ```javascript
 window.crypto.subtle.generateKey(
     {
@@ -1114,7 +1114,7 @@ window.crypto.subtle.generateKey(
     console.error(err);
 });
 ```
-####AES-KW.importKey
+####AES-KW - importKey
 ```javascript
 window.crypto.subtle.importKey(
     "jwk", //can be "jwk" or "raw"
@@ -1138,7 +1138,7 @@ window.crypto.subtle.importKey(
     console.error(err);
 });
 ```
-####AES-KW.exportKey
+####AES-KW - exportKey
 ```javascript
 window.crypto.subtle.exportKey(
     "jwk", //can be "jwk" or "raw"
@@ -1154,7 +1154,7 @@ window.crypto.subtle.exportKey(
 ```
 
 ##HMAC
-####HMAC.generateKey
+####HMAC - generateKey
 ```javascript
 window.crypto.subtle.generateKey(
     {
@@ -1173,7 +1173,7 @@ window.crypto.subtle.generateKey(
     console.error(err);
 });
 ```
-####HMAC.importKey
+####HMAC - importKey
 ```javascript
 window.crypto.subtle.importKey(
     "jwk", //can be "jwk" or "raw"
@@ -1199,7 +1199,7 @@ window.crypto.subtle.importKey(
     console.error(err);
 });
 ```
-####HMAC.exportKey
+####HMAC - exportKey
 ```javascript
 window.crypto.subtle.exportKey(
     "jwk", //can be "jwk" or "raw"
@@ -1213,7 +1213,7 @@ window.crypto.subtle.exportKey(
     console.error(err);
 });
 ```
-####HMAC.sign
+####HMAC - sign
 ```javascript
 window.crypto.subtle.sign(
     {
@@ -1230,7 +1230,7 @@ window.crypto.subtle.sign(
     console.error(err);
 });
 ```
-####HMAC.verify
+####HMAC - verify
 ```javascript
 window.crypto.subtle.verify(
     {
@@ -1250,7 +1250,7 @@ window.crypto.subtle.verify(
 ```
 
 ##DH
-####DH.generateKey
+####DH - generateKey
 ```javascript
 window.crypto.subtle.generateKey(
     {
@@ -1283,7 +1283,7 @@ window.crypto.subtle.generateKey(
     console.error(err);
 });
 ```
-####DH.importKey
+####DH - importKey
 ```javascript
 window.crypto.subtle.importKey(
     "raw", //can be "spki", "pkcs8", or "raw"
@@ -1326,7 +1326,7 @@ window.crypto.subtle.importKey(
     console.error(err);
 });
 ```
-####DH.exportKey
+####DH - exportKey
 ```javascript
 window.crypto.subtle.exportKey(
     "jwk", //can be "spki", "pkcs8", or "raw"
@@ -1340,7 +1340,7 @@ window.crypto.subtle.exportKey(
     console.error(err);
 });
 ```
-####DH.deriveKey
+####DH - deriveKey
 ```javascript
 window.crypto.subtle.deriveKey(
     {
@@ -1378,7 +1378,7 @@ window.crypto.subtle.deriveKey(
     console.error(err);
 });
 ```
-####DH.deriveBits
+####DH - deriveBits
 ```javascript
 window.crypto.subtle.deriveBits(
     {
@@ -1412,7 +1412,7 @@ window.crypto.subtle.deriveBits(
 ```
 
 ##SHA-1
-####SHA-1.digest
+####SHA-1 - digest
 ```javascript
 window.crypto.subtle.digest(
     {
@@ -1430,7 +1430,7 @@ window.crypto.subtle.digest(
 ```
 
 ##SHA-256
-####SHA-256.digest
+####SHA-256 - digest
 ```javascript
 window.crypto.subtle.digest(
     {
@@ -1448,7 +1448,7 @@ window.crypto.subtle.digest(
 ```
 
 ##SHA-384
-####SHA-384.digest
+####SHA-384 - digest
 ```javascript
 window.crypto.subtle.digest(
     {
@@ -1466,7 +1466,7 @@ window.crypto.subtle.digest(
 ```
 
 ##SHA-512
-####SHA-512.digest
+####SHA-512 - digest
 ```javascript
 window.crypto.subtle.digest(
     {
@@ -1484,7 +1484,7 @@ window.crypto.subtle.digest(
 ```
 
 ##CONCAT
-####CONCAT.importKey
+####CONCAT - importKey
 ```javascript
 window.crypto.subtle.importKey(
     "raw", //only "raw" is allowed
@@ -1503,7 +1503,7 @@ window.crypto.subtle.importKey(
     console.error(err);
 });
 ```
-####CONCAT.deriveKey
+####CONCAT - deriveKey
 ```javascript
 window.crypto.subtle.deriveKey(
     {
@@ -1532,7 +1532,7 @@ window.crypto.subtle.deriveKey(
     console.error(err);
 });
 ```
-####CONCAT.deriveBits
+####CONCAT - deriveBits
 ```javascript
 window.crypto.subtle.deriveBits(
     {
@@ -1557,7 +1557,7 @@ window.crypto.subtle.deriveBits(
 ```
 
 ##HKDF-CTR
-####HKDF-CTR.importKey
+####HKDF-CTR - importKey
 ```javascript
 window.crypto.subtle.importKey(
     "raw", //only "raw" is allowed
@@ -1576,7 +1576,7 @@ window.crypto.subtle.importKey(
     console.error(err);
 });
 ```
-####HKDF-CTR.deriveKey
+####HKDF-CTR - deriveKey
 ```javascript
 window.crypto.subtle.deriveKey(
     {
@@ -1602,7 +1602,7 @@ window.crypto.subtle.deriveKey(
     console.error(err);
 });
 ```
-####HKDF-CTR.deriveBits
+####HKDF-CTR - deriveBits
 ```javascript
 window.crypto.subtle.deriveBits(
     {
@@ -1624,7 +1624,7 @@ window.crypto.subtle.deriveBits(
 ```
 
 ##PBKDF2
-####PBKDF2.generateKey
+####PBKDF2 - generateKey
 ```javascript
 //NOTE: This prompts the user to enter a password.
 window.crypto.subtle.generateKey(
@@ -1642,7 +1642,7 @@ window.crypto.subtle.generateKey(
     console.error(err);
 });
 ```
-####PBKDF2.importKey
+####PBKDF2 - importKey
 ```javascript
 window.crypto.subtle.importKey(
     "raw", //only "raw" is allowed
@@ -1661,7 +1661,7 @@ window.crypto.subtle.importKey(
     console.error(err);
 });
 ```
-####PBKDF2.deriveKey
+####PBKDF2 - deriveKey
 ```javascript
 window.crypto.subtle.deriveKey(
     {
@@ -1687,7 +1687,7 @@ window.crypto.subtle.deriveKey(
     console.error(err);
 });
 ```
-####PBKDF2.deriveBits
+####PBKDF2 - deriveBits
 ```javascript
 window.crypto.subtle.deriveBits(
     {
