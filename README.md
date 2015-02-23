@@ -552,7 +552,7 @@ window.crypto.subtle.importKey(
         namedCurve: "P-256", //can be "P-256", "P-384", or "P-521"
     },
     false, //whether the key is extractable (i.e. can be used in exportKey)
-    ["deriveKey", "deriveBits"] //can be any combination of "deriveKey" and "deriveBits"
+    ["deriveKey", "deriveBits"] //"deriveKey" and/or "deriveBits" for private keys only
 )
 .then(function(publicKey){
     //returns a publicKey (or privateKey if you are importing a private key)
@@ -1329,7 +1329,7 @@ window.crypto.subtle.importKey(
         generator: new Uint8Array([2]),
     },
     false, //whether the key is extractable (i.e. can be used in exportKey)
-    ["deriveKey", "deriveBits"] //can be any combination of "deriveKey" and "deriveBits"
+    ["deriveKey", "deriveBits"] //"deriveKey" and/or "deriveBits" for private keys only
 )
 .then(function(publicKey){
     //returns a publicKey (or privateKey if you are importing a private key)

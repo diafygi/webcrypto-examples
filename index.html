@@ -952,7 +952,7 @@
                             x: "kgR_PqO07L8sZOBbw6rvv7O_f7clqDeiE3WnMkb5EoI",
                             y: "djI-XqCqSyO9GFk_QT_stROMCAROIvU8KOORBgQUemE",
                             ext: true,
-                        }, ECDH, false, ["deriveBits", "deriveKey"])
+                        }, ECDH, false, [])
                         .then(ok("ecdh", "importKey", "jwk-pub"))
                         .catch(err("ecdh", "importKey", "jwk-pub"));
 
@@ -978,7 +978,7 @@
                             163,180,236,191,44,100,224,91,195,170,239,191,179,191,127,183,37,168,55,162,19,117,167,
                             50,70,249,18,130,118,50,62,94,160,170,75,35,189,24,89,63,65,63,236,181,19,140,8,4,78,
                             34,245,60,40,227,145,6,4,20,122,97
-                        ]), ECDH, false, ["deriveBits", "deriveKey"])
+                        ]), ECDH, false, [])
                         .then(ok("ecdh", "importKey", "spki-pub"))
                         .catch(err("ecdh", "importKey", "spki-pub"));
 
@@ -2023,7 +2023,7 @@
                             203,118,217,91,45,58,172,165,224,122,230,50,135,120,124,37,190,186,204,103,218,19,
                             91,246,115,6,199,45,121,156,149,6,208,85,26,94,171,165,228,58,200,49,82,210,170,243,
                             154,190,15,2,225,143,159
-                        ]), DH, false, ["deriveBits", "deriveKey"])
+                        ]), DH, false, [])
                         .then(ok("dh", "importKey", "raw-pub"))
                         .catch(err("dh", "importKey", "raw-pub"));
 
@@ -2048,7 +2048,7 @@
                             197,29,246,201,146,241,249,123,67,52,67,24,167,232,249,3,191,254,50,249,76,14,237,
                             1,116,7,157,11,248,166,79,140,76,241,191,184,146,143,52,91,164,209,63,124,116,6,
                             150,123,68,137,168,229,210,250,198,7
-                        ]), DH, false, ["deriveBits", "deriveKey"])
+                        ]), DH, false, [])
                         .then(ok("dh", "importKey", "spki-pub"))
                         .catch(err("dh", "importKey", "spki-pub"));
 
