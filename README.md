@@ -97,8 +97,8 @@ wrote examples and made a live table with them. Pull requests welcome!
 14. [SHA](#sha-1)
   * [SHA-1 digest](#sha-1---digest) | 
 [SHA-256 digest](#sha-256---digest) | 
-[SHA-384 digest](#sha-256---digest) | 
-[SHA-512 digest](#sha-256---digest) | 
+[SHA-384 digest](#sha-384---digest) | 
+[SHA-512 digest](#sha-512---digest)
 
 18. [CONCAT](#concat)
   * [importKey](#concat---importkey) | 
