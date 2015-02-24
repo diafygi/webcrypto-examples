@@ -1,6 +1,6 @@
 # Web Cryptography API Examples
 
-Live Table: https://diafygi.github.io/webcrypto-examples
+Live Table: https://diafygi.github.io/webcrypto-examples/
 
 I couldn't find anywhere that had clear examples of WebCrytoAPI, so I
 wrote examples and made a live table with them. Pull requests welcome!
