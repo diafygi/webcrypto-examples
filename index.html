@@ -57,6 +57,7 @@
                     var result = document.createElement("span");
                     result.className = "bad";
                     result.innerHTML = msg;
+                    result.title = e.message;
                     document.querySelector("#" + id + " ." + cls).appendChild(result);
                     return e;
                 }
