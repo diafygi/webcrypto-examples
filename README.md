@@ -40,44 +40,42 @@ wrote examples and made a live table with them. Pull requests welcome!
 [deriveKey](#ecdh---derivekey) | 
 [deriveBits](#ecdh---derivebits)
 
-Warning the AES stream cipher modes are intended to be primitives in encryption protocols and not used to stand alone. Incorrect use can lead to loss of plaintext.
-
-6. [AES-CTR](#aes-ctr)
+6. [AES-CTR](#aes-ctr) - Warning[[1]](#warnings)
   * [generateKey](#aes-ctr---generatekey) | 
 [importKey](#aes-ctr---importkey) | 
 [exportKey](#aes-ctr---exportkey) | 
 [encrypt](#aes-ctr---encrypt) | 
 [decrypt](#aes-ctr---decrypt)
 
-7. [AES-CBC](#aes-cbc)
+7. [AES-CBC](#aes-cbc) - Warning[[1]](#warnings)
   * [generateKey](#aes-cbc---generatekey) | 
 [importKey](#aes-cbc---importkey) | 
 [exportKey](#aes-cbc---exportkey) | 
 [encrypt](#aes-cbc---encrypt) | 
 [decrypt](#aes-cbc---decrypt)
 
-8. [AES-CMAC](#aes-cmac)
+8. [AES-CMAC](#aes-cmac) - Warning[[1]](#warnings)
   * [generateKey](#aes-cmac---generatekey) | 
 [importKey](#aes-cmac---importkey) | 
 [exportKey](#aes-cmac---exportkey) | 
 [sign](#aes-cmac---sign) | 
 [verify](#aes-cmac---verify)
 
-9. [AES-GCM](#aes-gcm)
+9. [AES-GCM](#aes-gcm) - Warning[[1]](#warnings)
   * [generateKey](#aes-gcm---generatekey) | 
 [importKey](#aes-gcm---importkey) | 
 [exportKey](#aes-gcm---exportkey) | 
 [encrypt](#aes-gcm---encrypt) | 
 [decrypt](#aes-gcm---decrypt)
 
-10. [AES-CFB](#aes-cfb)
+10. [AES-CFB](#aes-cfb) - Warning[[1]](#warnings)
   * [generateKey](#aes-cfb---generatekey) | 
 [importKey](#aes-cfb---importkey) | 
 [exportKey](#aes-cfb---exportkey) | 
 [encrypt](#aes-cfb---encrypt) | 
 [decrypt](#aes-cfb---decrypt)
 
-11. [AES-KW](#aes-kw)
+11. [AES-KW](#aes-kw) - Warning[[1]](#warnings)
   * [generateKey](#aes-kw---generatekey) | 
 [importKey](#aes-kw---importkey) | 
 [exportKey](#aes-kw---exportkey)
@@ -686,8 +684,8 @@ window.crypto.subtle.exportKey(
 window.crypto.subtle.encrypt(
     {
         name: "AES-CTR",
-        counter: new Uint8Array(16),// AES-CTR mode converts an AES key to 2^64 key stream. Counter indexes into the key stream. A protocol can define incrementing the index through addition, concatination or XOR. Once the counter has been exhausted, a new key must be generated.
-        length: 128, // The bit length of ArrayBuffer you will encrypt. The buffer can 1-128 bits. Unlike other AES modes, padding is not required.
+        counter: new Uint8Array(16),
+        length: 128, //can be 1-128
     },
     key, //from generateKey or importKey above
     data //ArrayBuffer of data you want to encrypt
@@ -705,8 +703,8 @@ window.crypto.subtle.encrypt(
 window.crypto.subtle.decrypt(
     {
         name: "AES-CTR",
-        counter: window.crypto.getRandomValues(new Uint8Array(16)),
-        length: 128, //NOTE: NOT SURE WHAT THIS SHOULD BE! PLEASE PULL REQUEST!
+        counter: new Uint8Array(16),
+        length: 128, //can be 1-128
     },
     key, //from generateKey or importKey above
     data //ArrayBuffer of the data
@@ -1721,7 +1719,9 @@ window.crypto.subtle.deriveBits(
 });
 ```
 
+#Warnings
 
+1. The AES stream cipher modes are intended to be primitives in encryption protocols and not used to stand alone. Incorrect use can lead to loss of plaintext.
 
 
 

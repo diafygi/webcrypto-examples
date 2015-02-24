@@ -1053,8 +1053,8 @@
                         .then(function(key){
                             return window.crypto.subtle.encrypt({
                                 name: "AES-CTR",
-                                counter: window.crypto.getRandomValues(new Uint8Array(16)),
-                                length: 128, //NOTE: NOT SURE WHAT THIS SHOULD BE NORMALLY
+                                counter: new Uint8Array(16),
+                                length: 128,
                             }, key, TESTBYTES);
                         })
                         .then(ok("aes-ctr", "encrypt", "Yes"))
@@ -1068,14 +1068,14 @@
                         .then(function(key){
                             window.crypto.subtle.encrypt({
                                 name: "AES-CTR",
-                                counter: window.crypto.getRandomValues(new Uint8Array(16)),
-                                length: 128, //NOTE: NOT SURE WHAT THIS SHOULD BE NORMALLY
+                                counter: new Uint8Array(16),
+                                length: 128,
                             }, key, TESTBYTES)
                             .then(function(encrypted){
                                 return window.crypto.subtle.decrypt({
                                     name: "AES-CTR",
-                                    counter: window.crypto.getRandomValues(new Uint8Array(16)),
-                                    length: 128, //NOTE: NOT SURE WHAT THIS SHOULD BE NORMALLY
+                                    counter: new Uint8Array(16),
+                                    length: 128,
                                 }, key, encrypted);
                             })
                             .then(ok("aes-ctr", "decrypt", "Yes"))
