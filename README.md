@@ -40,6 +40,8 @@ wrote examples and made a live table with them. Pull requests welcome!
 [deriveKey](#ecdh---derivekey) | 
 [deriveBits](#ecdh---derivebits)
 
+Warning the AES stream cipher modes are intended to be primitives in encryption protocols and not used to stand alone. Incorrect use can lead to loss of plaintext.
+
 6. [AES-CTR](#aes-ctr)
   * [generateKey](#aes-ctr---generatekey) | 
 [importKey](#aes-ctr---importkey) | 
@@ -684,8 +686,8 @@ window.crypto.subtle.exportKey(
 window.crypto.subtle.encrypt(
     {
         name: "AES-CTR",
-        counter: window.crypto.getRandomValues(new Uint8Array(16)),
-        length: 128, //NOTE: NOT SURE WHAT THIS SHOULD BE! PLEASE PULL REQUEST!
+        counter: new Uint8Array(16),// AES-CTR mode converts an AES key to 2^64 key stream. Counter indexes into the key stream. A protocol can define incrementing the index through addition, concatination or XOR. Once the counter has been exhausted, a new key must be generated.
+        length: 128, // The bit length of ArrayBuffer you will encrypt. The buffer can 1-128 bits. Unlike other AES modes, padding is not required.
     },
     key, //from generateKey or importKey above
     data //ArrayBuffer of data you want to encrypt
