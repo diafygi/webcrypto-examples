@@ -684,6 +684,8 @@ window.crypto.subtle.exportKey(
 window.crypto.subtle.encrypt(
     {
         name: "AES-CTR",
+        //Don't re-use counters!
+        //Always use a new counter every time your encrypt!
         counter: new Uint8Array(16),
         length: 128, //can be 1-128
     },
@@ -703,8 +705,8 @@ window.crypto.subtle.encrypt(
 window.crypto.subtle.decrypt(
     {
         name: "AES-CTR",
-        counter: new Uint8Array(16),
-        length: 128, //can be 1-128
+        counter: ArrayBuffer(16), //The same counter you used to encrypt
+        length: 128, //The same length you used to encrypt
     },
     key, //from generateKey or importKey above
     data //ArrayBuffer of the data

@@ -1066,18 +1066,21 @@
                         //decrypt
                         window.crypto.subtle.generateKey(AESCTR, false, ["encrypt", "decrypt"])
                         .then(function(key){
+                            var counter = new Uint8Array(16);
+                            var length = 128;
                             window.crypto.subtle.encrypt({
                                 name: "AES-CTR",
-                                counter: new Uint8Array(16),
-                                length: 128,
+                                counter: counter,
+                                length: length,
                             }, key, TESTBYTES)
                             .then(function(encrypted){
                                 return window.crypto.subtle.decrypt({
                                     name: "AES-CTR",
-                                    counter: new Uint8Array(16),
-                                    length: 128,
+                                    counter: counter,
+                                    length: length,
                                 }, key, encrypted);
                             })
+                            .then(function(a){window.AAA=a;})
                             .then(ok("aes-ctr", "decrypt", "Yes"))
                             .catch(err("aes-ctr", "decrypt", "No"));
                         })
