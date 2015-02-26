@@ -40,42 +40,42 @@ wrote examples and made a live table with them. Pull requests welcome!
 [deriveKey](#ecdh---derivekey) | 
 [deriveBits](#ecdh---derivebits)
 
-6. [AES-CTR](#aes-ctr) - Warning[[1]](#warnings)
+6. [AES-CTR](#aes-ctr) \[[1](#warnings)]
   * [generateKey](#aes-ctr---generatekey) | 
 [importKey](#aes-ctr---importkey) | 
 [exportKey](#aes-ctr---exportkey) | 
 [encrypt](#aes-ctr---encrypt) | 
 [decrypt](#aes-ctr---decrypt)
 
-7. [AES-CBC](#aes-cbc) - Warning[[1]](#warnings)
+7. [AES-CBC](#aes-cbc) \[[1](#warnings)]
   * [generateKey](#aes-cbc---generatekey) | 
 [importKey](#aes-cbc---importkey) | 
 [exportKey](#aes-cbc---exportkey) | 
 [encrypt](#aes-cbc---encrypt) | 
 [decrypt](#aes-cbc---decrypt)
 
-8. [AES-CMAC](#aes-cmac) - Warning[[1]](#warnings)
+8. [AES-CMAC](#aes-cmac) \[[1](#warnings)]
   * [generateKey](#aes-cmac---generatekey) | 
 [importKey](#aes-cmac---importkey) | 
 [exportKey](#aes-cmac---exportkey) | 
 [sign](#aes-cmac---sign) | 
 [verify](#aes-cmac---verify)
 
-9. [AES-GCM](#aes-gcm) - Warning[[1]](#warnings)
+9. [AES-GCM](#aes-gcm) \[[1](#warnings)]
   * [generateKey](#aes-gcm---generatekey) | 
 [importKey](#aes-gcm---importkey) | 
 [exportKey](#aes-gcm---exportkey) | 
 [encrypt](#aes-gcm---encrypt) | 
 [decrypt](#aes-gcm---decrypt)
 
-10. [AES-CFB](#aes-cfb) - Warning[[1]](#warnings)
+10. [AES-CFB](#aes-cfb) \[[1](#warnings)]
   * [generateKey](#aes-cfb---generatekey) | 
 [importKey](#aes-cfb---importkey) | 
 [exportKey](#aes-cfb---exportkey) | 
 [encrypt](#aes-cfb---encrypt) | 
 [decrypt](#aes-cfb---decrypt)
 
-11. [AES-KW](#aes-kw) - Warning[[1]](#warnings)
+11. [AES-KW](#aes-kw) \[[1](#warnings)]
   * [generateKey](#aes-kw---generatekey) | 
 [importKey](#aes-kw---importkey) | 
 [exportKey](#aes-kw---exportkey)
