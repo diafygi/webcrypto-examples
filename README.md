@@ -1176,7 +1176,7 @@ window.crypto.subtle.generateKey(
     {
         name: "HMAC",
         hash: {name: "SHA-256"}, //can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
-        //length: 256, //optional, if you want your key length to differ from the hash length
+        //length: 256, //optional, if you want your key length to differ from the hash function's block length
     },
     false, //whether the key is extractable (i.e. can be used in exportKey)
     ["sign", "verify"] //can be any combination of "sign" and "verify"
@@ -1202,7 +1202,7 @@ window.crypto.subtle.importKey(
     {   //this is the algorithm options
         name: "HMAC",
         hash: {name: "SHA-256"}, //can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
-        //length: 256, //optional, if you want your key length to differ from the hash length
+        //length: 256, //optional, if you want your key length to differ from the hash function's block length
     },
     false, //whether the key is extractable (i.e. can be used in exportKey)
     ["sign", "verify"] //can be any combination of "sign" and "verify"
