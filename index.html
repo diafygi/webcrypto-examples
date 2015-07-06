@@ -516,7 +516,7 @@
                 <td class="encrypt">
                     <script>
                         //encrypt
-                        window.crypto.subtle.generateKey(RSAOAEP, false, ["encrypt"])
+                        window.crypto.subtle.generateKey(RSAOAEP, false, ["encrypt", "decrypt"])
                         .then(function(key){
                             return window.crypto.subtle.encrypt(RSAOAEP, key.publicKey, TESTBYTES);
                         })

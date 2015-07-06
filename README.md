@@ -327,7 +327,7 @@ window.crypto.subtle.generateKey(
         hash: {name: "SHA-256"}, //can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
     },
     false, //whether the key is extractable (i.e. can be used in exportKey)
-    ["encrypt", "decrypt"] //can be any combination of "encrypt" and "decrypt"
+    ["encrypt", "decrypt"] //must contain both "encrypt" and "decrypt"
 )
 .then(function(key){
     //returns a keypair object
