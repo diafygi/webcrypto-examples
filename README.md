@@ -978,8 +978,15 @@ window.crypto.subtle.encrypt(
         //Always generate a new iv every time your encrypt!
         iv: window.crypto.getRandomValues(new Uint8Array(16)),
 
-        //Additional authentication data (unsure what proper use for this is)
+        //Additional authenticated data: 
+        //AES-GCM protects the confidentiality and the integrity. The additionalData is not 
+        //encrypted but the integrity is stil protected.
+        //Decryption will only succeed if the additionalData is the same during 
+        //decryption and encryption. 
+        //This is an optional property.
         additionalData: window.crypto.getRandomValues(new Uint8Array(256)),
+        
+        //Length of the authentication tag
         tagLength: 128,
         };
     },
