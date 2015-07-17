@@ -37,6 +37,9 @@
         </style>
         <script>
             window.crypto = window.crypto || window.msCrypto; //for IE11
+            if(window.crypto.webkitSubtle){
+                window.crypto.subtle = window.crypto.webkitSubtle; //for Safari
+            }
             window.TESTBYTES = new Uint8Array([1, 2, 3, 4]);
 
             //shortcuts to insert test results into the table
