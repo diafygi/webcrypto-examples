@@ -978,10 +978,11 @@ window.crypto.subtle.encrypt(
         //Always generate a new iv every time your encrypt!
         iv: window.crypto.getRandomValues(new Uint8Array(16)),
 
-        //Additional authentication data (unsure what proper use for this is)
-        additionalData: window.crypto.getRandomValues(new Uint8Array(256)),
-        tagLength: 128,
-        };
+        //Additional authentication data (optional)
+        additionalData: ArrayBuffer,
+
+        //Tag length (optional)
+        tagLength: 128, //can be 32, 64, 96, 104, 112, 120 or 128 (default)
     },
     key, //from generateKey or importKey above
     data //ArrayBuffer of data you want to encrypt
@@ -1000,8 +1001,8 @@ window.crypto.subtle.decrypt(
     {
         name: "AES-GCM",
         iv: ArrayBuffer(16), //The initialization vector you used to encrypt
-        additionalData: ArrayBuffer, //The addtionalData you used to encrypt
-        tagLength: 128, //The tagLength you used to encrypt
+        additionalData: ArrayBuffer, //The addtionalData you used to encrypt (if any)
+        tagLength: 128, //The tagLength you used to encrypt (if any)
     },
     key, //from generateKey or importKey above
     data //ArrayBuffer of the data
