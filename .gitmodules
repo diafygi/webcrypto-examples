@@ -1,0 +1,3 @@
+[submodule "deps/mscrypto-adapter"]
+	path = deps/mscrypto-adapter
+	url = https://github.com/vibornoff/mscrypto-adapter.git
