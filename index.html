@@ -1432,7 +1432,7 @@
                         .then(function(key){
                             return window.crypto.subtle.encrypt({
                                 name: "AES-GCM",
-                                iv: window.crypto.getRandomValues(new Uint8Array(4096)),
+                                iv: window.crypto.getRandomValues(new Uint8Array(12)),
                                 additionalData: window.crypto.getRandomValues(new Uint8Array(256)),
                                 tagLength: 128,
                             }, key, TESTBYTES);
@@ -1446,7 +1446,7 @@
                         //decrypt
                         window.crypto.subtle.generateKey(AESGCM, false, ["encrypt", "decrypt"])
                         .then(function(key){
-                            var iv = window.crypto.getRandomValues(new Uint8Array(4096));
+                            var iv = window.crypto.getRandomValues(new Uint8Array(12));
                             var addtl = window.crypto.getRandomValues(new Uint8Array(256));
                             window.crypto.subtle.encrypt({
                                 name: "AES-GCM",
