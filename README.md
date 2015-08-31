@@ -12,105 +12,112 @@ wrote examples and made a live table with them. Pull requests welcome!
 [sign](#rsassa-pkcs1-v1_5---sign) | 
 [verify](#rsassa-pkcs1-v1_5---verify)
 
-2. [RSA-PSS](#rsa-pss)
+2. [RSAES-PKCS1-v1_5](#rsaes-pkcs1-v1_5)
+  * [generateKey](#rsaes-pkcs1-v1_5---generatekey) | 
+[importKey](#rsaes-pkcs1-v1_5---importkey) | 
+[exportKey](#rsaes-pkcs1-v1_5---exportkey) | 
+[encrypt](#rsaes-pkcs1-v1_5---encrypt) | 
+[decrypt](#rsaes-pkcs1-v1_5---decrypt)
+
+3. [RSA-PSS](#rsa-pss)
   * [generateKey](#rsa-pss---generatekey) | 
 [importKey](#rsa-pss---importkey) | 
 [exportKey](#rsa-pss---exportkey) | 
 [sign](#rsa-pss---sign) | 
 [verify](#rsa-pss---verify)
 
-3. [RSA-OAEP](#rsa-oaep)
+4. [RSA-OAEP](#rsa-oaep)
   * [generateKey](#rsa-oaep---generatekey) | 
 [importKey](#rsa-oaep---importkey) | 
 [exportKey](#rsa-oaep---exportkey) | 
 [encrypt](#rsa-oaep---encrypt) | 
 [decrypt](#rsa-oaep---decrypt)
 
-4. [ECDSA](#ecdsa)
+5. [ECDSA](#ecdsa)
   * [generateKey](#ecdsa---generatekey) | 
 [importKey](#ecdsa---importkey) | 
 [exportKey](#ecdsa---exportkey) | 
 [sign](#ecdsa---sign) | 
 [verify](#ecdsa---verify)
 
-5. [ECDH](#ecdh)
+6. [ECDH](#ecdh)
   * [generateKey](#ecdh---generatekey) | 
 [importKey](#ecdh---importkey) | 
 [exportKey](#ecdh---exportkey) | 
 [deriveKey](#ecdh---derivekey) | 
 [deriveBits](#ecdh---derivebits)
 
-6. [AES-CTR](#aes-ctr)
+7. [AES-CTR](#aes-ctr)
   * [generateKey](#aes-ctr---generatekey) | 
 [importKey](#aes-ctr---importkey) | 
 [exportKey](#aes-ctr---exportkey) | 
 [encrypt](#aes-ctr---encrypt) | 
 [decrypt](#aes-ctr---decrypt)
 
-7. [AES-CBC](#aes-cbc)
+8. [AES-CBC](#aes-cbc)
   * [generateKey](#aes-cbc---generatekey) | 
 [importKey](#aes-cbc---importkey) | 
 [exportKey](#aes-cbc---exportkey) | 
 [encrypt](#aes-cbc---encrypt) | 
 [decrypt](#aes-cbc---decrypt)
 
-8. [AES-CMAC](#aes-cmac)
+9. [AES-CMAC](#aes-cmac)
   * [generateKey](#aes-cmac---generatekey) | 
 [importKey](#aes-cmac---importkey) | 
 [exportKey](#aes-cmac---exportkey) | 
 [sign](#aes-cmac---sign) | 
 [verify](#aes-cmac---verify)
 
-9. [AES-GCM](#aes-gcm)
+10. [AES-GCM](#aes-gcm)
   * [generateKey](#aes-gcm---generatekey) | 
 [importKey](#aes-gcm---importkey) | 
 [exportKey](#aes-gcm---exportkey) | 
 [encrypt](#aes-gcm---encrypt) | 
 [decrypt](#aes-gcm---decrypt)
 
-10. [AES-CFB](#aes-cfb)
+11. [AES-CFB](#aes-cfb)
   * [generateKey](#aes-cfb---generatekey) | 
 [importKey](#aes-cfb---importkey) | 
 [exportKey](#aes-cfb---exportkey) | 
 [encrypt](#aes-cfb---encrypt) | 
 [decrypt](#aes-cfb---decrypt)
 
-11. [AES-KW](#aes-kw)
+12. [AES-KW](#aes-kw)
   * [generateKey](#aes-kw---generatekey) | 
 [importKey](#aes-kw---importkey) | 
 [exportKey](#aes-kw---exportkey)
 
-12. [HMAC](#hmac)
+13. [HMAC](#hmac)
   * [generateKey](#hmac---generatekey) | 
 [importKey](#hmac---importkey) | 
 [exportKey](#hmac---exportkey) | 
 [sign](#hmac---sign) | 
 [verify](#hmac-verify)
 
-13. [DH](#dh)
+14. [DH](#dh)
   * [generateKey](#dh---generatekey) | 
 [importKey](#dh---importkey) | 
 [exportKey](#dh---exportkey) | 
 [deriveKey](#dh---derivekey) | 
 [deriveBits](#dh---derivebits)
 
-14. [SHA](#sha-1)
+15. [SHA](#sha-1)
   * [SHA-1 digest](#sha-1---digest) | 
 [SHA-256 digest](#sha-256---digest) | 
 [SHA-384 digest](#sha-384---digest) | 
 [SHA-512 digest](#sha-512---digest)
 
-18. [CONCAT](#concat)
+16. [CONCAT](#concat)
   * [importKey](#concat---importkey) | 
 [deriveKey](#concat---derivekey) | 
 [deriveBits](#concat---derivebits)
 
-19. [HKDF-CTR](#hkdf-ctr)
+17. [HKDF-CTR](#hkdf-ctr)
   * [importKey](#hkdf-ctr---importkey) | 
 [deriveKey](#hkdf-ctr---derivekey) | 
 [deriveBits](#hkdf-ctr---derivebits)
 
-20. [PBKDF2](#pbkdf2)
+18. [PBKDF2](#pbkdf2)
   * [generateKey](#pbkdf2---generatekey) | 
 [importKey](#pbkdf2---importkey) | 
 [deriveKey](#pbkdf2---derivekey) | 
@@ -209,6 +216,104 @@ window.crypto.subtle.verify(
 .then(function(isvalid){
     //returns a boolean on whether the signature is true or not
     console.log(isvalid);
+})
+.catch(function(err){
+    console.error(err);
+});
+```
+
+##RSAES-PKCS1-v1_5
+####RSAES-PKCS1-v1_5 - generateKey
+```javascript
+window.crypto.subtle.generateKey(
+    {
+        name: "RSAES-PKCS1-v1_5",
+        modulusLength: 2048, //can be 1024, 2048, or 4096
+        publicExponent: new Uint8Array([0x01, 0x00, 0x01]),
+        hash: {name: "SHA-256"}, //can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
+    },
+    false, //whether the key is extractable (i.e. can be used in exportKey)
+    ["encrypt", "decrypt"] //can be any combination of "encrypt", "decrypt", "wrapKey", "unwrapKey"
+)
+.then(function(key){
+    //returns a keypair object
+    console.log(key);
+    console.log(key.publicKey);
+    console.log(key.privateKey);
+})
+.catch(function(err){
+    console.error(err);
+});
+```
+####RSAES-PKCS1-v1_5 - importKey
+```javascript
+window.crypto.subtle.importKey(
+    "jwk", //can be "jwk" (public or private), "spki" (public only), or "pkcs8" (private only)
+    {   //this is an example jwk key, other key types are Uint8Array objects
+        kty: "RSA",
+        e: "AQAB",
+        n: "vGO3eU16ag9zRkJ4AK8ZUZrjbtp5xWK0LyFMNT8933evJoHeczexMUzSiXaLrEFSyQZortk81zJH3y41MBO_UFDO_X0crAquNrkjZDrf9Scc5-MdxlWU2Jl7Gc4Z18AC9aNibWVmXhgvHYkEoFdLCFG-2Sq-qIyW4KFkjan05IE",
+        alg: "RS256",
+        ext: true,
+    },
+    {   //these are the algorithm options
+        name: "RSAES-PKCS1-v1_5",
+        hash: {name: "SHA-256"}, //can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
+    },
+    false, //whether the key is extractable (i.e. can be used in exportKey)
+    ["encrypt"] //"encrypt" or "wrapKey" for public key import, "decrypt" or "unwrapKey" for private key imports
+)
+.then(function(publicKey){
+    //returns a publicKey (or privateKey if you are importing a private key)
+    console.log(publicKey);
+})
+.catch(function(err){
+    console.error(err);
+});
+```
+####RSAES-PKCS1-v1_5 - exportKey
+```javascript
+window.crypto.subtle.exportKey(
+    "jwk", //can be "jwk" (public or private), "spki" (public only), or "pkcs8" (private only)
+    publicKey //can be a publicKey or privateKey, as long as extractable was true
+)
+.then(function(keydata){
+    //returns the exported key data
+    console.log(keydata);
+})
+.catch(function(err){
+    console.error(err);
+});
+```
+####RSAES-PKCS1-v1_5 - encrypt
+```javascript
+window.crypto.subtle.encrypt(
+    {
+        name: "RSAES-PKCS1-v1_5",
+    },
+    publicKey, //from generateKey or importKey above
+    data //ArrayBuffer of data you want to encrypt
+)
+.then(function(ciphertext){
+    //returns an ArrayBuffer containing the ciphertext
+    console.log(new Uint8Array(ciphertext));
+})
+.catch(function(err){
+    console.error(err);
+});
+```
+####RSAES-PKCS1-v1_5 - decrypt
+```javascript
+window.crypto.subtle.decrypt(
+    {
+        name: "RSAES-PKCS1-v1_5",
+    },
+    privateKey, //from generateKey or importKey above
+    ciphertext //ArrayBuffer of the ciphertext
+)
+.then(function(data){
+    //returns an ArrayBuffer of decrypted data
+    console.log(data);
 })
 .catch(function(err){
     console.error(err);
