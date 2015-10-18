@@ -20,6 +20,7 @@
     -->
     <head>
         <title>WebCryptoAPI Live Table</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <style>
             body{font-family:sans-serif;}
@@ -503,6 +504,205 @@
                 </td>
                 <td class="wrapKey disabled"></td>
                 <td class="unwrapKey disabled"></td>
+            </tr>
+
+
+            <!--
+            #############################
+            ###   RSAES-PKCS1-v1_5   ###
+            #############################
+            -->
+            <script>
+                //Base algorithm for testing
+                window.RSAES = {
+                    name: "RSAES-PKCS1-v1_5",
+                    //NOTE: THIS IS A SMALL MODULUS FOR TESTING ONLY
+                    //DO NOT USE IT FOR REAL! USE AT LEAST 2048
+                    modulusLength: 1024,
+                    publicExponent: new Uint8Array([0x01, 0x00, 0x01]),
+                    hash: {name: "SHA-256"},
+                }
+            </script>
+            <tr id="rsaes-pkcs1">
+                <td class="algname"><a href="https://github.com/diafygi/webcrypto-examples/#rsaes-pkcs1-v1_5">RSAES-PKCS1-v1_5</a></td>
+                <td class="encrypt">
+                    <script>
+                        //encrypt
+                        window.crypto.subtle.generateKey(RSAES, false, ["encrypt", "decrypt"])
+                        .then(function(key){
+                            return window.crypto.subtle.encrypt(RSAES, key.publicKey, TESTBYTES);
+                        })
+                        .then(ok("rsaes-pkcs1", "encrypt", "Yes"))
+                        .catch(err("rsaes-pkcs1", "encrypt", "No"));
+                    </script>
+                </td>
+                <td class="decrypt">
+                    <script>
+                        //decrypt
+                        window.crypto.subtle.generateKey(RSAES, false, ["encrypt", "decrypt"])
+                        .then(function(key){
+                            window.crypto.subtle.encrypt(RSAES, key.publicKey, TESTBYTES)
+                            .then(function(encrypted){
+                                return window.crypto.subtle.decrypt(RSAES, key.privateKey, encrypted);
+                            })
+                            .then(ok("rsaes-pkcs1", "decrypt", "Yes"))
+                            .catch(err("rsaes-pkcs1", "decrypt", "No"));
+                        })
+                        .catch(err("rsaes-pkcs1", "decrypt", "N/A"));
+                    </script>
+                </td>
+                <td class="sign disabled"></td>
+                <td class="verify disabled"></td>
+                <td class="digest disabled"></td>
+                <td class="generateKey">
+                    <a id="rsaes_generatKey" href="#">Test (slow)</a>
+                    <script>
+                        //generateKey
+                        document.getElementById("rsaes_generatKey").onclick = function(evt){
+                            evt.preventDefault();
+                            evt.target.style.display = "none";
+
+                            //1024 bits
+                            window.crypto.subtle.generateKey({
+                                name: "RSAES-PKCS1-v1_5",
+                                modulusLength: 1024,
+                                publicExponent: new Uint8Array([0x01, 0x00, 0x01]),
+                                hash: {name: "SHA-1"},
+                            }, false, ["encrypt", "decrypt"])
+                            .then(ok("rsaes-pkcs1", "generateKey", "1024 bits"))
+                            .catch(err("rsaes-pkcs1", "generateKey", "1024 bits"));
+
+                            //2048 bits
+                            window.crypto.subtle.generateKey({
+                                name: "RSAES-PKCS1-v1_5",
+                                modulusLength: 2048,
+                                publicExponent: new Uint8Array([0x01, 0x00, 0x01]),
+                                hash: {name: "SHA-256"},
+                            }, false, ["encrypt", "decrypt"])
+                            .then(ok("rsaes-pkcs1", "generateKey", "2048 bits"))
+                            .catch(err("rsaes-pkcs1", "generateKey", "2048 bits"));
+
+                            //4096 bits
+                            window.crypto.subtle.generateKey({
+                                name: "RSAES-PKCS1-v1_5",
+                                modulusLength: 4096,
+                                publicExponent: new Uint8Array([0x01, 0x00, 0x01]),
+                                hash: {name: "SHA-384"},
+                            }, false, ["encrypt", "decrypt"])
+                            .then(ok("rsaes-pkcs1", "generateKey", "4096 bits"))
+                            .catch(err("rsaes-pkcs1", "generateKey", "4096 bits"));
+
+                        };
+                    </script>
+                </td>
+                <td class="deriveKey disabled"></td>
+                <td class="deriveBits disabled"></td>
+                <td class="importKey">
+                    <script>
+                        //importKey
+
+                        //jwk
+                        window.crypto.subtle.importKey("jwk", {
+                            kty: "RSA",
+                            e: "AQAB",
+                            n: "vGO3eU16ag9zRkJ4AK8ZUZrjbtp5xWK0LyFMNT8933evJoHeczexMUzSiXaLrEFSyQZortk81zJH3y41MBO_UFDO_X0crAquNrkjZDrf9Scc5-MdxlWU2Jl7Gc4Z18AC9aNibWVmXhgvHYkEoFdLCFG-2Sq-qIyW4KFkjan05IE",
+                            alg: "RSA1_5",
+                            ext: true,
+                        }, RSAES, false, ["encrypt"])
+                        .then(ok("rsaes-pkcs1", "importKey", "jwk-pub"))
+                        .catch(err("rsaes-pkcs1", "importKey", "jwk-pub"));
+
+                        window.crypto.subtle.importKey("jwk", {
+                            kty: "RSA",
+                            e: "AQAB",
+                            d: "n_dIVw9MD_04lANi5KnKJPoRfxKy7cGHYLG0hU5DGpsFNfx2yH0Uz9j8uU7ZARai1iHECBxcxhpi3wbckQtjmbkCUKvs4G0gKLT9UuNHcCbh0WfvadfPPec52n4z6s4zwisbgWCNbT2L-SyHt1yuFmLAYXkg0swk3y5Bt_ilA8E",
+                            dp: "2RNM_uiYEQMcATQaUu3AwdeJpenCPykbQHkwAylvXqlHB6W7m5XX0k-SutkbXAijmGTC-Oh8NexsLGHxOACb8Q",
+                            dq: "rHabkI3_XVGieLqHujpWaWe9YD03fJY0KbbQX0fIoNdNU4GcmUftzIWLSajPKKsiyfR6Xk2AEtBmBPE5qaoV6Q",
+                            n: "vGO3eU16ag9zRkJ4AK8ZUZrjbtp5xWK0LyFMNT8933evJoHeczexMUzSiXaLrEFSyQZortk81zJH3y41MBO_UFDO_X0crAquNrkjZDrf9Scc5-MdxlWU2Jl7Gc4Z18AC9aNibWVmXhgvHYkEoFdLCFG-2Sq-qIyW4KFkjan05IE",
+                            p: "5Y4ynodegqC9kgGmfZeSrojGmLyYR8HIvKVEAIjjMUQjyvKWpWsXfPg67mTdqVpjSpQLQlRfES2nUvZ27KrU6Q",
+                            q: "0hd_U9PcNpMe77nhsTgoVNgMB34cqfrfu4fPuJ-7NvvMkKIELDLy-m8qg1MBbgf2i5546A9B5Exsuj4D2Vwz2Q",
+                            qi: "R3CkCGVAESy_hChmDvUaLMT-R1xk6kK7RLIUQKXATPQbnDqWBMgm-vcawFVhKJ-ICJsPfmRUsv7Wt1bJ01wLGQ",
+                            alg: "RSA1_5",
+                            ext: true,
+                        }, RSAES, false, ["decrypt"])
+                        .then(ok("rsaes-pkcs1", "importKey", "jwk-priv"))
+                        .catch(err("rsaes-pkcs1", "importKey", "jwk-priv"));
+
+                        //spki
+                        window.crypto.subtle.importKey("spki", new Uint8Array([
+                            48,129,159,48,13,6,9,42,134,72,134,247,13,1,1,1,5,0,3,
+                            129,141,0,48,129,137,2,129,129,0,182,93,35,213,252,204,
+                            20,103,91,238,105,199,53,114,24,221,114,210,137,173,88,
+                            76,205,113,148,148,79,80,59,208,60,75,231,248,78,125,12,
+                            30,237,226,63,146,157,203,239,60,138,123,234,50,23,174,
+                            216,33,122,16,53,246,140,254,75,246,205,204,117,204,115,
+                            29,178,102,139,201,74,177,45,131,183,166,234,61,124,75,
+                            110,3,70,202,148,95,45,228,94,95,148,2,162,79,146,137,29,
+                            189,102,75,207,214,116,58,63,171,219,27,5,9,108,16,218,23,
+                            169,43,181,119,31,172,95,205,180,18,255,203,2,3,1,0,1
+                        ]), RSAES, false, ["encrypt"])
+                        .then(ok("rsaes-pkcs1", "importKey", "spki-pub"))
+                        .catch(err("rsaes-pkcs1", "importKey", "spki-pub"));
+
+                        //pkcs8
+                        window.crypto.subtle.importKey("pkcs8", new Uint8Array([
+                            48,130,2,118,2,1,0,48,13,6,9,42,134,72,134,247,13,1,1,1,5,0,4,130,2,96,48,130,2,92,2,1,0,2,129,
+                            129,0,217,78,147,218,221,152,10,66,75,127,242,108,182,142,157,44,93,58,176,193,135,103,216,179,
+                            69,72,38,115,144,244,12,139,0,245,48,115,204,234,158,193,231,127,178,240,244,203,35,229,203,245,
+                            110,215,199,19,98,183,164,223,159,203,128,123,173,26,12,172,250,99,254,35,225,221,39,51,62,3,139,
+                            35,38,164,71,238,240,73,139,214,68,172,204,253,171,244,14,186,152,159,225,133,229,140,99,50,183,
+                            242,217,248,86,233,20,117,42,136,55,8,65,124,244,65,29,15,194,255,78,31,189,146,105,161,2,3,1,0,1,
+                            2,129,128,26,88,13,82,166,52,141,97,214,23,79,195,96,42,79,225,149,247,204,127,217,179,124,48,215,
+                            128,84,177,3,236,162,44,163,212,21,168,164,57,249,63,22,154,131,141,244,143,63,237,214,217,13,51,
+                            249,125,95,37,86,70,137,239,184,198,197,136,62,183,41,78,118,234,57,195,161,219,173,234,61,11,165,
+                            109,209,9,3,22,186,114,32,135,147,74,6,106,190,214,36,208,32,220,61,12,41,105,251,247,18,159,3,198,
+                            28,228,36,44,189,125,45,72,233,199,12,72,91,106,165,246,217,58,168,53,2,65,0,241,112,53,166,98,11,
+                            38,73,58,156,84,190,118,74,247,229,85,178,83,231,53,137,237,228,246,12,32,206,157,198,152,70,11,185,
+                            234,30,112,23,115,249,68,176,159,108,247,249,207,152,145,166,246,79,176,219,163,111,243,4,49,3,239,
+                            242,63,147,2,65,0,230,105,200,1,208,201,237,225,85,27,39,216,193,1,253,168,88,15,242,166,70,106,235,
+                            2,92,24,130,66,176,176,220,238,66,12,159,26,24,40,19,213,138,98,238,98,220,65,148,116,146,21,0,25,6,
+                            177,57,216,70,51,149,244,157,153,106,123,2,64,127,92,254,48,67,80,54,102,50,240,253,19,108,59,168,1,
+                            230,239,39,171,180,102,138,132,89,247,147,230,234,252,52,159,222,215,184,85,78,52,81,13,145,218,202,
+                            127,37,97,54,205,249,39,230,143,171,112,114,11,64,91,89,176,6,7,248,217,2,65,0,220,94,95,132,29,4,
+                            132,22,247,38,185,189,125,27,66,87,55,162,73,24,238,80,99,228,37,224,234,244,141,185,26,20,101,231,
+                            92,99,192,166,212,17,112,1,158,173,190,170,154,41,195,109,130,98,109,28,35,142,205,213,152,158,19,
+                            253,30,241,2,64,15,148,8,16,189,122,55,109,203,175,173,24,222,36,130,130,179,87,189,32,141,149,30,
+                            115,211,227,79,234,78,202,253,48,173,95,167,203,20,193,160,30,146,33,109,4,221,25,212,216,183,100,
+                            18,46,184,52,65,146,249,68,225,10,84,38,98,133
+                        ]), RSAES, false, ["decrypt"])
+                        .then(ok("rsaes-pkcs1", "importKey", "pkcs8-priv"))
+                        .catch(err("rsaes-pkcs1", "importKey", "pkcs8-priv"));
+                    </script>
+                </td>
+                <td class="exportKey">
+                    <script>
+                        //exportKey
+                        window.crypto.subtle.generateKey(RSAES, true, ["encrypt", "decrypt"])
+                        .then(function(key){
+
+                            //jwk
+                            window.crypto.subtle.exportKey("jwk", key.publicKey)
+                            .then(ok("rsaes-pkcs1", "exportKey", "jwk-pub"))
+                            .catch(err("rsaes-pkcs1", "exportKey", "jwk-pub"));
+
+                            window.crypto.subtle.exportKey("jwk", key.privateKey)
+                            .then(ok("rsaes-pkcs1", "exportKey", "jwk-priv"))
+                            .catch(err("rsaes-pkcs1", "exportKey", "jwk-priv"));
+
+                            //spki
+                            window.crypto.subtle.exportKey("spki", key.publicKey)
+                            .then(ok("rsaes-pkcs1", "exportKey", "spki-pub"))
+                            .catch(err("rsaes-pkcs1", "exportKey", "spki-pub"));
+
+                            //pkcs8
+                            window.crypto.subtle.exportKey("pkcs8", key.privateKey)
+                            .then(ok("rsaes-pkcs1", "exportKey", "pkcs8-priv"))
+                            .catch(err("rsaes-pkcs1", "exportKey", "pkcs8-priv"));
+
+                        })
+                        .catch(err("rsaes-pkcs1", "exportKey", "N/A"));
+                    </script>
+                </td>
             </tr>
 
 
