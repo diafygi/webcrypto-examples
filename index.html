@@ -49,6 +49,7 @@
                     result.className = "good";
                     result.innerHTML = msg;
                     document.querySelector("#" + id + " ." + cls).appendChild(result);
+                    document.querySelector("#" + id + " ." + cls).appendChild(document.createElement("br"));
                 }
             }
             function err(id, cls, msg, loud){
@@ -62,6 +63,7 @@
                     result.innerHTML = msg;
                     result.title = e.message;
                     document.querySelector("#" + id + " ." + cls).appendChild(result);
+                    document.querySelector("#" + id + " ." + cls).appendChild(document.createElement("br"));
                     return e;
                 }
             }
