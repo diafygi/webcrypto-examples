@@ -30,6 +30,8 @@
             td{max-width:130px;}
             td:first-child{max-width:200px;}
             .disabled{background-color:#aaaaaa;}
+            .recommended{background-color:#8cff8c;}
+            .unsafe{background-color:#ffb6b6;}
             .good,.bad{display:inline-block;padding-left:24px;margin-top:4px;min-height:20px;background-repeat:no-repeat;}
             .good:first-child,.bad:first-child{margin-top:0px;}
             .good{background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAA9ElEQVQ4y2P4//8/AzUxw6Ay0GG/A4vlFu8SEAaxKTIQbNg2r1WWW73+g/EW79UgMeoYhsAzSDYsdFUoM1DjSiyG/bfa6vWIZMOAmlZgMwyI/1hs8wwHK7TY7qEAFDhhsdXrOFCDPC7DgBqW4zEsGhwpUMMeIEnet9nsK0eOYWADQS7Douiu6U43WaQwW0aMYfgMBOE7IO8D6aXEGobLy8j4OymGwRO22SZfRaCihzg0E20YSk6x2eKtBEpHlBiGkfVAhgI1PSbXMKx52WqbpzIWQ4kyDGfhYLnDXQXJUKINw1vagGLfYot3j/lWL9ehW8BiwwA8jA6GeQxGVAAAAABJRU5ErkJggg==);}
@@ -81,6 +83,12 @@
                 https://github.com/diafygi/webcrypto-examples/
             </a>
         </p>
+        <p>
+            <span class="recommended"></span> - Recommended
+        </p>
+        <p>
+            <span class="unsafe"></span> - Unsafe! Only use for backwards compatibility!
+        </p>
         <table>
             <tr>
                 <th>Algorithm Name</th>
@@ -119,7 +127,7 @@
                 <td class="algname"><a href="https://github.com/diafygi/webcrypto-examples/#rsassa-pkcs1-v1_5">RSASSA-PKCS1-v1_5</a></td>
                 <td class="encrypt disabled"></td>
                 <td class="decrypt disabled"></td>
-                <td class="sign">
+                <td class="sign unsafe">
                     <script>
                         //sign
                         window.crypto.subtle.generateKey(RSASSA, false, ["sign"])
@@ -130,7 +138,7 @@
                         .catch(err("rsassa-pkcs1", "sign", "No"));
                     </script>
                 </td>
-                <td class="verify">
+                <td class="verify unsafe">
                     <script>
                         //verify
                         window.crypto.subtle.generateKey(RSASSA, false, ["sign", "verify"])
@@ -146,7 +154,7 @@
                     </script>
                 </td>
                 <td class="digest disabled"></td>
-                <td class="generateKey">
+                <td class="generateKey unsafe">
                     <a id="rsassa_generatKey" href="#">Test (slow)</a>
                     <script>
                         //generateKey
@@ -189,7 +197,7 @@
                 </td>
                 <td class="deriveKey disabled"></td>
                 <td class="deriveBits disabled"></td>
-                <td class="importKey">
+                <td class="importKey unsafe">
                     <script>
                         //importKey
 
@@ -266,7 +274,7 @@
                         .catch(err("rsassa-pkcs1", "importKey", "pkcs8-priv"));
                     </script>
                 </td>
-                <td class="exportKey">
+                <td class="exportKey unsafe">
                     <script>
                         //exportKey
                         window.crypto.subtle.generateKey(RSASSA, true, ["sign", "verify"])
@@ -321,7 +329,7 @@
                 <td class="algname"><a href="https://github.com/diafygi/webcrypto-examples/#rsa-pss">RSA-PSS</a></td>
                 <td class="encrypt disabled"></td>
                 <td class="decrypt disabled"></td>
-                <td class="sign">
+                <td class="sign unsafe">
                     <script>
                         //sign
                         window.crypto.subtle.generateKey(RSAPSS, false, ["sign"])
@@ -332,7 +340,7 @@
                         .catch(err("rsa-pss", "sign", "No"));
                     </script>
                 </td>
-                <td class="verify">
+                <td class="verify unsafe">
                     <script>
                         //verify
                         window.crypto.subtle.generateKey(RSAPSS, false, ["sign", "verify"])
@@ -348,7 +356,7 @@
                     </script>
                 </td>
                 <td class="digest disabled"></td>
-                <td class="generateKey">
+                <td class="generateKey unsafe">
                     <a id="rsapss_generatKey" href="#">Test (slow)</a>
                     <script>
                         //generateKey
@@ -394,7 +402,7 @@
                 </td>
                 <td class="deriveKey disabled"></td>
                 <td class="deriveBits disabled"></td>
-                <td class="importKey">
+                <td class="importKey unsafe">
                     <script>
                         //importKey
 
@@ -472,7 +480,7 @@
                         .catch(err("rsa-pss", "importKey", "pkcs8-priv"));
                     </script>
                 </td>
-                <td class="exportKey">
+                <td class="exportKey unsafe">
                     <script>
                         //exportKey
                         window.crypto.subtle.generateKey(RSAPSS, true, ["sign", "verify"])
@@ -524,7 +532,7 @@
             </script>
             <tr id="rsa-oaep">
                 <td class="algname"><a href="https://github.com/diafygi/webcrypto-examples/#rsa-oaep">RSA-OAEP</a></td>
-                <td class="encrypt">
+                <td class="encrypt unsafe">
                     <script>
                         //encrypt
                         window.crypto.subtle.generateKey(RSAOAEP, false, ["encrypt", "decrypt"])
@@ -535,7 +543,7 @@
                         .catch(err("rsa-oaep", "encrypt", "No"));
                     </script>
                 </td>
-                <td class="decrypt">
+                <td class="decrypt unsafe">
                     <script>
                         //decrypt
                         window.crypto.subtle.generateKey(RSAOAEP, false, ["encrypt", "decrypt"])
@@ -553,7 +561,7 @@
                 <td class="sign disabled"></td>
                 <td class="verify disabled"></td>
                 <td class="digest disabled"></td>
-                <td class="generateKey">
+                <td class="generateKey unsafe">
                     <a id="rsaoaep_generatKey" href="#">Test (slow)</a>
                     <script>
                         //generateKey
@@ -596,7 +604,7 @@
                 </td>
                 <td class="deriveKey disabled"></td>
                 <td class="deriveBits disabled"></td>
-                <td class="importKey">
+                <td class="importKey unsafe">
                     <script>
                         //importKey
 
@@ -673,7 +681,7 @@
                         .catch(err("rsa-oaep", "importKey", "pkcs8-priv"));
                     </script>
                 </td>
-                <td class="exportKey">
+                <td class="exportKey unsafe">
                     <script>
                         //exportKey
                         window.crypto.subtle.generateKey(RSAOAEP, true, ["encrypt", "decrypt"])
@@ -702,7 +710,7 @@
                         .catch(err("rsa-oaep", "exportKey", "N/A"));
                     </script>
                 </td>
-                <td class="wrapKey">
+                <td class="wrapKey unsafe">
                     <script>
                         //ECDH
                         window.crypto.subtle.generateKey({
@@ -837,7 +845,7 @@
                         .catch(err("rsa-oaep", "wrapKey", "HMAC"));
                     </script>
                 </td>
-                <td class="unwrapKey">
+                <td class="unwrapKey unsafe">
                     <script>
                         //ECDH
                         window.crypto.subtle.generateKey({
@@ -1060,7 +1068,7 @@
                 <td class="algname"><a href="https://github.com/diafygi/webcrypto-examples/#ecdsa">ECDSA</a></td>
                 <td class="encrypt disabled"></td>
                 <td class="decrypt disabled"></td>
-                <td class="sign">
+                <td class="sign recommended">
                     <script>
                         //sign
                         window.crypto.subtle.generateKey(ECDSA, true, ["sign", "verify"])
@@ -1071,7 +1079,7 @@
                         .catch(err("ecdsa", "sign", "No"));
                     </script>
                 </td>
-                <td class="verify">
+                <td class="verify recommended">
                     <script>
                         //verify
                         window.crypto.subtle.generateKey(ECDSA, true, ["sign", "verify"])
@@ -1087,7 +1095,7 @@
                     </script>
                 </td>
                 <td class="digest disabled"></td>
-                <td class="generateKey">
+                <td class="generateKey recommended">
                     <script>
                         //generateKey
 
@@ -1118,7 +1126,7 @@
                 </td>
                 <td class="deriveKey disabled"></td>
                 <td class="deriveBits disabled"></td>
-                <td class="importKey">
+                <td class="importKey recommended">
                     <script>
                         //importKey
 
@@ -1167,7 +1175,7 @@
                         .catch(err("ecdsa", "importKey", "pkcs8-priv"));
                     </script>
                 </td>
-                <td class="exportKey">
+                <td class="exportKey recommended">
                     <script>
                         //exportKey
                         window.crypto.subtle.generateKey(ECDSA, true, ["sign", "verify"])
@@ -1220,7 +1228,7 @@
                 <td class="sign disabled"></td>
                 <td class="verify disabled"></td>
                 <td class="digest disabled"></td>
-                <td class="generateKey">
+                <td class="generateKey recommended">
                     <script>
                         //generateKey
 
@@ -1249,7 +1257,7 @@
                         .catch(err("ecdh", "generateKey", "P-521"));
                     </script>
                 </td>
-                <td class="deriveKey">
+                <td class="deriveKey recommended">
                     <script>
                         //deriveKey
                         window.crypto.subtle.generateKey(ECDH, false, ["deriveKey"])
@@ -1271,7 +1279,7 @@
                         .catch(err("ecdh", "deriveKey", "N/A"));
                     </script>
                 </td>
-                <td class="deriveBits">
+                <td class="deriveBits recommended">
                     <script>
                         //deriveBits
                         window.crypto.subtle.generateKey(ECDH, false, ["deriveBits"])
@@ -1293,7 +1301,7 @@
                         .catch(err("ecdh", "deriveBits", "N/A"));
                     </script>
                 </td>
-                <td class="importKey">
+                <td class="importKey recommended">
                     <script>
                         //importKey
 
@@ -1346,7 +1354,7 @@
                         .catch(err("ecdh", "importKey", "pkcs8-priv"));
                     </script>
                 </td>
-                <td class="exportKey">
+                <td class="exportKey recommended">
                     <script>
                         //exportKey
                         window.crypto.subtle.generateKey(ECDH, true, ["deriveBits", "deriveKey"])
@@ -1399,7 +1407,7 @@
             </script>
             <tr id="aes-ctr">
                 <td class="algname"><a href="https://github.com/diafygi/webcrypto-examples/#aes-ctr">AES-CTR</a></td>
-                <td class="encrypt">
+                <td class="encrypt unsafe">
                     <script>
                         //encrypt
                         window.crypto.subtle.generateKey(AESCTR, false, ["encrypt"])
@@ -1414,7 +1422,7 @@
                         .catch(err("aes-ctr", "encrypt", "No"));
                     </script>
                 </td>
-                <td class="decrypt">
+                <td class="decrypt unsafe">
                     <script>
                         //decrypt
                         window.crypto.subtle.generateKey(AESCTR, false, ["encrypt", "decrypt"])
@@ -1442,7 +1450,7 @@
                 <td class="sign disabled"></td>
                 <td class="verify disabled"></td>
                 <td class="digest disabled"></td>
-                <td class="generateKey">
+                <td class="generateKey unsafe">
                     <script>
                         //generateKey
 
@@ -1473,7 +1481,7 @@
                 </td>
                 <td class="deriveKey disabled"></td>
                 <td class="deriveBits disabled"></td>
-                <td class="importKey">
+                <td class="importKey unsafe">
                     <script>
                         //importKey
 
@@ -1496,7 +1504,7 @@
                         .catch(err("aes-ctr", "importKey", "raw-key"));
                     </script>
                 </td>
-                <td class="exportKey">
+                <td class="exportKey unsafe">
                     <script>
                         //exportKey
                         window.crypto.subtle.generateKey(AESCTR, true, ["encrypt", "decrypt"])
@@ -1516,7 +1524,7 @@
                         .catch(err("aes-ctr", "exportKey", "N/A"));
                     </script>
                 </td>
-                <td class="wrapKey">
+                <td class="wrapKey unsafe">
                     <script>
                         //RSASSA-PKCS1-v1_5
                         window.crypto.subtle.generateKey({name: "AES-CTR", length: 256}, false, ["wrapKey"])
@@ -1734,7 +1742,7 @@
                         .catch(err("aes-ctr", "wrapKey", "HMAC"));
                     </script>
                 </td>
-                <td class="unwrapKey">
+                <td class="unwrapKey unsafe">
                     <script>
                         //RSASSA-PKCS1-v1_5
                         window.crypto.subtle.generateKey({name: "AES-CTR", length: 256}, false, ["wrapKey", "unwrapKey"])
@@ -2148,7 +2156,7 @@
             </script>
             <tr id="aes-cbc">
                 <td class="algname"><a href="https://github.com/diafygi/webcrypto-examples/#aes-cbc">AES-CBC</a></td>
-                <td class="encrypt">
+                <td class="encrypt unsafe">
                     <script>
                         //encrypt
                         window.crypto.subtle.generateKey(AESCBC, false, ["encrypt"])
@@ -2162,7 +2170,7 @@
                         .catch(err("aes-cbc", "encrypt", "No"));
                     </script>
                 </td>
-                <td class="decrypt">
+                <td class="decrypt unsafe">
                     <script>
                         //decrypt
                         window.crypto.subtle.generateKey(AESCBC, false, ["encrypt", "decrypt"])
@@ -2187,7 +2195,7 @@
                 <td class="sign disabled"></td>
                 <td class="verify disabled"></td>
                 <td class="digest disabled"></td>
-                <td class="generateKey">
+                <td class="generateKey unsafe">
                     <script>
                         //generateKey
 
@@ -2218,7 +2226,7 @@
                 </td>
                 <td class="deriveKey disabled"></td>
                 <td class="deriveBits disabled"></td>
-                <td class="importKey">
+                <td class="importKey unsafe">
                     <script>
                         //importKey
 
@@ -2241,7 +2249,7 @@
                         .catch(err("aes-cbc", "importKey", "raw-key"));
                     </script>
                 </td>
-                <td class="exportKey">
+                <td class="exportKey unsafe">
                     <script>
                         //exportKey
                         window.crypto.subtle.generateKey(AESCBC, true, ["encrypt", "decrypt"])
@@ -2261,7 +2269,7 @@
                         .catch(err("aes-cbc", "exportKey", "N/A"));
                     </script>
                 </td>
-                <td class="wrapKey">
+                <td class="wrapKey unsafe">
                     <script>
                         //RSASSA-PKCS1-v1_5
                         window.crypto.subtle.generateKey({name: "AES-CBC", length: 256}, false, ["wrapKey"])
@@ -2465,7 +2473,7 @@
                         .catch(err("aes-cbc", "wrapKey", "HMAC"));
                     </script>
                 </td>
-                <td class="unwrapKey">
+                <td class="unwrapKey unsafe">
                     <script>
                         //RSASSA-PKCS1-v1_5
                         window.crypto.subtle.generateKey({name: "AES-CBC", length: 256}, false, ["wrapKey", "unwrapKey"])
@@ -2839,7 +2847,7 @@
                 <td class="algname"><a href="https://github.com/diafygi/webcrypto-examples/#aes-cmac">AES-CMAC</a></td>
                 <td class="encrypt disabled"></td>
                 <td class="decrypt disabled"></td>
-                <td class="sign">
+                <td class="sign unsafe">
                     <script>
                         //sign
                         window.crypto.subtle.generateKey(AESCMAC, false, ["sign"])
@@ -2850,7 +2858,7 @@
                         .catch(err("aes-cmac", "sign", "No"));
                     </script>
                 </td>
-                <td class="verify">
+                <td class="verify unsafe">
                     <script>
                         //verify
                         window.crypto.subtle.generateKey(AESCMAC, false, ["sign", "verify"])
@@ -2866,7 +2874,7 @@
                     </script>
                 </td>
                 <td class="digest disabled"></td>
-                <td class="generateKey">
+                <td class="generateKey unsafe">
                     <script>
                         //generateKey
 
@@ -2888,7 +2896,7 @@
                 </td>
                 <td class="deriveKey disabled"></td>
                 <td class="deriveBits disabled"></td>
-                <td class="importKey">
+                <td class="importKey unsafe">
                     <script>
                         //importKey
 
@@ -2911,7 +2919,7 @@
                         .catch(err("aes-cmac", "importKey", "raw-key"));
                     </script>
                 </td>
-                <td class="exportKey">
+                <td class="exportKey unsafe">
                     <script>
                         //exportKey
                         window.crypto.subtle.generateKey(AESCMAC, true, ["sign", "verify"])
@@ -2950,7 +2958,7 @@
             </script>
             <tr id="aes-gcm">
                 <td class="algname"><a href="https://github.com/diafygi/webcrypto-examples/#aes-gcm">AES-GCM</a></td>
-                <td class="encrypt">
+                <td class="encrypt recommended">
                     <script>
                         //encrypt
                         window.crypto.subtle.generateKey(AESGCM, false, ["encrypt"])
@@ -2966,7 +2974,7 @@
                         .catch(err("aes-gcm", "encrypt", "No"));
                     </script>
                 </td>
-                <td class="decrypt">
+                <td class="decrypt recommended">
                     <script>
                         //decrypt
                         window.crypto.subtle.generateKey(AESGCM, false, ["encrypt", "decrypt"])
@@ -2996,7 +3004,7 @@
                 <td class="sign disabled"></td>
                 <td class="verify disabled"></td>
                 <td class="digest disabled"></td>
-                <td class="generateKey">
+                <td class="generateKey recommended">
                     <script>
                         //generateKey
 
@@ -3027,7 +3035,7 @@
                 </td>
                 <td class="deriveKey disabled"></td>
                 <td class="deriveBits disabled"></td>
-                <td class="importKey">
+                <td class="importKey recommended">
                     <script>
                         //importKey
 
@@ -3050,7 +3058,7 @@
                         .catch(err("aes-gcm", "importKey", "raw-key"));
                     </script>
                 </td>
-                <td class="exportKey">
+                <td class="exportKey recommended">
                     <script>
                         //exportKey
                         window.crypto.subtle.generateKey(AESGCM, true, ["encrypt", "decrypt"])
@@ -3070,7 +3078,7 @@
                         .catch(err("aes-gcm", "exportKey", "N/A"));
                     </script>
                 </td>
-                <td class="wrapKey">
+                <td class="wrapKey recommended">
                     <script>
                         //RSASSA-PKCS1-v1_5
                         window.crypto.subtle.generateKey({name: "AES-GCM", length: 256}, false, ["wrapKey"])
@@ -3274,7 +3282,7 @@
                         .catch(err("aes-gcm", "wrapKey", "HMAC"));
                     </script>
                 </td>
-                <td class="unwrapKey">
+                <td class="unwrapKey recommended">
                     <script>
                         //RSASSA-PKCS1-v1_5
                         window.crypto.subtle.generateKey({name: "AES-GCM", length: 256}, false, ["wrapKey", "unwrapKey"])
@@ -3647,7 +3655,7 @@
             </script>
             <tr id="aes-cfb">
                 <td class="algname"><a href="https://github.com/diafygi/webcrypto-examples/#aes-cfb">AES-CFB</a></td>
-                <td class="encrypt">
+                <td class="encrypt unsafe">
                     <script>
                         //encrypt
                         window.crypto.subtle.generateKey(AESCFB, false, ["encrypt"])
@@ -3661,7 +3669,7 @@
                         .catch(err("aes-cfb", "encrypt", "No"));
                     </script>
                 </td>
-                <td class="decrypt">
+                <td class="decrypt unsafe">
                     <script>
                         //decrypt
                         window.crypto.subtle.generateKey(AESCFB, false, ["encrypt", "decrypt"])
@@ -3686,7 +3694,7 @@
                 <td class="sign disabled"></td>
                 <td class="verify disabled"></td>
                 <td class="digest disabled"></td>
-                <td class="generateKey">
+                <td class="generateKey unsafe">
                     <script>
                         //generateKey
 
@@ -3717,7 +3725,7 @@
                 </td>
                 <td class="deriveKey disabled"></td>
                 <td class="deriveBits disabled"></td>
-                <td class="importKey">
+                <td class="importKey unsafe">
                     <script>
                         //importKey
 
@@ -3740,7 +3748,7 @@
                         .catch(err("aes-cfb", "importKey", "raw-key"));
                     </script>
                 </td>
-                <td class="exportKey">
+                <td class="exportKey unsafe">
                     <script>
                         //exportKey
                         window.crypto.subtle.generateKey(AESCFB, true, ["encrypt", "decrypt"])
@@ -3760,14 +3768,14 @@
                         .catch(err("aes-cfb", "exportKey", "N/A"));
                     </script>
                 </td>
-                <td class="wrapKey">
+                <td class="wrapKey unsafe">
                     <script>
                         window.crypto.subtle.generateKey(AESCFB, true, ["wrapKey"])
                         .then(ok("aes-cfb", "wrapKey", "TODO"))
                         .catch(err("aes-cfb", "wrapKey", "N/A"));
                     </script>
                 </td>
-                <td class="unwrapKey">
+                <td class="unwrapKey unsafe">
                     <script>
                         window.crypto.subtle.generateKey(AESCFB, true, ["wrapKey", "unwrapKey"])
                         .then(ok("aes-cfb", "unwrapKey", "TODO"))
@@ -3796,7 +3804,7 @@
                 <td class="sign disabled"></td>
                 <td class="verify disabled"></td>
                 <td class="digest disabled"></td>
-                <td class="generateKey">
+                <td class="generateKey recommended">
                     <script>
                         //generateKey
 
@@ -3827,7 +3835,7 @@
                 </td>
                 <td class="deriveKey disabled"></td>
                 <td class="deriveBits disabled"></td>
-                <td class="importKey">
+                <td class="importKey recommended">
                     <script>
                         //importKey
 
@@ -3850,7 +3858,7 @@
                         .catch(err("aes-kw", "importKey", "raw-key"));
                     </script>
                 </td>
-                <td class="exportKey">
+                <td class="exportKey recommended">
                     <script>
                         //exportKey
                         window.crypto.subtle.generateKey(AESKW, true, ["wrapKey", "unwrapKey"])
@@ -3870,7 +3878,7 @@
                         .catch(err("aes-kw", "exportKey", "N/A"));
                     </script>
                 </td>
-                <td class="wrapKey">
+                <td class="wrapKey recommended">
                     <script>
                         //ECDH
                         window.crypto.subtle.generateKey({name: "AES-KW", length: 256}, false, ["wrapKey"])
@@ -3966,7 +3974,7 @@
                         .catch(err("aes-kw", "wrapKey", "HMAC"));
                     </script>
                 </td>
-                <td class="unwrapKey">
+                <td class="unwrapKey recommended">
                     <script>
                         //ECDH
                         window.crypto.subtle.generateKey({name: "AES-KW", length: 256}, false, ["wrapKey", "unwrapKey"])
@@ -4130,7 +4138,7 @@
                 <td class="algname"><a href="https://github.com/diafygi/webcrypto-examples/#hmac">HMAC</a></td>
                 <td class="encrypt disabled"></td>
                 <td class="decrypt disabled"></td>
-                <td class="sign">
+                <td class="sign recommended">
                     <script>
                         //sign
                         window.crypto.subtle.generateKey(HMAC, false, ["sign"])
@@ -4141,7 +4149,7 @@
                         .catch(err("hmac", "sign", "No"));
                     </script>
                 </td>
-                <td class="verify">
+                <td class="verify recommended">
                     <script>
                         //verify
                         window.crypto.subtle.generateKey(HMAC, false, ["sign", "verify"])
@@ -4157,7 +4165,7 @@
                     </script>
                 </td>
                 <td class="digest disabled"></td>
-                <td class="generateKey">
+                <td class="generateKey recommended">
                     <script>
                         //generateKey
 
@@ -4196,7 +4204,7 @@
                 </td>
                 <td class="deriveKey disabled"></td>
                 <td class="deriveBits disabled"></td>
-                <td class="importKey">
+                <td class="importKey recommended">
                     <script>
                         //importKey
 
@@ -4219,7 +4227,7 @@
                         .catch(err("hmac", "importKey", "raw-key"));
                     </script>
                 </td>
-                <td class="exportKey">
+                <td class="exportKey recommended">
                     <script>
                         //exportKey
                         window.crypto.subtle.generateKey(HMAC, true, ["sign", "verify"])
@@ -4277,7 +4285,7 @@
                 <td class="sign disabled"></td>
                 <td class="verify disabled"></td>
                 <td class="digest disabled"></td>
-                <td class="generateKey">
+                <td class="generateKey unsafe">
                     <script>
                         //generateKey
                         window.crypto.subtle.generateKey(DH, false, ["deriveBits", "deriveKey"])
@@ -4285,7 +4293,7 @@
                         .catch(err("dh", "generateKey", "No"));
                     </script>
                 </td>
-                <td class="deriveKey">
+                <td class="deriveKey unsafe">
                     <script>
                         //deriveKey
                         window.crypto.subtle.generateKey(DH, false, ["deriveKey"])
@@ -4321,7 +4329,7 @@
                         .catch(err("dh", "deriveKey", "N/A"));
                     </script>
                 </td>
-                <td class="deriveBits">
+                <td class="deriveBits unsafe">
                     <script>
                         //deriveBits
                         window.crypto.subtle.generateKey(DH, false, ["deriveBits"])
@@ -4357,7 +4365,7 @@
                         .catch(err("dh", "deriveBits", "N/A"));
                     </script>
                 </td>
-                <td class="importKey">
+                <td class="importKey unsafe">
                     <script>
                         //importKey
 
@@ -4407,7 +4415,7 @@
                         .catch(err("dh", "importKey", "pkcs8-priv*"));
                     </script>
                 </td>
-                <td class="exportKey">
+                <td class="exportKey unsafe">
                     <script>
                         //exportKey
                         window.crypto.subtle.generateKey(DH, true, ["deriveBits", "deriveKey"])
@@ -4452,7 +4460,7 @@
                 <td class="decrypt disabled"></td>
                 <td class="sign disabled"></td>
                 <td class="verify disabled"></td>
-                <td class="digest">
+                <td class="digest unsafe">
                     <script>
                         //digest
                         window.crypto.subtle.digest({name: "SHA-1"}, TESTBYTES)
@@ -4481,7 +4489,7 @@
                 <td class="decrypt disabled"></td>
                 <td class="sign disabled"></td>
                 <td class="verify disabled"></td>
-                <td class="digest">
+                <td class="digest recommended">
                     <script>
                         //digest
                         window.crypto.subtle.digest({name: "SHA-256"}, TESTBYTES)
@@ -4510,7 +4518,7 @@
                 <td class="decrypt disabled"></td>
                 <td class="sign disabled"></td>
                 <td class="verify disabled"></td>
-                <td class="digest">
+                <td class="digest recommended">
                     <script>
                         //digest
                         window.crypto.subtle.digest({name: "SHA-384"}, TESTBYTES)
@@ -4539,7 +4547,7 @@
                 <td class="decrypt disabled"></td>
                 <td class="sign disabled"></td>
                 <td class="verify disabled"></td>
-                <td class="digest">
+                <td class="digest recommended">
                     <script>
                         //digest
                         window.crypto.subtle.digest({name: "SHA-512"}, TESTBYTES)
@@ -4570,7 +4578,7 @@
                 <td class="verify disabled"></td>
                 <td class="digest disabled"></td>
                 <td class="generateKey disabled"></td>
-                <td class="deriveKey">
+                <td class="deriveKey unsafe">
                     <script>
                         //deriveKey
                         var keydata = window.crypto.getRandomValues(new Uint8Array(16));
@@ -4593,7 +4601,7 @@
                         .catch(err("concatkdf", "deriveKey", "N/A"));
                     </script>
                 </td>
-                <td class="deriveBits">
+                <td class="deriveBits unsafe">
                     <script>
                         //deriveBits
                         var keydata = window.crypto.getRandomValues(new Uint8Array(16));
@@ -4616,7 +4624,7 @@
                         .catch(err("concatkdf", "deriveBits", "N/A"));
                     </script>
                 </td>
-                <td class="importKey">
+                <td class="importKey unsafe">
                     <script>
                         //importKey
 
@@ -4646,7 +4654,7 @@
                 <td class="verify disabled"></td>
                 <td class="digest disabled"></td>
                 <td class="generateKey disabled"></td>
-                <td class="deriveKey">
+                <td class="deriveKey unsafe">
                     <script>
                         //deriveKey
                         var keydata = window.crypto.getRandomValues(new Uint8Array(16));
@@ -4666,7 +4674,7 @@
                         .catch(err("hkdf-ctr", "deriveKey", "N/A"));
                     </script>
                 </td>
-                <td class="deriveBits">
+                <td class="deriveBits unsafe">
                     <script>
                         //deriveBits
                         var keydata = window.crypto.getRandomValues(new Uint8Array(16));
@@ -4686,7 +4694,7 @@
                         .catch(err("hkdf-ctr", "deriveBits", "N/A"));
                     </script>
                 </td>
-                <td class="importKey">
+                <td class="importKey unsafe">
                     <script>
                         //importKey
 
@@ -4715,7 +4723,7 @@
                 <td class="sign disabled"></td>
                 <td class="verify disabled"></td>
                 <td class="digest disabled"></td>
-                <td class="generateKey">
+                <td class="generateKey recommended">
                     <a id="pbkdf2_generatKey" href="#">Test (prompt)</a>
                     <script>
                         //generateKey
@@ -4729,7 +4737,7 @@
                         };
                     </script>
                 </td>
-                <td class="deriveKey">
+                <td class="deriveKey recommended">
                     <script>
                         //deriveKey
                         var password = window.crypto.getRandomValues(new Uint8Array(16));
@@ -4780,7 +4788,7 @@
                         .catch(err("pbkdf2", "deriveKey", "N/A"));
                     </script>
                 </td>
-                <td class="deriveBits">
+                <td class="deriveBits recommended">
                     <script>
                         //deriveBits
                         var password = window.crypto.getRandomValues(new Uint8Array(16));
@@ -4831,7 +4839,7 @@
                         .catch(err("pbkdf2", "deriveBits", "N/A"));
                     </script>
                 </td>
-                <td class="importKey">
+                <td class="importKey recommended">
                     <script>
                         //importKey
 
