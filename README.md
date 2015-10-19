@@ -24,7 +24,9 @@ wrote examples and made a live table with them. Pull requests welcome!
 [importKey](#rsa-oaep---importkey) | 
 [exportKey](#rsa-oaep---exportkey) | 
 [encrypt](#rsa-oaep---encrypt) | 
-[decrypt](#rsa-oaep---decrypt)
+[decrypt](#rsa-oaep---decrypt) |
+[wrapKey](#rsa-oaep---wrapkey) |
+[unwrapKey](#rsa-oaep---unwrapkey)
 
 4. [ECDSA](#ecdsa)
   * [generateKey](#ecdsa---generatekey) | 
@@ -45,14 +47,18 @@ wrote examples and made a live table with them. Pull requests welcome!
 [importKey](#aes-ctr---importkey) | 
 [exportKey](#aes-ctr---exportkey) | 
 [encrypt](#aes-ctr---encrypt) | 
-[decrypt](#aes-ctr---decrypt)
+[decrypt](#aes-ctr---decrypt) |
+[wrapKey](#aes-ctr---wrapkey) |
+[unwrapKey](#aes-ctr---unwrapkey)
 
 7. [AES-CBC](#aes-cbc)
   * [generateKey](#aes-cbc---generatekey) | 
 [importKey](#aes-cbc---importkey) | 
 [exportKey](#aes-cbc---exportkey) | 
 [encrypt](#aes-cbc---encrypt) | 
-[decrypt](#aes-cbc---decrypt)
+[decrypt](#aes-cbc---decrypt) |
+[wrapKey](#aes-cbc---wrapkey) |
+[unwrapKey](#aes-cbc---unwrapkey)
 
 8. [AES-CMAC](#aes-cmac)
   * [generateKey](#aes-cmac---generatekey) | 
@@ -66,19 +72,25 @@ wrote examples and made a live table with them. Pull requests welcome!
 [importKey](#aes-gcm---importkey) | 
 [exportKey](#aes-gcm---exportkey) | 
 [encrypt](#aes-gcm---encrypt) | 
-[decrypt](#aes-gcm---decrypt)
+[decrypt](#aes-gcm---decrypt) |
+[wrapKey](#aes-gcm---wrapkey) |
+[unwrapKey](#aes-gcm---unwrapkey)
 
 10. [AES-CFB](#aes-cfb)
   * [generateKey](#aes-cfb---generatekey) | 
 [importKey](#aes-cfb---importkey) | 
 [exportKey](#aes-cfb---exportkey) | 
 [encrypt](#aes-cfb---encrypt) | 
-[decrypt](#aes-cfb---decrypt)
+[decrypt](#aes-cfb---decrypt) |
+[wrapKey](#aes-cfb---wrapkey) |
+[unwrapKey](#aes-cfb---unwrapkey)
 
 11. [AES-KW](#aes-kw)
   * [generateKey](#aes-kw---generatekey) | 
 [importKey](#aes-kw---importkey) | 
-[exportKey](#aes-kw---exportkey)
+[exportKey](#aes-kw---exportkey) |
+[wrapKey](#aes-kw---wrapkey) |
+[unwrapKey](#aes-kw---unwrapkey)
 
 12. [HMAC](#hmac)
   * [generateKey](#hmac---generatekey) | 
@@ -327,7 +339,7 @@ window.crypto.subtle.generateKey(
         hash: {name: "SHA-256"}, //can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
     },
     false, //whether the key is extractable (i.e. can be used in exportKey)
-    ["encrypt", "decrypt"] //must contain both "encrypt" and "decrypt"
+    ["encrypt", "decrypt"] //must be ["encrypt", "decrypt"] or ["wrapKey", "unwrapKey"]
 )
 .then(function(key){
     //returns a keypair object
@@ -355,7 +367,8 @@ window.crypto.subtle.importKey(
         hash: {name: "SHA-256"}, //can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
     },
     false, //whether the key is extractable (i.e. can be used in exportKey)
-    ["encrypt"] //"encrypt" for public key import, "decrypt" for private key imports
+    ["encrypt"] //"encrypt" or "wrapKey" for public key import or
+                //"decrypt" or "unwrapKey" for private key imports
 )
 .then(function(publicKey){
     //returns a publicKey (or privateKey if you are importing a private key)
@@ -410,6 +423,52 @@ window.crypto.subtle.decrypt(
 .then(function(decrypted){
     //returns an ArrayBuffer containing the decrypted data
     console.log(new Uint8Array(decrypted));
+})
+.catch(function(err){
+    console.error(err);
+});
+```
+####RSA-OAEP - wrapKey
+```javascript
+window.crypto.subtle.wrapKey(
+    "raw", //the export format, must be "raw" (only available sometimes)
+    key, //the key you want to wrap, must be able to fit in RSA-OAEP padding
+    publicKey, //the public key with "wrapKey" usage flag
+    {   //these are the wrapping key's algorithm options
+        name: "RSA-OAEP",
+        hash: {name: "SHA-256"},
+    }
+)
+.then(function(wrapped){
+    //returns an ArrayBuffer containing the encrypted data
+    console.log(new Uint8Array(wrapped));
+})
+.catch(function(err){
+    console.error(err);
+});
+```
+####RSA-OAEP - unwrapKey
+```javascript
+window.crypto.subtle.unwrapKey(
+    "raw", //the import format, must be "raw" (only available sometimes)
+    wrapped, //the key you want to unwrap
+    privateKey, //the private key with "unwrapKey" usage flag
+    {   //these are the wrapping key's algorithm options
+        name: "RSA-OAEP",
+        modulusLength: 2048,
+        publicExponent: new Uint8Array([0x01, 0x00, 0x01]),
+        hash: {name: "SHA-256"},
+    },
+    {   //this what you want the wrapped key to become (same as when wrapping)
+        name: "AES-GCM",
+        length: 256
+    },
+    false, //whether the key is extractable (i.e. can be used in exportKey)
+    ["encrypt", "decrypt"] //the usages you want the unwrapped key to have
+)
+.then(function(key){
+    //returns a key object
+    console.log(key);
 })
 .catch(function(err){
     console.error(err);
@@ -631,7 +690,7 @@ window.crypto.subtle.generateKey(
         length: 256, //can be  128, 192, or 256
     },
     false, //whether the key is extractable (i.e. can be used in exportKey)
-    ["encrypt", "decrypt"] //can be any combination of "encrypt" and "decrypt"
+    ["encrypt", "decrypt"] //can "encrypt", "decrypt", "wrapKey", or "unwrapKey"
 )
 .then(function(key){
     //returns a key object
@@ -655,7 +714,7 @@ window.crypto.subtle.importKey(
         name: "AES-CTR",
     },
     false, //whether the key is extractable (i.e. can be used in exportKey)
-    ["encrypt", "decrypt"] //can be any combination of "encrypt" and "decrypt"
+    ["encrypt", "decrypt"] //can "encrypt", "decrypt", "wrapKey", or "unwrapKey"
 )
 .then(function(key){
     //returns the symmetric key
@@ -719,6 +778,56 @@ window.crypto.subtle.decrypt(
     console.error(err);
 });
 ```
+####AES-CTR - wrapKey
+```javascript
+window.crypto.subtle.wrapKey(
+    "jwk", //can be "jwk", "raw", "spki", or "pkcs8"
+    key, //the key you want to wrap, must be able to export to "raw" format
+    wrappingKey, //the AES-CTR key with "wrapKey" usage flag
+    {   //these are the wrapping key's algorithm options
+        name: "AES-CTR",
+        //Don't re-use counters!
+        //Always use a new counter every time your encrypt!
+        counter: new Uint8Array(16),
+        length: 128, //can be 1-128
+    }
+)
+.then(function(wrapped){
+    //returns an ArrayBuffer containing the encrypted data
+    console.log(new Uint8Array(wrapped));
+})
+.catch(function(err){
+    console.error(err);
+});
+```
+####AES-CTR - unwrapKey
+```javascript
+window.crypto.subtle.unwrapKey(
+    "jwk", //"jwk", "raw", "spki", or "pkcs8" (whatever was used in wrapping)
+    wrapped, //the key you want to unwrap
+    wrappingKey, //the AES-CTR key with "unwrapKey" usage flag
+    {   //these are the wrapping key's algorithm options
+        name: "AES-CTR",
+        //Don't re-use counters!
+        //Always use a new counter every time your encrypt!
+        counter: new Uint8Array(16),
+        length: 128, //can be 1-128
+    },
+    {   //this what you want the wrapped key to become (same as when wrapping)
+        name: "AES-GCM",
+        length: 256
+    },
+    false, //whether the key is extractable (i.e. can be used in exportKey)
+    ["encrypt", "decrypt"] //the usages you want the unwrapped key to have
+)
+.then(function(key){
+    //returns a key object
+    console.log(key);
+})
+.catch(function(err){
+    console.error(err);
+});
+```
 
 ##AES-CBC
 ####AES-CBC - generateKey
@@ -729,7 +838,7 @@ window.crypto.subtle.generateKey(
         length: 256, //can be  128, 192, or 256
     },
     false, //whether the key is extractable (i.e. can be used in exportKey)
-    ["encrypt", "decrypt"] //can be any combination of "encrypt" and "decrypt"
+    ["encrypt", "decrypt"] //can be "encrypt", "decrypt", "wrapKey", or "unwrapKey"
 )
 .then(function(key){
     //returns a key object
@@ -753,7 +862,7 @@ window.crypto.subtle.importKey(
         name: "AES-CBC",
     },
     false, //whether the key is extractable (i.e. can be used in exportKey)
-    ["encrypt", "decrypt"] //can be any combination of "encrypt" and "decrypt"
+    ["encrypt", "decrypt"] //can be "encrypt", "decrypt", "wrapKey", or "unwrapKey"
 )
 .then(function(key){
     //returns the symmetric key
@@ -810,6 +919,52 @@ window.crypto.subtle.decrypt(
 .then(function(decrypted){
     //returns an ArrayBuffer containing the decrypted data
     console.log(new Uint8Array(decrypted));
+})
+.catch(function(err){
+    console.error(err);
+});
+```
+####AES-CBC - wrapKey
+```javascript
+window.crypto.subtle.wrapKey(
+    "jwk", //can be "jwk", "raw", "spki", or "pkcs8"
+    key, //the key you want to wrap, must be able to export to above format
+    wrappingKey, //the AES-CBC key with "wrapKey" usage flag
+    {   //these are the wrapping key's algorithm options
+        name: "AES-CBC",
+        //Don't re-use initialization vectors!
+        //Always generate a new iv every time your encrypt!
+        iv: window.crypto.getRandomValues(new Uint8Array(16)),
+    }
+)
+.then(function(wrapped){
+    //returns an ArrayBuffer containing the encrypted data
+    console.log(new Uint8Array(wrapped));
+})
+.catch(function(err){
+    console.error(err);
+});
+```
+####AES-CBC - unwrapKey
+```javascript
+window.crypto.subtle.unwrapKey(
+    "jwk", //"jwk", "raw", "spki", or "pkcs8" (whatever was used in wrapping)
+    wrapped, //the key you want to unwrap
+    wrappingKey, //the AES-CBC key with "unwrapKey" usage flag
+    {   //these are the wrapping key's algorithm options
+        name: "AES-CBC",
+        iv: ArrayBuffer(16), //The initialization vector you used to encrypt
+    },
+    {   //this what you want the wrapped key to become (same as when wrapping)
+        name: "AES-GCM",
+        length: 256
+    },
+    false, //whether the key is extractable (i.e. can be used in exportKey)
+    ["encrypt", "decrypt"] //the usages you want the unwrapped key to have
+)
+.then(function(key){
+    //returns a key object
+    console.log(key);
 })
 .catch(function(err){
     console.error(err);
@@ -920,7 +1075,7 @@ window.crypto.subtle.generateKey(
         length: 256, //can be  128, 192, or 256
     },
     false, //whether the key is extractable (i.e. can be used in exportKey)
-    ["encrypt", "decrypt"] //can be any combination of "encrypt" and "decrypt"
+    ["encrypt", "decrypt"] //can "encrypt", "decrypt", "wrapKey", or "unwrapKey"
 )
 .then(function(key){
     //returns a key object
@@ -944,7 +1099,7 @@ window.crypto.subtle.importKey(
         name: "AES-GCM",
     },
     false, //whether the key is extractable (i.e. can be used in exportKey)
-    ["encrypt", "decrypt"] //can be any combination of "encrypt" and "decrypt"
+    ["encrypt", "decrypt"] //can "encrypt", "decrypt", "wrapKey", or "unwrapKey"
 )
 .then(function(key){
     //returns the symmetric key
@@ -1016,6 +1171,62 @@ window.crypto.subtle.decrypt(
     console.error(err);
 });
 ```
+####AES-GCM - wrapKey
+```javascript
+window.crypto.subtle.wrapKey(
+    "jwk", //can be "jwk", "raw", "spki", or "pkcs8"
+    key, //the key you want to wrap, must be able to export to above format
+    wrappingKey, //the AES-GCM key with "wrapKey" usage flag
+    {   //these are the wrapping key's algorithm options
+        name: "AES-GCM",
+
+        //Don't re-use initialization vectors!
+        //Always generate a new iv every time your encrypt!
+        //Recommended to use 12 bytes length
+        iv: window.crypto.getRandomValues(new Uint8Array(12)),
+
+        //Additional authentication data (optional)
+        additionalData: ArrayBuffer,
+
+        //Tag length (optional)
+        tagLength: 128, //can be 32, 64, 96, 104, 112, 120 or 128 (default)
+    }
+)
+.then(function(wrapped){
+    //returns an ArrayBuffer containing the encrypted data
+    console.log(new Uint8Array(wrapped));
+})
+.catch(function(err){
+    console.error(err);
+});
+```
+####AES-GCM - unwrapKey
+```javascript
+window.crypto.subtle.unwrapKey(
+    "jwk", //"jwk", "raw", "spki", or "pkcs8" (whatever was used in wrapping)
+    wrapped, //the key you want to unwrap
+    wrappingKey, //the AES-GCM key with "unwrapKey" usage flag
+    {   //these are the wrapping key's algorithm options
+        name: "AES-GCM",
+        iv: ArrayBuffer(12), //The initialization vector you used to encrypt
+        additionalData: ArrayBuffer, //The addtionalData you used to encrypt (if any)
+        tagLength: 128, //The tagLength you used to encrypt (if any)
+    },
+    {   //this what you want the wrapped key to become (same as when wrapping)
+        name: "AES-CBC",
+        length: 256
+    },
+    false, //whether the key is extractable (i.e. can be used in exportKey)
+    ["encrypt", "decrypt"] //the usages you want the unwrapped key to have
+)
+.then(function(key){
+    //returns a key object
+    console.log(key);
+})
+.catch(function(err){
+    console.error(err);
+});
+```
 
 ##AES-CFB
 ####AES-CFB - generateKey
@@ -1026,7 +1237,7 @@ window.crypto.subtle.generateKey(
         length: 256, //can be  128, 192, or 256
     },
     false, //whether the key is extractable (i.e. can be used in exportKey)
-    ["encrypt", "decrypt"] //can be any combination of "encrypt" and "decrypt"
+    ["encrypt", "decrypt"] //can "encrypt", "decrypt", "wrapKey", or "unwrapKey"
 )
 .then(function(key){
     //returns a key object
@@ -1050,7 +1261,7 @@ window.crypto.subtle.importKey(
         name: "AES-CFB-8",
     },
     false, //whether the key is extractable (i.e. can be used in exportKey)
-    ["encrypt", "decrypt"] //can be any combination of "encrypt" and "decrypt"
+    ["encrypt", "decrypt"] //can "encrypt", "decrypt", "wrapKey", or "unwrapKey"
 )
 .then(function(key){
     //returns the symmetric key
@@ -1112,6 +1323,52 @@ window.crypto.subtle.decrypt(
     console.error(err);
 });
 ```
+####AES-CFB - wrapKey
+```javascript
+window.crypto.subtle.wrapKey(
+    "jwk", //can be "jwk", "raw", "spki", or "pkcs8"
+    key, //the key you want to wrap, must be able to export to above format
+    wrappingKey, //the AES-CFB key with "wrapKey" usage flag
+    {   //these are the wrapping key's algorithm options
+        name: "AES-CFB",
+        //Don't re-use initialization vectors!
+        //Always generate a new iv every time your encrypt!
+        iv: window.crypto.getRandomValues(new Uint8Array(16)),
+    }
+)
+.then(function(wrapped){
+    //returns an ArrayBuffer containing the encrypted data
+    console.log(new Uint8Array(wrapped));
+})
+.catch(function(err){
+    console.error(err);
+});
+```
+####AES-CFB - unwrapKey
+```javascript
+window.crypto.subtle.unwrapKey(
+    "jwk", //"jwk", "raw", "spki", or "pkcs8" (whatever was used in wrapping)
+    wrapped, //the key you want to unwrap
+    wrappingKey, //the AES-CFB key with "unwrapKey" usage flag
+    {   //these are the wrapping key's algorithm options
+        name: "AES-CFB",
+        iv: ArrayBuffer(16), //The initialization vector you used to encrypt
+    },
+    {   //this what you want the wrapped key to become (same as when wrapping)
+        name: "AES-GCM",
+        length: 256
+    },
+    false, //whether the key is extractable (i.e. can be used in exportKey)
+    ["encrypt", "decrypt"] //the usages you want the unwrapped key to have
+)
+.then(function(key){
+    //returns a key object
+    console.log(key);
+})
+.catch(function(err){
+    console.error(err);
+});
+```
 
 ##AES-KW
 ####AES-KW - generateKey
@@ -1165,6 +1422,48 @@ window.crypto.subtle.exportKey(
 .then(function(keydata){
     //returns the exported key data
     console.log(keydata);
+})
+.catch(function(err){
+    console.error(err);
+});
+```
+####AES-KW - wrapKey
+```javascript
+window.crypto.subtle.wrapKey(
+    "raw", //the export format, must be "raw" (only available sometimes)
+    key, //the key you want to wrap, must export in 8 byte increments
+    wrappingKey, //the AES-KW key with "wrapKey" usage flag
+    {   //these are the wrapping key's algorithm options
+        name: "AES-KW",
+    }
+)
+.then(function(wrapped){
+    //returns an ArrayBuffer containing the encrypted data
+    console.log(new Uint8Array(wrapped));
+})
+.catch(function(err){
+    console.error(err);
+});
+```
+####AES-KW - unwrapKey
+```javascript
+window.crypto.subtle.unwrapKey(
+    "raw", //the import format, must be "raw" (only available sometimes)
+    wrapped, //the key you want to unwrap
+    wrappingKey, //the AES-KW key with "unwrapKey" usage flag
+    {   //these are the wrapping key's algorithm options
+        name: "AES-KW",
+    },
+    {   //this what you want the wrapped key to become (same as when wrapping)
+        name: "AES-GCM",
+        length: 256
+    },
+    false, //whether the key is extractable (i.e. can be used in exportKey)
+    ["encrypt", "decrypt"] //the usages you want the unwrapped key to have
+)
+.then(function(key){
+    //returns a key object
+    console.log(key);
 })
 .catch(function(err){
     console.error(err);
