@@ -745,7 +745,7 @@ window.crypto.subtle.encrypt(
         name: "AES-CTR",
         //Don't re-use counters!
         //Always use a new counter every time your encrypt!
-        counter: new Uint8Array(16),
+        counter: window.crypto.getRandomValues(new Uint8Array(16)),
         length: 128, //can be 1-128
     },
     key, //from generateKey or importKey above
@@ -788,7 +788,7 @@ window.crypto.subtle.wrapKey(
         name: "AES-CTR",
         //Don't re-use counters!
         //Always use a new counter every time your encrypt!
-        counter: new Uint8Array(16),
+        counter: window.crypto.getRandomValues(new Uint8Array(16)),
         length: 128, //can be 1-128
     }
 )
@@ -808,9 +808,7 @@ window.crypto.subtle.unwrapKey(
     wrappingKey, //the AES-CTR key with "unwrapKey" usage flag
     {   //these are the wrapping key's algorithm options
         name: "AES-CTR",
-        //Don't re-use counters!
-        //Always use a new counter every time your encrypt!
-        counter: new Uint8Array(16),
+        counter: new Uint8Array(16), //The same counter you used to wrap
         length: 128, //can be 1-128
     },
     {   //this what you want the wrapped key to become (same as when wrapping)
