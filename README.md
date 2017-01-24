@@ -2,7 +2,7 @@
 
 Live Table: https://diafygi.github.io/webcrypto-examples/
 
-I couldn't find anywhere that had clear examples of WebCrytoAPI, so I
+I couldn't find anywhere that had clear examples of WebCryptoAPI, so I
 wrote examples and made a live table with them. Pull requests welcome!
 
 1. [RSASSA-PKCS1-v1_5](#rsassa-pkcs1-v1_5)
