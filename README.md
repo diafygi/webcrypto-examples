@@ -6,126 +6,126 @@ I couldn't find anywhere that had clear examples of WebCryptoAPI, so I
 wrote examples and made a live table with them. Pull requests welcome!
 
 1. [RSASSA-PKCS1-v1_5](#rsassa-pkcs1-v1_5)
-  * [generateKey](#rsassa-pkcs1-v1_5---generatekey) | 
-[importKey](#rsassa-pkcs1-v1_5---importkey) | 
-[exportKey](#rsassa-pkcs1-v1_5---exportkey) | 
-[sign](#rsassa-pkcs1-v1_5---sign) | 
+  * [generateKey](#rsassa-pkcs1-v1_5---generatekey) |
+[importKey](#rsassa-pkcs1-v1_5---importkey) |
+[exportKey](#rsassa-pkcs1-v1_5---exportkey) |
+[sign](#rsassa-pkcs1-v1_5---sign) |
 [verify](#rsassa-pkcs1-v1_5---verify)
 
 2. [RSA-PSS](#rsa-pss)
-  * [generateKey](#rsa-pss---generatekey) | 
-[importKey](#rsa-pss---importkey) | 
-[exportKey](#rsa-pss---exportkey) | 
-[sign](#rsa-pss---sign) | 
+  * [generateKey](#rsa-pss---generatekey) |
+[importKey](#rsa-pss---importkey) |
+[exportKey](#rsa-pss---exportkey) |
+[sign](#rsa-pss---sign) |
 [verify](#rsa-pss---verify)
 
 3. [RSA-OAEP](#rsa-oaep)
-  * [generateKey](#rsa-oaep---generatekey) | 
-[importKey](#rsa-oaep---importkey) | 
-[exportKey](#rsa-oaep---exportkey) | 
-[encrypt](#rsa-oaep---encrypt) | 
+  * [generateKey](#rsa-oaep---generatekey) |
+[importKey](#rsa-oaep---importkey) |
+[exportKey](#rsa-oaep---exportkey) |
+[encrypt](#rsa-oaep---encrypt) |
 [decrypt](#rsa-oaep---decrypt) |
 [wrapKey](#rsa-oaep---wrapkey) |
 [unwrapKey](#rsa-oaep---unwrapkey)
 
 4. [ECDSA](#ecdsa)
-  * [generateKey](#ecdsa---generatekey) | 
-[importKey](#ecdsa---importkey) | 
-[exportKey](#ecdsa---exportkey) | 
-[sign](#ecdsa---sign) | 
+  * [generateKey](#ecdsa---generatekey) |
+[importKey](#ecdsa---importkey) |
+[exportKey](#ecdsa---exportkey) |
+[sign](#ecdsa---sign) |
 [verify](#ecdsa---verify)
 
 5. [ECDH](#ecdh)
-  * [generateKey](#ecdh---generatekey) | 
-[importKey](#ecdh---importkey) | 
-[exportKey](#ecdh---exportkey) | 
-[deriveKey](#ecdh---derivekey) | 
+  * [generateKey](#ecdh---generatekey) |
+[importKey](#ecdh---importkey) |
+[exportKey](#ecdh---exportkey) |
+[deriveKey](#ecdh---derivekey) |
 [deriveBits](#ecdh---derivebits)
 
 6. [AES-CTR](#aes-ctr)
-  * [generateKey](#aes-ctr---generatekey) | 
-[importKey](#aes-ctr---importkey) | 
-[exportKey](#aes-ctr---exportkey) | 
-[encrypt](#aes-ctr---encrypt) | 
+  * [generateKey](#aes-ctr---generatekey) |
+[importKey](#aes-ctr---importkey) |
+[exportKey](#aes-ctr---exportkey) |
+[encrypt](#aes-ctr---encrypt) |
 [decrypt](#aes-ctr---decrypt) |
 [wrapKey](#aes-ctr---wrapkey) |
 [unwrapKey](#aes-ctr---unwrapkey)
 
 7. [AES-CBC](#aes-cbc)
-  * [generateKey](#aes-cbc---generatekey) | 
-[importKey](#aes-cbc---importkey) | 
-[exportKey](#aes-cbc---exportkey) | 
-[encrypt](#aes-cbc---encrypt) | 
+  * [generateKey](#aes-cbc---generatekey) |
+[importKey](#aes-cbc---importkey) |
+[exportKey](#aes-cbc---exportkey) |
+[encrypt](#aes-cbc---encrypt) |
 [decrypt](#aes-cbc---decrypt) |
 [wrapKey](#aes-cbc---wrapkey) |
 [unwrapKey](#aes-cbc---unwrapkey)
 
 8. [AES-CMAC](#aes-cmac)
-  * [generateKey](#aes-cmac---generatekey) | 
-[importKey](#aes-cmac---importkey) | 
-[exportKey](#aes-cmac---exportkey) | 
-[sign](#aes-cmac---sign) | 
+  * [generateKey](#aes-cmac---generatekey) |
+[importKey](#aes-cmac---importkey) |
+[exportKey](#aes-cmac---exportkey) |
+[sign](#aes-cmac---sign) |
 [verify](#aes-cmac---verify)
 
 9. [AES-GCM](#aes-gcm)
-  * [generateKey](#aes-gcm---generatekey) | 
-[importKey](#aes-gcm---importkey) | 
-[exportKey](#aes-gcm---exportkey) | 
-[encrypt](#aes-gcm---encrypt) | 
+  * [generateKey](#aes-gcm---generatekey) |
+[importKey](#aes-gcm---importkey) |
+[exportKey](#aes-gcm---exportkey) |
+[encrypt](#aes-gcm---encrypt) |
 [decrypt](#aes-gcm---decrypt) |
 [wrapKey](#aes-gcm---wrapkey) |
 [unwrapKey](#aes-gcm---unwrapkey)
 
 10. [AES-CFB](#aes-cfb)
-  * [generateKey](#aes-cfb---generatekey) | 
-[importKey](#aes-cfb---importkey) | 
-[exportKey](#aes-cfb---exportkey) | 
-[encrypt](#aes-cfb---encrypt) | 
+  * [generateKey](#aes-cfb---generatekey) |
+[importKey](#aes-cfb---importkey) |
+[exportKey](#aes-cfb---exportkey) |
+[encrypt](#aes-cfb---encrypt) |
 [decrypt](#aes-cfb---decrypt) |
 [wrapKey](#aes-cfb---wrapkey) |
 [unwrapKey](#aes-cfb---unwrapkey)
 
 11. [AES-KW](#aes-kw)
-  * [generateKey](#aes-kw---generatekey) | 
-[importKey](#aes-kw---importkey) | 
+  * [generateKey](#aes-kw---generatekey) |
+[importKey](#aes-kw---importkey) |
 [exportKey](#aes-kw---exportkey) |
 [wrapKey](#aes-kw---wrapkey) |
 [unwrapKey](#aes-kw---unwrapkey)
 
 12. [HMAC](#hmac)
-  * [generateKey](#hmac---generatekey) | 
-[importKey](#hmac---importkey) | 
-[exportKey](#hmac---exportkey) | 
-[sign](#hmac---sign) | 
+  * [generateKey](#hmac---generatekey) |
+[importKey](#hmac---importkey) |
+[exportKey](#hmac---exportkey) |
+[sign](#hmac---sign) |
 [verify](#hmac-verify)
 
 13. [DH](#dh)
-  * [generateKey](#dh---generatekey) | 
-[importKey](#dh---importkey) | 
-[exportKey](#dh---exportkey) | 
-[deriveKey](#dh---derivekey) | 
+  * [generateKey](#dh---generatekey) |
+[importKey](#dh---importkey) |
+[exportKey](#dh---exportkey) |
+[deriveKey](#dh---derivekey) |
 [deriveBits](#dh---derivebits)
 
 14. [SHA](#sha-1)
-  * [SHA-1 digest](#sha-1---digest) | 
-[SHA-256 digest](#sha-256---digest) | 
-[SHA-384 digest](#sha-384---digest) | 
+  * [SHA-1 digest](#sha-1---digest) |
+[SHA-256 digest](#sha-256---digest) |
+[SHA-384 digest](#sha-384---digest) |
 [SHA-512 digest](#sha-512---digest)
 
 18. [CONCAT](#concat)
-  * [importKey](#concat---importkey) | 
-[deriveKey](#concat---derivekey) | 
+  * [importKey](#concat---importkey) |
+[deriveKey](#concat---derivekey) |
 [deriveBits](#concat---derivebits)
 
 19. [HKDF-CTR](#hkdf-ctr)
-  * [importKey](#hkdf-ctr---importkey) | 
-[deriveKey](#hkdf-ctr---derivekey) | 
+  * [importKey](#hkdf-ctr---importkey) |
+[deriveKey](#hkdf-ctr---derivekey) |
 [deriveBits](#hkdf-ctr---derivebits)
 
 20. [PBKDF2](#pbkdf2)
-  * [generateKey](#pbkdf2---generatekey) | 
-[importKey](#pbkdf2---importkey) | 
-[deriveKey](#pbkdf2---derivekey) | 
+  * [generateKey](#pbkdf2---generatekey) |
+[importKey](#pbkdf2---importkey) |
+[deriveKey](#pbkdf2---derivekey) |
 [deriveBits](#pbkdf2---derivebits)
 
 ##RSASSA-PKCS1-v1_5
@@ -2021,4 +2021,3 @@ window.crypto.subtle.deriveBits(
     console.error(err);
 });
 ```
-
