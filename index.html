@@ -1263,8 +1263,15 @@
                                     "namedCurve": "P-256",
                                     "public": key2.publicKey,
                                 }, key1.privateKey, 128)
-                                .then(ok("ecdh", "deriveBits", "Yes"))
+                                .then(ok("ecdh", "deriveBits", "With Length"))
                                 .catch(err("ecdh", "deriveBits", "No"));
+                                window.crypto.subtle.deriveBits({
+                                    "name": "ECDH",
+                                    "namedCurve": "P-256",
+                                    "public": key2.publicKey,
+                                }, key1.privateKey, null)
+                                .then(ok("ecdh", "deriveBits", "Null Length"))
+                                .catch(err("ecdh", "deriveBits", "Null Length"));
 
                             })
                             .catch(err("ecdh", "deriveBits", "N/A"));
@@ -1299,9 +1306,9 @@
                         .catch(err("ecdh", "importKey", "jwk-priv"));
 
                         //raw
-                        window.crypto.subtle.importKey("raw", null, ECDH, false, ["deriveBits", "deriveKey"])
+                        window.crypto.subtle.importKey("raw", new Uint8Array([4,214,216,80,169,57,179,244,8,2,153,20,52,209,120,4,26,208,84,209,225,206,72,239,168,198,6,58,172,223,140,18,0,216,191,176,75,169,134,185,177,219,186,16,113,49,29,188,133,218,162,201,14,163,196,28,31,237,167,17,18,142,107,176,38]), ECDH, false, ["deriveBits", "deriveKey"])
                         .then(ok("ecdh", "importKey", "raw-pub"))
-                        .catch(err("ecdh", "importKey", "raw-pub*"));
+                        .catch(e=>{console.log(e);err("ecdh", "importKey", "raw-pub*")});
 
                         //spki
                         window.crypto.subtle.importKey("spki", new Uint8Array([
@@ -4877,4 +4884,3 @@
         </p>
     </body>
 </html>
-
