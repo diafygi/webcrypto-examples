@@ -125,7 +125,9 @@
                 <td class="encrypt recommended">
                     <script>
                         //encrypt
-                        window.crypto.subtle.generateKey(AESGCM, false, ["encrypt"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey(AESGCM, false, ["encrypt"]);
+                        })
                         .then(function(key){
                             return window.crypto.subtle.encrypt({
                                 name: "AES-GCM",
@@ -141,7 +143,9 @@
                 <td class="decrypt recommended">
                     <script>
                         //decrypt
-                        window.crypto.subtle.generateKey(AESGCM, false, ["encrypt", "decrypt"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey(AESGCM, false, ["encrypt", "decrypt"]);
+                        })
                         .then(function(key){
                             var iv = window.crypto.getRandomValues(new Uint8Array(12));
                             var addtl = window.crypto.getRandomValues(new Uint8Array(256));
@@ -173,26 +177,32 @@
                         //generateKey
 
                         //128 bits
-                        window.crypto.subtle.generateKey({
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({
                             name: "AES-GCM",
                             length: 128,
-                        }, false, ["encrypt", "decrypt"])
+                        }, false, ["encrypt", "decrypt"]);
+                        })
                         .then(ok("aes-gcm", "generateKey", "128 bits"))
                         .catch(err("aes-gcm", "generateKey", "128 bits"));
 
                         //192 bits
-                        window.crypto.subtle.generateKey({
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({
                             name: "AES-GCM",
                             length: 192,
-                        }, false, ["encrypt", "decrypt"])
+                        }, false, ["encrypt", "decrypt"]);
+                        })
                         .then(ok("aes-gcm", "generateKey", "192 bits"))
                         .catch(err("aes-gcm", "generateKey", "192 bits"));
 
                         //256 bits
-                        window.crypto.subtle.generateKey({
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({
                             name: "AES-GCM",
                             length: 256,
-                        }, false, ["encrypt", "decrypt"])
+                        }, false, ["encrypt", "decrypt"]);
+                        })
                         .then(ok("aes-gcm", "generateKey", "256 bits"))
                         .catch(err("aes-gcm", "generateKey", "256 bits"));
                     </script>
@@ -204,20 +214,24 @@
                         //importKey
 
                         //jwk
-                        window.crypto.subtle.importKey("jwk", {
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.importKey("jwk", {
                             kty: "oct",
                             k: "KfKY5nueRX7eBrOddn9IerHLv1r-T7qpggaCF3MfSR4",
                             alg: "A256GCM",
                             ext: true,
-                        }, AESGCM, false, ["encrypt", "decrypt"])
+                        }, AESGCM, false, ["encrypt", "decrypt"]);
+                        })
                         .then(ok("aes-gcm", "importKey", "jwk-key"))
                         .catch(err("aes-gcm", "importKey", "jwk-key"));
 
                         //raw
-                        window.crypto.subtle.importKey("raw", new Uint8Array([
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.importKey("raw", new Uint8Array([
                             122,94,39,230,46,23,151,80,131,230,3,101,80,234,143,9,251,
                             152,229,228,89,222,31,135,214,104,55,68,67,59,5,51
-                        ]), AESGCM, false, ["encrypt", "decrypt"])
+                        ]), AESGCM, false, ["encrypt", "decrypt"]);
+                        })
                         .then(ok("aes-gcm", "importKey", "raw-key"))
                         .catch(err("aes-gcm", "importKey", "raw-key"));
                     </script>
@@ -225,7 +239,9 @@
                 <td class="exportKey recommended">
                     <script>
                         //exportKey
-                        window.crypto.subtle.generateKey(AESGCM, true, ["encrypt", "decrypt"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey(AESGCM, true, ["encrypt", "decrypt"]);
+                        })
                         .then(function(key){
 
                             //jwk
@@ -245,7 +261,9 @@
                 <td class="wrapKey recommended">
                     <script>
                         //RSASSA-PKCS1-v1_5
-                        window.crypto.subtle.generateKey({name: "AES-GCM", length: 256}, false, ["wrapKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({name: "AES-GCM", length: 256}, false, ["wrapKey"]);
+                        })
                         .then(function(wrappingKey){
                             return window.crypto.subtle.generateKey({
                                 name: "RSASSA-PKCS1-v1_5",
@@ -272,7 +290,9 @@
                         .catch(err("aes-gcm", "wrapKey", "RSASSA-PKCS1-v1_5"));
 
                         //RSA-PSS
-                        window.crypto.subtle.generateKey({name: "AES-GCM", length: 256}, false, ["wrapKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({name: "AES-GCM", length: 256}, false, ["wrapKey"]);
+                        })
                         .then(function(wrappingKey){
                             return window.crypto.subtle.generateKey({
                                 name: "RSA-PSS",
@@ -300,7 +320,9 @@
                         .catch(err("aes-gcm", "wrapKey", "RSA-PSS"));
 
                         //RSA-OAEP
-                        window.crypto.subtle.generateKey({name: "AES-GCM", length: 256}, false, ["wrapKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({name: "AES-GCM", length: 256}, false, ["wrapKey"]);
+                        })
                         .then(function(wrappingKey){
                             return window.crypto.subtle.generateKey({
                                 name: "RSA-OAEP",
@@ -327,7 +349,9 @@
                         .catch(err("aes-gcm", "wrapKey", "RSA-OAEP"));
 
                         //ECDSA
-                        window.crypto.subtle.generateKey({name: "AES-GCM", length: 256}, false, ["wrapKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({name: "AES-GCM", length: 256}, false, ["wrapKey"]);
+                        })
                         .then(function(wrappingKey){
                             return window.crypto.subtle.generateKey({
                                 name: "ECDSA",
@@ -353,7 +377,9 @@
                         .catch(err("aes-gcm", "wrapKey", "ECDSA"));
 
                         //ECDH
-                        window.crypto.subtle.generateKey({name: "AES-GCM", length: 256}, false, ["wrapKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({name: "AES-GCM", length: 256}, false, ["wrapKey"]);
+                        })
                         .then(function(wrappingKey){
                             return window.crypto.subtle.generateKey({
                                 name: "ECDH",
@@ -378,7 +404,9 @@
                         .catch(err("aes-gcm", "wrapKey", "ECDH"));
 
                         //AES-CTR
-                        window.crypto.subtle.generateKey({name: "AES-GCM", length: 256}, false, ["wrapKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({name: "AES-GCM", length: 256}, false, ["wrapKey"]);
+                        })
                         .then(function(wrappingKey){
                             return window.crypto.subtle.generateKey(
                                 {name: "AES-CTR", length: 256},
@@ -395,7 +423,9 @@
                         .catch(err("aes-gcm", "wrapKey", "AES-CTR"));
 
                         //AES-CBC
-                        window.crypto.subtle.generateKey({name: "AES-GCM", length: 256}, false, ["wrapKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({name: "AES-GCM", length: 256}, false, ["wrapKey"]);
+                        })
                         .then(function(wrappingKey){
                             return window.crypto.subtle.generateKey(
                                 {name: "AES-CBC", length: 256},
@@ -412,7 +442,9 @@
                         .catch(err("aes-gcm", "wrapKey", "AES-CBC"));
 
                         //AES-GCM
-                        window.crypto.subtle.generateKey({name: "AES-GCM", length: 256}, false, ["wrapKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({name: "AES-GCM", length: 256}, false, ["wrapKey"]);
+                        })
                         .then(function(wrappingKey){
                             return window.crypto.subtle.generateKey(
                                 {name: "AES-GCM", length: 256},
@@ -429,7 +461,9 @@
                         .catch(err("aes-gcm", "wrapKey", "AES-GCM"));
 
                         //HMAC
-                        window.crypto.subtle.generateKey({name: "AES-GCM", length: 256}, false, ["wrapKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({name: "AES-GCM", length: 256}, false, ["wrapKey"]);
+                        })
                         .then(function(wrappingKey){
                             return window.crypto.subtle.generateKey(
                                 {name: "HMAC", hash: {name: "SHA-256"}},
@@ -449,7 +483,9 @@
                 <td class="unwrapKey recommended">
                     <script>
                         //RSASSA-PKCS1-v1_5
-                        window.crypto.subtle.generateKey({name: "AES-GCM", length: 256}, false, ["wrapKey", "unwrapKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({name: "AES-GCM", length: 256}, false, ["wrapKey", "unwrapKey"]);
+                        })
                         .then(function(wrappingKey){
                             return window.crypto.subtle.generateKey({
                                 name: "RSASSA-PKCS1-v1_5",
@@ -501,7 +537,9 @@
 
 
                         //RSA-PSS
-                        window.crypto.subtle.generateKey({name: "AES-GCM", length: 256}, false, ["wrapKey", "unwrapKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({name: "AES-GCM", length: 256}, false, ["wrapKey", "unwrapKey"]);
+                        })
                         .then(function(wrappingKey){
                             return window.crypto.subtle.generateKey({
                                 name: "RSA-PSS",
@@ -555,7 +593,9 @@
                         .catch(err("aes-gcm", "unwrapKey", "RSA-PSS"));
 
                         //RSA-OAEP
-                        window.crypto.subtle.generateKey({name: "AES-GCM", length: 256}, false, ["wrapKey", "unwrapKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({name: "AES-GCM", length: 256}, false, ["wrapKey", "unwrapKey"]);
+                        })
                         .then(function(wrappingKey){
                             return window.crypto.subtle.generateKey({
                                 name: "RSA-OAEP",
@@ -606,7 +646,9 @@
                         .catch(err("aes-gcm", "unwrapKey", "RSA-OAEP"));
 
                         //ECDSA
-                        window.crypto.subtle.generateKey({name: "AES-GCM", length: 256}, false, ["wrapKey", "unwrapKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({name: "AES-GCM", length: 256}, false, ["wrapKey", "unwrapKey"]);
+                        })
                         .then(function(wrappingKey){
                             return window.crypto.subtle.generateKey({
                                 name: "ECDSA",
@@ -654,7 +696,9 @@
                         .catch(err("aes-gcm", "unwrapKey", "ECDSA"));
 
                         //ECDH
-                        window.crypto.subtle.generateKey({name: "AES-GCM", length: 256}, false, ["wrapKey", "unwrapKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({name: "AES-GCM", length: 256}, false, ["wrapKey", "unwrapKey"]);
+                        })
                         .then(function(wrappingKey){
                             return window.crypto.subtle.generateKey({
                                 name: "ECDH",
@@ -702,7 +746,9 @@
                         .catch(err("aes-gcm", "unwrapKey", "ECDH"));
 
                         //AES-CTR
-                        window.crypto.subtle.generateKey({name: "AES-GCM", length: 256}, false, ["wrapKey", "unwrapKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({name: "AES-GCM", length: 256}, false, ["wrapKey", "unwrapKey"]);
+                        })
                         .then(function(wrappingKey){
                             return window.crypto.subtle.generateKey(
                                 {name: "AES-CTR", length: 256},
@@ -727,7 +773,9 @@
                         .catch(err("aes-gcm", "unwrapKey", "AES-CTR"));
 
                         //AES-CBC
-                        window.crypto.subtle.generateKey({name: "AES-GCM", length: 256}, false, ["wrapKey", "unwrapKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({name: "AES-GCM", length: 256}, false, ["wrapKey", "unwrapKey"]);
+                        })
                         .then(function(wrappingKey){
                             return window.crypto.subtle.generateKey(
                                 {name: "AES-CBC", length: 256},
@@ -752,7 +800,9 @@
                         .catch(err("aes-gcm", "unwrapKey", "AES-CBC"));
 
                         //AES-GCM
-                        window.crypto.subtle.generateKey({name: "AES-GCM", length: 256}, false, ["wrapKey", "unwrapKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({name: "AES-GCM", length: 256}, false, ["wrapKey", "unwrapKey"]);
+                        })
                         .then(function(wrappingKey){
                             return window.crypto.subtle.generateKey(
                                 {name: "AES-GCM", length: 256},
@@ -777,7 +827,9 @@
                         .catch(err("aes-gcm", "unwrapKey", "AES-GCM"));
 
                         //HMAC
-                        window.crypto.subtle.generateKey({name: "AES-GCM", length: 256}, false, ["wrapKey", "unwrapKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({name: "AES-GCM", length: 256}, false, ["wrapKey", "unwrapKey"]);
+                        })
                         .then(function(wrappingKey){
                             return window.crypto.subtle.generateKey(
                                 {name: "HMAC", hash: {name: "SHA-256"}},
@@ -825,7 +877,9 @@
                 <td class="sign recommended">
                     <script>
                         //sign
-                        window.crypto.subtle.generateKey(ECDSA, true, ["sign", "verify"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey(ECDSA, true, ["sign", "verify"]);
+                        })
                         .then(function(key){
                             return window.crypto.subtle.sign(ECDSA, key.privateKey, TESTBYTES);
                         })
@@ -836,7 +890,9 @@
                 <td class="verify recommended">
                     <script>
                         //verify
-                        window.crypto.subtle.generateKey(ECDSA, true, ["sign", "verify"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey(ECDSA, true, ["sign", "verify"]);
+                        })
                         .then(function(key){
                             window.crypto.subtle.sign(ECDSA, key.privateKey, TESTBYTES)
                             .then(function(sig){
@@ -854,26 +910,32 @@
                         //generateKey
 
                         //P-256
-                        window.crypto.subtle.generateKey({
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({
                             name: "ECDSA",
                             namedCurve: "P-256",
-                        }, false, ["sign", "verify"])
+                        }, false, ["sign", "verify"]);
+                        })
                         .then(ok("ecdsa", "generateKey", "P-256"))
                         .catch(err("ecdsa", "generateKey", "P-256"));
 
                         //P-384
-                        window.crypto.subtle.generateKey({
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({
                             name: "ECDSA",
                             namedCurve: "P-384",
-                        }, false, ["sign", "verify"])
+                        }, false, ["sign", "verify"]);
+                        })
                         .then(ok("ecdsa", "generateKey", "P-384"))
                         .catch(err("ecdsa", "generateKey", "P-384"));
 
                         //P-521
-                        window.crypto.subtle.generateKey({
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({
                             name: "ECDSA",
                             namedCurve: "P-521",
-                        }, false, ["sign", "verify"])
+                        }, false, ["sign", "verify"]);
+                        })
                         .then(ok("ecdsa", "generateKey", "P-521"))
                         .catch(err("ecdsa", "generateKey", "P-521"));
                     </script>
@@ -885,46 +947,54 @@
                         //importKey
 
                         //jwk
-                        window.crypto.subtle.importKey("jwk", {
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.importKey("jwk", {
                             kty: "EC",
                             crv: "P-256",
                             x: "A5fQnBdBSgBhTjMr1Atpzvh5SKYQ4aQRJ9WTCG5U4m4",
                             y: "8YF98byzMljHX3T5ORLYTDbcwG-_eq3f23JtTE6lOe0",
                             ext: true,
-                        }, ECDSA, false, ["verify"])
+                        }, ECDSA, false, ["verify"]);
+                        })
                         .then(ok("ecdsa", "importKey", "jwk-pub"))
                         .catch(err("ecdsa", "importKey", "jwk-pub"));
 
-                        window.crypto.subtle.importKey("jwk", {
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.importKey("jwk", {
                             kty: "EC",
                             crv: "P-256",
                             x: "A5fQnBdBSgBhTjMr1Atpzvh5SKYQ4aQRJ9WTCG5U4m4",
                             y: "8YF98byzMljHX3T5ORLYTDbcwG-_eq3f23JtTE6lOe0",
                             d: "4DvC-hxpv8myZLNeMY-8nq55MhdfA4obM1lGG3hF_yo",
                             ext: true,
-                        }, ECDSA, false, ["sign"])
+                        }, ECDSA, false, ["sign"]);
+                        })
                         .then(ok("ecdsa", "importKey", "jwk-priv"))
                         .catch(err("ecdsa", "importKey", "jwk-priv"));
 
                         //spki
-                        window.crypto.subtle.importKey("spki", new Uint8Array([
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.importKey("spki", new Uint8Array([
                             48,89,48,19,6,7,42,134,72,206,61,2,1,6,8,42,134,72,206,61,3,1,7,3,66,0,4,3,151,
                             208,156,23,65,74,0,97,78,51,43,212,11,105,206,248,121,72,166,16,225,164,17,39,
                             213,147,8,110,84,226,110,241,129,125,241,188,179,50,88,199,95,116,249,57,18,216,
                             76,54,220,192,111,191,122,173,223,219,114,109,76,78,165,57,237
-                        ]), ECDSA, false, ["verify"])
+                        ]), ECDSA, false, ["verify"]);
+                        })
                         .then(ok("ecdsa", "importKey", "spki-pub"))
                         .catch(err("ecdsa", "importKey", "spki-pub"));
 
                         //pkcs8
-                        window.crypto.subtle.importKey("pkcs8", new Uint8Array([
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.importKey("pkcs8", new Uint8Array([
                             48,129,135,2,1,0,48,19,6,7,42,134,72,206,61,2,1,6,8,42,134,72,206,61,3,1,7,4,109,48,
                             107,2,1,1,4,32,224,59,194,250,28,105,191,201,178,100,179,94,49,143,188,158,174,121,50,
                             23,95,3,138,27,51,89,70,27,120,69,255,42,161,68,3,66,0,4,3,151,208,156,23,65,74,0,97,
                             78,51,43,212,11,105,206,248,121,72,166,16,225,164,17,39,213,147,8,110,84,226,110,241,
                             129,125,241,188,179,50,88,199,95,116,249,57,18,216,76,54,220,192,111,191,122,173,223,
                             219,114,109,76,78,165,57,237
-                        ]), ECDSA, false, ["sign"])
+                        ]), ECDSA, false, ["sign"]);
+                        })
                         .then(ok("ecdsa", "importKey", "pkcs8-priv"))
                         .catch(err("ecdsa", "importKey", "pkcs8-priv"));
                     </script>
@@ -932,7 +1002,9 @@
                 <td class="exportKey recommended">
                     <script>
                         //exportKey
-                        window.crypto.subtle.generateKey(ECDSA, true, ["sign", "verify"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey(ECDSA, true, ["sign", "verify"]);
+                        })
                         .then(function(key){
 
                             //jwk
@@ -982,7 +1054,9 @@
                 <td class="sign recommended">
                     <script>
                         //sign
-                        window.crypto.subtle.generateKey(HMAC, false, ["sign"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey(HMAC, false, ["sign"]);
+                        })
                         .then(function(key){
                             return window.crypto.subtle.sign(HMAC, key, TESTBYTES);
                         })
@@ -993,7 +1067,9 @@
                 <td class="verify recommended">
                     <script>
                         //verify
-                        window.crypto.subtle.generateKey(HMAC, false, ["sign", "verify"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey(HMAC, false, ["sign", "verify"]);
+                        })
                         .then(function(key){
                             window.crypto.subtle.sign(HMAC, key, TESTBYTES)
                             .then(function(sig){
@@ -1011,34 +1087,42 @@
                         //generateKey
 
                         //sha-1
-                        window.crypto.subtle.generateKey({
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({
                             name: "HMAC",
                             hash: {name: "SHA-1"},
-                        }, false, ["sign", "verify"])
+                        }, false, ["sign", "verify"]);
+                        })
                         .then(ok("hmac", "generateKey", "SHA-1"))
                         .catch(err("hmac", "generateKey", "SHA-1"));
 
                         //sha-256
-                        window.crypto.subtle.generateKey({
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({
                             name: "HMAC",
                             hash: {name: "SHA-256"},
-                        }, false, ["sign", "verify"])
+                        }, false, ["sign", "verify"]);
+                        })
                         .then(ok("hmac", "generateKey", "SHA-256"))
                         .catch(err("hmac", "generateKey", "SHA-256"));
 
                         //sha-384
-                        window.crypto.subtle.generateKey({
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({
                             name: "HMAC",
                             hash: {name: "SHA-384"},
-                        }, false, ["sign", "verify"])
+                        }, false, ["sign", "verify"]);
+                        })
                         .then(ok("hmac", "generateKey", "SHA-384"))
                         .catch(err("hmac", "generateKey", "SHA-384"));
 
                         //sha-512
-                        window.crypto.subtle.generateKey({
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({
                             name: "HMAC",
                             hash: {name: "SHA-512"},
-                        }, false, ["sign", "verify"])
+                        }, false, ["sign", "verify"]);
+                        })
                         .then(ok("hmac", "generateKey", "SHA-512"))
                         .catch(err("hmac", "generateKey", "SHA-512"));
                     </script>
@@ -1050,20 +1134,24 @@
                         //importKey
 
                         //jwk
-                        window.crypto.subtle.importKey("jwk", {
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.importKey("jwk", {
                             kty: "oct",
                             k: "KfKY5nueRX7eBrOddn9IerHLv1r-T7qpggaCF3MfSR4",
                             alg: "HS256",
                             ext: true,
-                        }, HMAC, false, ["sign", "verify"])
+                        }, HMAC, false, ["sign", "verify"]);
+                        })
                         .then(ok("hmac", "importKey", "jwk-key"))
                         .catch(err("hmac", "importKey", "jwk-key"));
 
                         //raw
-                        window.crypto.subtle.importKey("raw", new Uint8Array([
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.importKey("raw", new Uint8Array([
                             122,94,39,230,46,23,151,80,131,230,3,101,80,234,143,9,251,
                             152,229,228,89,222,31,135,214,104,55,68,67,59,5,51
-                        ]), HMAC, false, ["sign", "verify"])
+                        ]), HMAC, false, ["sign", "verify"]);
+                        })
                         .then(ok("hmac", "importKey", "raw-key"))
                         .catch(err("hmac", "importKey", "raw-key"));
                     </script>
@@ -1071,7 +1159,9 @@
                 <td class="exportKey recommended">
                     <script>
                         //exportKey
-                        window.crypto.subtle.generateKey(HMAC, true, ["sign", "verify"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey(HMAC, true, ["sign", "verify"]);
+                        })
                         .then(function(key){
 
                             //jwk
@@ -1107,7 +1197,9 @@
                 <td class="digest recommended">
                     <script>
                         //digest
-                        window.crypto.subtle.digest({name: "SHA-256"}, TESTBYTES)
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.digest({name: "SHA-256"}, TESTBYTES);
+                        })
                         .then(ok("sha-256", "digest", "Yes"))
                         .catch(err("sha-256", "digest", "No"));
                     </script>
@@ -1136,7 +1228,9 @@
                 <td class="digest recommended">
                     <script>
                         //digest
-                        window.crypto.subtle.digest({name: "SHA-384"}, TESTBYTES)
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.digest({name: "SHA-384"}, TESTBYTES);
+                        })
                         .then(ok("sha-384", "digest", "Yes"))
                         .catch(err("sha-384", "digest", "No"));
                     </script>
@@ -1165,7 +1259,9 @@
                 <td class="digest recommended">
                     <script>
                         //digest
-                        window.crypto.subtle.digest({name: "SHA-512"}, TESTBYTES)
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.digest({name: "SHA-512"}, TESTBYTES);
+                        })
                         .then(ok("sha-512", "digest", "Yes"))
                         .catch(err("sha-512", "digest", "No"));
                     </script>
@@ -1204,26 +1300,32 @@
                         //generateKey
 
                         //P-256
-                        window.crypto.subtle.generateKey({
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({
                             name: "ECDH",
                             namedCurve: "P-256",
-                        }, false, ["deriveBits", "deriveKey"])
+                        }, false, ["deriveBits", "deriveKey"]);
+                        })
                         .then(ok("ecdh", "generateKey", "P-256"))
                         .catch(err("ecdh", "generateKey", "P-256"));
 
                         //P-384
-                        window.crypto.subtle.generateKey({
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({
                             name: "ECDH",
                             namedCurve: "P-384",
-                        }, false, ["deriveBits", "deriveKey"])
+                        }, false, ["deriveBits", "deriveKey"]);
+                        })
                         .then(ok("ecdh", "generateKey", "P-384"))
                         .catch(err("ecdh", "generateKey", "P-384"));
 
                         //P-521
-                        window.crypto.subtle.generateKey({
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({
                             name: "ECDH",
                             namedCurve: "P-521",
-                        }, false, ["deriveBits", "deriveKey"])
+                        }, false, ["deriveBits", "deriveKey"]);
+                        })
                         .then(ok("ecdh", "generateKey", "P-521"))
                         .catch(err("ecdh", "generateKey", "P-521"));
                     </script>
@@ -1231,7 +1333,9 @@
                 <td class="deriveKey recommended">
                     <script>
                         //deriveKey
-                        window.crypto.subtle.generateKey(ECDH, false, ["deriveKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey(ECDH, false, ["deriveKey"]);
+                        })
                         .then(function(key1){
                             window.crypto.subtle.generateKey(ECDH, false, ["deriveKey"])
                             .then(function(key2){
@@ -1253,7 +1357,9 @@
                 <td class="deriveBits recommended">
                     <script>
                         //deriveBits
-                        window.crypto.subtle.generateKey(ECDH, false, ["deriveBits"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey(ECDH, false, ["deriveBits"]);
+                        })
                         .then(function(key1){
                             window.crypto.subtle.generateKey(ECDH, false, ["deriveBits"])
                             .then(function(key2){
@@ -1277,50 +1383,60 @@
                         //importKey
 
                         //jwk
-                        window.crypto.subtle.importKey("jwk", {
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.importKey("jwk", {
                             kty: "EC",
                             crv: "P-256",
                             x: "kgR_PqO07L8sZOBbw6rvv7O_f7clqDeiE3WnMkb5EoI",
                             y: "djI-XqCqSyO9GFk_QT_stROMCAROIvU8KOORBgQUemE",
                             ext: true,
-                        }, ECDH, false, [])
+                        }, ECDH, false, []);
+                        })
                         .then(ok("ecdh", "importKey", "jwk-pub"))
                         .catch(err("ecdh", "importKey", "jwk-pub"));
 
-                        window.crypto.subtle.importKey("jwk", {
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.importKey("jwk", {
                             kty: "EC",
                             crv: "P-256",
                             x: "kgR_PqO07L8sZOBbw6rvv7O_f7clqDeiE3WnMkb5EoI",
                             y: "djI-XqCqSyO9GFk_QT_stROMCAROIvU8KOORBgQUemE",
                             d: "5aPFSt0UFVXYGu-ZKyC9FQIUOAMmnjzdIwkxCMe3Iok",
                             ext: true,
-                        }, ECDH, false, ["deriveBits", "deriveKey"])
+                        }, ECDH, false, ["deriveBits", "deriveKey"]);
+                        })
                         .then(ok("ecdh", "importKey", "jwk-priv"))
                         .catch(err("ecdh", "importKey", "jwk-priv"));
 
                         //raw
-                        window.crypto.subtle.importKey("raw", null, ECDH, false, ["deriveBits", "deriveKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.importKey("raw", null, ECDH, false, ["deriveBits", "deriveKey"]);
+                        })
                         .then(ok("ecdh", "importKey", "raw-pub"))
                         .catch(err("ecdh", "importKey", "raw-pub*"));
 
                         //spki
-                        window.crypto.subtle.importKey("spki", new Uint8Array([
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.importKey("spki", new Uint8Array([
                             48,89,48,19,6,7,42,134,72,206,61,2,1,6,8,42,134,72,206,61,3,1,7,3,66,0,4,146,4,127,62,
                             163,180,236,191,44,100,224,91,195,170,239,191,179,191,127,183,37,168,55,162,19,117,167,
                             50,70,249,18,130,118,50,62,94,160,170,75,35,189,24,89,63,65,63,236,181,19,140,8,4,78,
                             34,245,60,40,227,145,6,4,20,122,97
-                        ]), ECDH, false, [])
+                        ]), ECDH, false, []);
+                        })
                         .then(ok("ecdh", "importKey", "spki-pub"))
                         .catch(err("ecdh", "importKey", "spki-pub"));
 
                         //pkcs8
-                        window.crypto.subtle.importKey("pkcs8", new Uint8Array([
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.importKey("pkcs8", new Uint8Array([
                             48,129,135,2,1,0,48,19,6,7,42,134,72,206,61,2,1,6,8,42,134,72,206,61,3,1,7,4,109,48,107,2,
                             1,1,4,32,229,163,197,74,221,20,21,85,216,26,239,153,43,32,189,21,2,20,56,3,38,158,60,221,35,
                             9,49,8,199,183,34,137,161,68,3,66,0,4,146,4,127,62,163,180,236,191,44,100,224,91,195,170,239,
                             191,179,191,127,183,37,168,55,162,19,117,167,50,70,249,18,130,118,50,62,94,160,170,75,35,189,
                             24,89,63,65,63,236,181,19,140,8,4,78,34,245,60,40,227,145,6,4,20,122,97
-                        ]), ECDH, false, ["deriveBits", "deriveKey"])
+                        ]), ECDH, false, ["deriveBits", "deriveKey"]);
+                        })
                         .then(ok("ecdh", "importKey", "pkcs8-priv"))
                         .catch(err("ecdh", "importKey", "pkcs8-priv"));
                     </script>
@@ -1328,7 +1444,9 @@
                 <td class="exportKey recommended">
                     <script>
                         //exportKey
-                        window.crypto.subtle.generateKey(ECDH, true, ["deriveBits", "deriveKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey(ECDH, true, ["deriveBits", "deriveKey"]);
+                        })
                         .then(function(key){
 
                             //jwk
@@ -1394,7 +1512,9 @@
                     <script>
                         //deriveKey
                         var password = window.crypto.getRandomValues(new Uint8Array(16));
-                        window.crypto.subtle.importKey("raw", password, {name: "PBKDF2"}, false, ["deriveBits", "deriveKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.importKey("raw", password, {name: "PBKDF2"}, false, ["deriveBits", "deriveKey"]);
+                        })
                         .then(function(key){
 
                             //sha-1
@@ -1445,7 +1565,9 @@
                     <script>
                         //deriveBits
                         var password = window.crypto.getRandomValues(new Uint8Array(16));
-                        window.crypto.subtle.importKey("raw", password, {name: "PBKDF2"}, false, ["deriveBits", "deriveKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.importKey("raw", password, {name: "PBKDF2"}, false, ["deriveBits", "deriveKey"]);
+                        })
                         .then(function(key){
 
                             //sha-1
@@ -1498,7 +1620,9 @@
 
                         //raw
                         var password = window.crypto.getRandomValues(new Uint8Array(16));
-                        window.crypto.subtle.importKey("raw", password, {name: "PBKDF2"}, false, ["deriveBits", "deriveKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.importKey("raw", password, {name: "PBKDF2"}, false, ["deriveBits", "deriveKey"]);
+                        })
                         .then(ok("pbkdf2", "importKey", "raw"))
                         .catch(err("pbkdf2", "importKey", "raw"));
                     </script>
@@ -1533,26 +1657,32 @@
                         //generateKey
 
                         //128 bits
-                        window.crypto.subtle.generateKey({
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({
                             name: "AES-KW",
                             length: 128,
-                        }, false, ["wrapKey", "unwrapKey"])
+                        }, false, ["wrapKey", "unwrapKey"]);
+                        })
                         .then(ok("aes-kw", "generateKey", "128 bits"))
                         .catch(err("aes-kw", "generateKey", "128 bits"));
 
                         //192 bits
-                        window.crypto.subtle.generateKey({
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({
                             name: "AES-KW",
                             length: 192,
-                        }, false, ["wrapKey", "unwrapKey"])
+                        }, false, ["wrapKey", "unwrapKey"]);
+                        })
                         .then(ok("aes-kw", "generateKey", "192 bits"))
                         .catch(err("aes-kw", "generateKey", "192 bits"));
 
                         //256 bits
-                        window.crypto.subtle.generateKey({
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({
                             name: "AES-KW",
                             length: 256,
-                        }, false, ["wrapKey", "unwrapKey"])
+                        }, false, ["wrapKey", "unwrapKey"]);
+                        })
                         .then(ok("aes-kw", "generateKey", "256 bits"))
                         .catch(err("aes-kw", "generateKey", "256 bits"));
                     </script>
@@ -1564,20 +1694,24 @@
                         //importKey
 
                         //jwk
-                        window.crypto.subtle.importKey("jwk", {
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.importKey("jwk", {
                             kty: "oct",
                             k: "KfKY5nueRX7eBrOddn9IerHLv1r-T7qpggaCF3MfSR4",
                             alg: "A256KW",
                             ext: true,
-                        }, AESKW, false, ["wrapKey", "unwrapKey"])
+                        }, AESKW, false, ["wrapKey", "unwrapKey"]);
+                        })
                         .then(ok("aes-kw", "importKey", "jwk-key"))
                         .catch(err("aes-kw", "importKey", "jwk-key"));
 
                         //raw
-                        window.crypto.subtle.importKey("raw", new Uint8Array([
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.importKey("raw", new Uint8Array([
                             122,94,39,230,46,23,151,80,131,230,3,101,80,234,143,9,251,
                             152,229,228,89,222,31,135,214,104,55,68,67,59,5,51
-                        ]), AESKW, false, ["wrapKey", "unwrapKey"])
+                        ]), AESKW, false, ["wrapKey", "unwrapKey"]);
+                        })
                         .then(ok("aes-kw", "importKey", "raw-key"))
                         .catch(err("aes-kw", "importKey", "raw-key"));
                     </script>
@@ -1585,7 +1719,9 @@
                 <td class="exportKey recommended">
                     <script>
                         //exportKey
-                        window.crypto.subtle.generateKey(AESKW, true, ["wrapKey", "unwrapKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey(AESKW, true, ["wrapKey", "unwrapKey"]);
+                        })
                         .then(function(key){
 
                             //jwk
@@ -1605,7 +1741,9 @@
                 <td class="wrapKey recommended">
                     <script>
                         //ECDH
-                        window.crypto.subtle.generateKey({name: "AES-KW", length: 256}, false, ["wrapKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({name: "AES-KW", length: 256}, false, ["wrapKey"]);
+                        })
                         .then(function(wrappingKey){
                             return window.crypto.subtle.generateKey({
                                 name: "ECDH",
@@ -1634,7 +1772,9 @@
                         .catch(err("aes-kw", "wrapKey", "ECDH"));
 
                         //AES-CTR
-                        window.crypto.subtle.generateKey({name: "AES-KW", length: 256}, false, ["wrapKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({name: "AES-KW", length: 256}, false, ["wrapKey"]);
+                        })
                         .then(function(wrappingKey){
                             return window.crypto.subtle.generateKey(
                                 {name: "AES-CTR", length: 256},
@@ -1650,7 +1790,9 @@
                         .catch(err("aes-kw", "wrapKey", "AES-CTR"));
 
                         //AES-CBC
-                        window.crypto.subtle.generateKey({name: "AES-KW", length: 256}, false, ["wrapKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({name: "AES-KW", length: 256}, false, ["wrapKey"]);
+                        })
                         .then(function(wrappingKey){
                             return window.crypto.subtle.generateKey(
                                 {name: "AES-CBC", length: 256},
@@ -1666,7 +1808,9 @@
                         .catch(err("aes-kw", "wrapKey", "AES-CBC"));
 
                         //AES-GCM
-                        window.crypto.subtle.generateKey({name: "AES-KW", length: 256}, false, ["wrapKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({name: "AES-KW", length: 256}, false, ["wrapKey"]);
+                        })
                         .then(function(wrappingKey){
                             return window.crypto.subtle.generateKey(
                                 {name: "AES-GCM", length: 256},
@@ -1682,7 +1826,9 @@
                         .catch(err("aes-kw", "wrapKey", "AES-GCM"));
 
                         //HMAC
-                        window.crypto.subtle.generateKey({name: "AES-KW", length: 256}, false, ["wrapKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({name: "AES-KW", length: 256}, false, ["wrapKey"]);
+                        })
                         .then(function(wrappingKey){
                             return window.crypto.subtle.generateKey(
                                 {name: "HMAC", hash: {name: "SHA-256"}},
@@ -1701,7 +1847,9 @@
                 <td class="unwrapKey recommended">
                     <script>
                         //ECDH
-                        window.crypto.subtle.generateKey({name: "AES-KW", length: 256}, false, ["wrapKey", "unwrapKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({name: "AES-KW", length: 256}, false, ["wrapKey", "unwrapKey"]);
+                        })
                         .then(function(wrappingKey){
                             return window.crypto.subtle.generateKey({
                                 name: "ECDH",
@@ -1747,7 +1895,9 @@
                         .catch(err("aes-kw", "unwrapKey", "ECDH"));
 
                         //AES-CTR
-                        window.crypto.subtle.generateKey({name: "AES-KW", length: 256}, false, ["wrapKey", "unwrapKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({name: "AES-KW", length: 256}, false, ["wrapKey", "unwrapKey"]);
+                        })
                         .then(function(wrappingKey){
                             return window.crypto.subtle.generateKey(
                                 {name: "AES-CTR", length: 256},
@@ -1771,7 +1921,9 @@
                         .catch(err("aes-kw", "unwrapKey", "AES-CTR"));
 
                         //AES-CBC
-                        window.crypto.subtle.generateKey({name: "AES-KW", length: 256}, false, ["wrapKey", "unwrapKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({name: "AES-KW", length: 256}, false, ["wrapKey", "unwrapKey"]);
+                        })
                         .then(function(wrappingKey){
                             return window.crypto.subtle.generateKey(
                                 {name: "AES-CBC", length: 256},
@@ -1795,7 +1947,9 @@
                         .catch(err("aes-kw", "unwrapKey", "AES-CBC"));
 
                         //AES-GCM
-                        window.crypto.subtle.generateKey({name: "AES-KW", length: 256}, false, ["wrapKey", "unwrapKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({name: "AES-KW", length: 256}, false, ["wrapKey", "unwrapKey"]);
+                        })
                         .then(function(wrappingKey){
                             return window.crypto.subtle.generateKey(
                                 {name: "AES-GCM", length: 256},
@@ -1819,7 +1973,9 @@
                         .catch(err("aes-kw", "unwrapKey", "AES-GCM"));
 
                         //HMAC
-                        window.crypto.subtle.generateKey({name: "AES-KW", length: 256}, false, ["wrapKey", "unwrapKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({name: "AES-KW", length: 256}, false, ["wrapKey", "unwrapKey"]);
+                        })
                         .then(function(wrappingKey){
                             return window.crypto.subtle.generateKey(
                                 {name: "HMAC", hash: {name: "SHA-256"}},
@@ -1867,7 +2023,9 @@
                 <td class="encrypt unsafe">
                     <script>
                         //encrypt
-                        window.crypto.subtle.generateKey(RSAOAEP, false, ["encrypt", "decrypt"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey(RSAOAEP, false, ["encrypt", "decrypt"]);
+                        })
                         .then(function(key){
                             return window.crypto.subtle.encrypt(RSAOAEP, key.publicKey, TESTBYTES);
                         })
@@ -1878,7 +2036,9 @@
                 <td class="decrypt unsafe">
                     <script>
                         //decrypt
-                        window.crypto.subtle.generateKey(RSAOAEP, false, ["encrypt", "decrypt"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey(RSAOAEP, false, ["encrypt", "decrypt"]);
+                        })
                         .then(function(key){
                             window.crypto.subtle.encrypt(RSAOAEP, key.publicKey, TESTBYTES)
                             .then(function(encrypted){
@@ -1941,17 +2101,20 @@
                         //importKey
 
                         //jwk
-                        window.crypto.subtle.importKey("jwk", {
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.importKey("jwk", {
                             kty: "RSA",
                             e: "AQAB",
                             n: "vGO3eU16ag9zRkJ4AK8ZUZrjbtp5xWK0LyFMNT8933evJoHeczexMUzSiXaLrEFSyQZortk81zJH3y41MBO_UFDO_X0crAquNrkjZDrf9Scc5-MdxlWU2Jl7Gc4Z18AC9aNibWVmXhgvHYkEoFdLCFG-2Sq-qIyW4KFkjan05IE",
                             alg: "RSA-OAEP-256",
                             ext: true,
-                        }, RSAOAEP, false, ["encrypt"])
+                        }, RSAOAEP, false, ["encrypt"]);
+                        })
                         .then(ok("rsa-oaep", "importKey", "jwk-pub"))
                         .catch(err("rsa-oaep", "importKey", "jwk-pub"));
 
-                        window.crypto.subtle.importKey("jwk", {
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.importKey("jwk", {
                             kty: "RSA",
                             e: "AQAB",
                             d: "e-Nm1CB_F7j0p4Cb-T4WmFTh7RbxUthC3j8xnlXwHgWYwaPs9ZRkicgNCfmjEb-qJ-m0ho1Cz4WzlL1CtTKEdr2w0P6L_IQPvWkFYwUm0rpY9doxnOKkzq53dhP5zdc6N8aOLk4cmAcVjw4o_csc85H-0fxzQxsTP0_jhJn7SNE",
@@ -1963,12 +2126,14 @@
                             qi: "R1aKNnhUiTjoCHfOVHZ6Qv5R7So-F5mtjDKCBvCi8190U3E25DiKRvDqHZ0bHMRbdQPLLknxHVnuETw6gddHUg",
                             alg: "RSA-OAEP-256",
                             ext: true,
-                        }, RSAOAEP, false, ["decrypt"])
+                        }, RSAOAEP, false, ["decrypt"]);
+                        })
                         .then(ok("rsa-oaep", "importKey", "jwk-priv"))
                         .catch(err("rsa-oaep", "importKey", "jwk-priv"));
 
                         //spki
-                        window.crypto.subtle.importKey("spki", new Uint8Array([
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.importKey("spki", new Uint8Array([
                             48,129,159,48,13,6,9,42,134,72,134,247,13,1,1,1,5,0,3,
                             129,141,0,48,129,137,2,129,129,0,182,93,35,213,252,204,
                             20,103,91,238,105,199,53,114,24,221,114,210,137,173,88,
@@ -1979,12 +2144,14 @@
                             110,3,70,202,148,95,45,228,94,95,148,2,162,79,146,137,29,
                             189,102,75,207,214,116,58,63,171,219,27,5,9,108,16,218,23,
                             169,43,181,119,31,172,95,205,180,18,255,203,2,3,1,0,1
-                        ]), RSAOAEP, false, ["encrypt"])
+                        ]), RSAOAEP, false, ["encrypt"]);
+                        })
                         .then(ok("rsa-oaep", "importKey", "spki-pub"))
                         .catch(err("rsa-oaep", "importKey", "spki-pub"));
 
                         //pkcs8
-                        window.crypto.subtle.importKey("pkcs8", new Uint8Array([
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.importKey("pkcs8", new Uint8Array([
                             48,130,2,118,2,1,0,48,13,6,9,42,134,72,134,247,13,1,1,1,5,0,4,130,2,96,48,130,2,92,2,1,0,2,129,
                             129,0,217,78,147,218,221,152,10,66,75,127,242,108,182,142,157,44,93,58,176,193,135,103,216,179,
                             69,72,38,115,144,244,12,139,0,245,48,115,204,234,158,193,231,127,178,240,244,203,35,229,203,245,
@@ -2008,7 +2175,8 @@
                             253,30,241,2,64,15,148,8,16,189,122,55,109,203,175,173,24,222,36,130,130,179,87,189,32,141,149,30,
                             115,211,227,79,234,78,202,253,48,173,95,167,203,20,193,160,30,146,33,109,4,221,25,212,216,183,100,
                             18,46,184,52,65,146,249,68,225,10,84,38,98,133
-                        ]), RSAOAEP, false, ["decrypt"])
+                        ]), RSAOAEP, false, ["decrypt"]);
+                        })
                         .then(ok("rsa-oaep", "importKey", "pkcs8-priv"))
                         .catch(err("rsa-oaep", "importKey", "pkcs8-priv"));
                     </script>
@@ -2016,7 +2184,9 @@
                 <td class="exportKey unsafe">
                     <script>
                         //exportKey
-                        window.crypto.subtle.generateKey(RSAOAEP, true, ["encrypt", "decrypt"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey(RSAOAEP, true, ["encrypt", "decrypt"]);
+                        })
                         .then(function(key){
 
                             //jwk
@@ -2045,12 +2215,14 @@
                 <td class="wrapKey unsafe">
                     <script>
                         //ECDH
-                        window.crypto.subtle.generateKey({
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({
                             name: "RSA-OAEP",
                             modulusLength: 1024,
                             publicExponent: new Uint8Array([0x01, 0x00, 0x01]),
                             hash: {name: "SHA-256"},
-                        }, false, ["wrapKey", "unwrapKey"])
+                        }, false, ["wrapKey", "unwrapKey"]);
+                        })
                         .then(function(wrappingKey){
                             return window.crypto.subtle.generateKey({
                                 name: "ECDH",
@@ -2073,12 +2245,14 @@
                         .catch(err("rsa-oaep", "wrapKey", "ECDH"));
 
                         //AES-CTR
-                        window.crypto.subtle.generateKey({
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({
                             name: "RSA-OAEP",
                             modulusLength: 1024,
                             publicExponent: new Uint8Array([0x01, 0x00, 0x01]),
                             hash: {name: "SHA-256"},
-                        }, false, ["wrapKey", "unwrapKey"])
+                        }, false, ["wrapKey", "unwrapKey"]);
+                        })
                         .then(function(wrappingKey){
                             return window.crypto.subtle.generateKey(
                                 {name: "AES-CTR", length: 256},
@@ -2099,12 +2273,14 @@
                         .catch(err("rsa-oaep", "wrapKey", "AES-CTR"));
 
                         //AES-CBC
-                        window.crypto.subtle.generateKey({
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({
                             name: "RSA-OAEP",
                             modulusLength: 1024,
                             publicExponent: new Uint8Array([0x01, 0x00, 0x01]),
                             hash: {name: "SHA-256"},
-                        }, false, ["wrapKey", "unwrapKey"])
+                        }, false, ["wrapKey", "unwrapKey"]);
+                        })
                         .then(function(wrappingKey){
                             return window.crypto.subtle.generateKey(
                                 {name: "AES-CBC", length: 256},
@@ -2125,12 +2301,14 @@
                         .catch(err("rsa-oaep", "wrapKey", "AES-CBC"));
 
                         //AES-GCM
-                        window.crypto.subtle.generateKey({
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({
                             name: "RSA-OAEP",
                             modulusLength: 1024,
                             publicExponent: new Uint8Array([0x01, 0x00, 0x01]),
                             hash: {name: "SHA-256"},
-                        }, false, ["wrapKey", "unwrapKey"])
+                        }, false, ["wrapKey", "unwrapKey"]);
+                        })
                         .then(function(wrappingKey){
                             return window.crypto.subtle.generateKey(
                                 {name: "AES-GCM", length: 256},
@@ -2151,12 +2329,14 @@
                         .catch(err("rsa-oaep", "wrapKey", "AES-GCM"));
 
                         //HMAC
-                        window.crypto.subtle.generateKey({
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({
                             name: "RSA-OAEP",
                             modulusLength: 1024,
                             publicExponent: new Uint8Array([0x01, 0x00, 0x01]),
                             hash: {name: "SHA-1"}, //need shorter hash to accomidate 64 byte HMAC raw export
-                        }, false, ["wrapKey", "unwrapKey"])
+                        }, false, ["wrapKey", "unwrapKey"]);
+                        })
                         .then(function(wrappingKey){
                             return window.crypto.subtle.generateKey(
                                 {name: "HMAC", hash: {name: "SHA-256"}},
@@ -2180,12 +2360,14 @@
                 <td class="unwrapKey unsafe">
                     <script>
                         //ECDH
-                        window.crypto.subtle.generateKey({
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({
                             name: "RSA-OAEP",
                             modulusLength: 1024,
                             publicExponent: new Uint8Array([0x01, 0x00, 0x01]),
                             hash: {name: "SHA-256"},
-                        }, false, ["wrapKey", "unwrapKey"])
+                        }, false, ["wrapKey", "unwrapKey"]);
+                        })
                         .then(function(wrappingKey){
                             return window.crypto.subtle.generateKey({
                                 name: "ECDH",
@@ -2224,12 +2406,14 @@
                         .catch(err("rsa-oaep", "unwrapKey", "ECDH"));
 
                         //AES-CTR
-                        window.crypto.subtle.generateKey({
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({
                             name: "RSA-OAEP",
                             modulusLength: 1024,
                             publicExponent: new Uint8Array([0x01, 0x00, 0x01]),
                             hash: {name: "SHA-256"},
-                        }, false, ["wrapKey", "unwrapKey"])
+                        }, false, ["wrapKey", "unwrapKey"]);
+                        })
                         .then(function(wrappingKey){
                             return window.crypto.subtle.generateKey(
                                 {name: "AES-CTR", length: 256},
@@ -2263,12 +2447,14 @@
                         .catch(err("rsa-oaep", "unwrapKey", "AES-CTR"));
 
                         //AES-CBC
-                        window.crypto.subtle.generateKey({
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({
                             name: "RSA-OAEP",
                             modulusLength: 1024,
                             publicExponent: new Uint8Array([0x01, 0x00, 0x01]),
                             hash: {name: "SHA-256"},
-                        }, false, ["wrapKey", "unwrapKey"])
+                        }, false, ["wrapKey", "unwrapKey"]);
+                        })
                         .then(function(wrappingKey){
                             return window.crypto.subtle.generateKey(
                                 {name: "AES-CBC", length: 256},
@@ -2302,12 +2488,14 @@
                         .catch(err("rsa-oaep", "unwrapKey", "AES-CBC"));
 
                         //AES-GCM
-                        window.crypto.subtle.generateKey({
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({
                             name: "RSA-OAEP",
                             modulusLength: 1024,
                             publicExponent: new Uint8Array([0x01, 0x00, 0x01]),
                             hash: {name: "SHA-256"},
-                        }, false, ["wrapKey", "unwrapKey"])
+                        }, false, ["wrapKey", "unwrapKey"]);
+                        })
                         .then(function(wrappingKey){
                             return window.crypto.subtle.generateKey(
                                 {name: "AES-GCM", length: 256},
@@ -2341,12 +2529,14 @@
                         .catch(err("rsa-oaep", "unwrapKey", "AES-GCM"));
 
                         //HMAC
-                        window.crypto.subtle.generateKey({
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({
                             name: "RSA-OAEP",
                             modulusLength: 1024,
                             publicExponent: new Uint8Array([0x01, 0x00, 0x01]),
                             hash: {name: "SHA-1"}, //need shorter hash to accomidate 64 byte HMAC raw export
-                        }, false, ["wrapKey", "unwrapKey"])
+                        }, false, ["wrapKey", "unwrapKey"]);
+                        })
                         .then(function(wrappingKey){
                             return window.crypto.subtle.generateKey(
                                 {name: "HMAC", hash: {name: "SHA-256"}},
@@ -2400,7 +2590,9 @@
                 <td class="encrypt unsafe">
                     <script>
                         //encrypt
-                        window.crypto.subtle.generateKey(AESCTR, false, ["encrypt"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey(AESCTR, false, ["encrypt"]);
+                        })
                         .then(function(key){
                             return window.crypto.subtle.encrypt({
                                 name: "AES-CTR",
@@ -2415,7 +2607,9 @@
                 <td class="decrypt unsafe">
                     <script>
                         //decrypt
-                        window.crypto.subtle.generateKey(AESCTR, false, ["encrypt", "decrypt"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey(AESCTR, false, ["encrypt", "decrypt"]);
+                        })
                         .then(function(key){
                             var counter = new Uint8Array(16);
                             var length = 128;
@@ -2445,26 +2639,32 @@
                         //generateKey
 
                         //128 bits
-                        window.crypto.subtle.generateKey({
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({
                             name: "AES-CTR",
                             length: 128,
-                        }, false, ["encrypt", "decrypt"])
+                        }, false, ["encrypt", "decrypt"]);
+                        })
                         .then(ok("aes-ctr", "generateKey", "128 bits"))
                         .catch(err("aes-ctr", "generateKey", "128 bits"));
 
                         //192 bits
-                        window.crypto.subtle.generateKey({
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({
                             name: "AES-CTR",
                             length: 192,
-                        }, false, ["encrypt", "decrypt"])
+                        }, false, ["encrypt", "decrypt"]);
+                        })
                         .then(ok("aes-ctr", "generateKey", "192 bits"))
                         .catch(err("aes-ctr", "generateKey", "192 bits"));
 
                         //256 bits
-                        window.crypto.subtle.generateKey({
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({
                             name: "AES-CTR",
                             length: 256,
-                        }, false, ["encrypt", "decrypt"])
+                        }, false, ["encrypt", "decrypt"]);
+                        })
                         .then(ok("aes-ctr", "generateKey", "256 bits"))
                         .catch(err("aes-ctr", "generateKey", "256 bits"));
                     </script>
@@ -2476,20 +2676,24 @@
                         //importKey
 
                         //jwk
-                        window.crypto.subtle.importKey("jwk", {
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.importKey("jwk", {
                             kty: "oct",
                             k: "Y0zt37HgOx-BY7SQjYVmrqhPkO44Ii2Jcb9yydUDPfE",
                             alg: "A256CTR",
                             ext: true,
-                        }, AESCTR, false, ["encrypt", "decrypt"])
+                        }, AESCTR, false, ["encrypt", "decrypt"]);
+                        })
                         .then(ok("aes-ctr", "importKey", "jwk-key"))
                         .catch(err("aes-ctr", "importKey", "jwk-key"));
 
                         //raw
-                        window.crypto.subtle.importKey("raw", new Uint8Array([
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.importKey("raw", new Uint8Array([
                             122,94,39,230,46,23,151,80,131,230,3,101,80,234,143,9,251,
                             152,229,228,89,222,31,135,214,104,55,68,67,59,5,51
-                        ]), AESCTR, false, ["encrypt", "decrypt"])
+                        ]), AESCTR, false, ["encrypt", "decrypt"]);
+                        })
                         .then(ok("aes-ctr", "importKey", "raw-key"))
                         .catch(err("aes-ctr", "importKey", "raw-key"));
                     </script>
@@ -2497,7 +2701,9 @@
                 <td class="exportKey unsafe">
                     <script>
                         //exportKey
-                        window.crypto.subtle.generateKey(AESCTR, true, ["encrypt", "decrypt"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey(AESCTR, true, ["encrypt", "decrypt"]);
+                        })
                         .then(function(key){
 
                             //jwk
@@ -2517,7 +2723,9 @@
                 <td class="wrapKey unsafe">
                     <script>
                         //RSASSA-PKCS1-v1_5
-                        window.crypto.subtle.generateKey({name: "AES-CTR", length: 256}, false, ["wrapKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({name: "AES-CTR", length: 256}, false, ["wrapKey"]);
+                        })
                         .then(function(wrappingKey){
                             return window.crypto.subtle.generateKey({
                                 name: "RSASSA-PKCS1-v1_5",
@@ -2546,7 +2754,9 @@
                         .catch(err("aes-ctr", "wrapKey", "RSASSA-PKCS1-v1_5"));
 
                         //RSA-PSS
-                        window.crypto.subtle.generateKey({name: "AES-CTR", length: 256}, false, ["wrapKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({name: "AES-CTR", length: 256}, false, ["wrapKey"]);
+                        })
                         .then(function(wrappingKey){
                             return window.crypto.subtle.generateKey({
                                 name: "RSA-PSS",
@@ -2576,7 +2786,9 @@
                         .catch(err("aes-ctr", "wrapKey", "RSA-PSS"));
 
                         //RSA-OAEP
-                        window.crypto.subtle.generateKey({name: "AES-CTR", length: 256}, false, ["wrapKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({name: "AES-CTR", length: 256}, false, ["wrapKey"]);
+                        })
                         .then(function(wrappingKey){
                             return window.crypto.subtle.generateKey({
                                 name: "RSA-OAEP",
@@ -2605,7 +2817,9 @@
                         .catch(err("aes-ctr", "wrapKey", "RSA-OAEP"));
 
                         //ECDSA
-                        window.crypto.subtle.generateKey({name: "AES-CTR", length: 256}, false, ["wrapKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({name: "AES-CTR", length: 256}, false, ["wrapKey"]);
+                        })
                         .then(function(wrappingKey){
                             return window.crypto.subtle.generateKey({
                                 name: "ECDSA",
@@ -2633,7 +2847,9 @@
                         .catch(err("aes-ctr", "wrapKey", "ECDSA"));
 
                         //ECDH
-                        window.crypto.subtle.generateKey({name: "AES-CTR", length: 256}, false, ["wrapKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({name: "AES-CTR", length: 256}, false, ["wrapKey"]);
+                        })
                         .then(function(wrappingKey){
                             return window.crypto.subtle.generateKey({
                                 name: "ECDH",
@@ -2660,7 +2876,9 @@
                         .catch(err("aes-ctr", "wrapKey", "ECDH"));
 
                         //AES-CTR
-                        window.crypto.subtle.generateKey({name: "AES-CTR", length: 256}, false, ["wrapKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({name: "AES-CTR", length: 256}, false, ["wrapKey"]);
+                        })
                         .then(function(wrappingKey){
                             return window.crypto.subtle.generateKey(
                                 {name: "AES-CTR", length: 256},
@@ -2678,7 +2896,9 @@
                         .catch(err("aes-ctr", "wrapKey", "AES-CTR"));
 
                         //AES-CBC
-                        window.crypto.subtle.generateKey({name: "AES-CTR", length: 256}, false, ["wrapKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({name: "AES-CTR", length: 256}, false, ["wrapKey"]);
+                        })
                         .then(function(wrappingKey){
                             return window.crypto.subtle.generateKey(
                                 {name: "AES-CBC", length: 256},
@@ -2696,7 +2916,9 @@
                         .catch(err("aes-ctr", "wrapKey", "AES-CBC"));
 
                         //AES-GCM
-                        window.crypto.subtle.generateKey({name: "AES-CTR", length: 256}, false, ["wrapKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({name: "AES-CTR", length: 256}, false, ["wrapKey"]);
+                        })
                         .then(function(wrappingKey){
                             return window.crypto.subtle.generateKey(
                                 {name: "AES-GCM", length: 256},
@@ -2714,7 +2936,9 @@
                         .catch(err("aes-ctr", "wrapKey", "AES-GCM"));
 
                         //HMAC
-                        window.crypto.subtle.generateKey({name: "AES-CTR", length: 256}, false, ["wrapKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({name: "AES-CTR", length: 256}, false, ["wrapKey"]);
+                        })
                         .then(function(wrappingKey){
                             return window.crypto.subtle.generateKey(
                                 {name: "HMAC", hash: {name: "SHA-256"}},
@@ -2735,7 +2959,9 @@
                 <td class="unwrapKey unsafe">
                     <script>
                         //RSASSA-PKCS1-v1_5
-                        window.crypto.subtle.generateKey({name: "AES-CTR", length: 256}, false, ["wrapKey", "unwrapKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({name: "AES-CTR", length: 256}, false, ["wrapKey", "unwrapKey"]);
+                        })
                         .then(function(wrappingKey){
                             return window.crypto.subtle.generateKey({
                                 name: "RSASSA-PKCS1-v1_5",
@@ -2792,7 +3018,9 @@
                         .catch(err("aes-ctr", "unwrapKey", "RSASSA-PKCS1-v1_5"));
 
                         //RSA-PSS
-                        window.crypto.subtle.generateKey({name: "AES-CTR", length: 256}, false, ["wrapKey", "unwrapKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({name: "AES-CTR", length: 256}, false, ["wrapKey", "unwrapKey"]);
+                        })
                         .then(function(wrappingKey){
                             return window.crypto.subtle.generateKey({
                                 name: "RSA-PSS",
@@ -2852,7 +3080,9 @@
                         .catch(err("aes-ctr", "unwrapKey", "RSA-PSS"));
 
                         //RSA-OAEP
-                        window.crypto.subtle.generateKey({name: "AES-CTR", length: 256}, false, ["wrapKey", "unwrapKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({name: "AES-CTR", length: 256}, false, ["wrapKey", "unwrapKey"]);
+                        })
                         .then(function(wrappingKey){
                             return window.crypto.subtle.generateKey({
                                 name: "RSA-OAEP",
@@ -2909,7 +3139,9 @@
                         .catch(err("aes-ctr", "unwrapKey", "RSA-OAEP"));
 
                         //ECDSA
-                        window.crypto.subtle.generateKey({name: "AES-CTR", length: 256}, false, ["wrapKey", "unwrapKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({name: "AES-CTR", length: 256}, false, ["wrapKey", "unwrapKey"]);
+                        })
                         .then(function(wrappingKey){
                             return window.crypto.subtle.generateKey({
                                 name: "ECDSA",
@@ -2963,7 +3195,9 @@
                         .catch(err("aes-ctr", "unwrapKey", "ECDSA"));
 
                         //ECDH
-                        window.crypto.subtle.generateKey({name: "AES-CTR", length: 256}, false, ["wrapKey", "unwrapKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({name: "AES-CTR", length: 256}, false, ["wrapKey", "unwrapKey"]);
+                        })
                         .then(function(wrappingKey){
                             return window.crypto.subtle.generateKey({
                                 name: "ECDH",
@@ -3017,7 +3251,9 @@
                         .catch(err("aes-ctr", "unwrapKey", "ECDH"));
 
                         //AES-CTR
-                        window.crypto.subtle.generateKey({name: "AES-CTR", length: 256}, false, ["wrapKey", "unwrapKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({name: "AES-CTR", length: 256}, false, ["wrapKey", "unwrapKey"]);
+                        })
                         .then(function(wrappingKey){
                             return window.crypto.subtle.generateKey(
                                 {name: "AES-CTR", length: 256},
@@ -3045,7 +3281,9 @@
                         .catch(err("aes-ctr", "unwrapKey", "AES-CTR"));
 
                         //AES-CBC
-                        window.crypto.subtle.generateKey({name: "AES-CTR", length: 256}, false, ["wrapKey", "unwrapKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({name: "AES-CTR", length: 256}, false, ["wrapKey", "unwrapKey"]);
+                        })
                         .then(function(wrappingKey){
                             return window.crypto.subtle.generateKey(
                                 {name: "AES-CBC", length: 256},
@@ -3073,7 +3311,9 @@
                         .catch(err("aes-ctr", "unwrapKey", "AES-CBC"));
 
                         //AES-GCM
-                        window.crypto.subtle.generateKey({name: "AES-CTR", length: 256}, false, ["wrapKey", "unwrapKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({name: "AES-CTR", length: 256}, false, ["wrapKey", "unwrapKey"]);
+                        })
                         .then(function(wrappingKey){
                             return window.crypto.subtle.generateKey(
                                 {name: "AES-GCM", length: 256},
@@ -3101,7 +3341,9 @@
                         .catch(err("aes-ctr", "unwrapKey", "AES-GCM"));
 
                         //HMAC
-                        window.crypto.subtle.generateKey({name: "AES-CTR", length: 256}, false, ["wrapKey", "unwrapKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({name: "AES-CTR", length: 256}, false, ["wrapKey", "unwrapKey"]);
+                        })
                         .then(function(wrappingKey){
                             return window.crypto.subtle.generateKey(
                                 {name: "HMAC", hash: {name: "SHA-256"}},
@@ -3149,7 +3391,9 @@
                 <td class="encrypt unsafe">
                     <script>
                         //encrypt
-                        window.crypto.subtle.generateKey(AESCBC, false, ["encrypt"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey(AESCBC, false, ["encrypt"]);
+                        })
                         .then(function(key){
                             return window.crypto.subtle.encrypt({
                                 name: "AES-CBC",
@@ -3163,7 +3407,9 @@
                 <td class="decrypt unsafe">
                     <script>
                         //decrypt
-                        window.crypto.subtle.generateKey(AESCBC, false, ["encrypt", "decrypt"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey(AESCBC, false, ["encrypt", "decrypt"]);
+                        })
                         .then(function(key){
                             var iv = window.crypto.getRandomValues(new Uint8Array(16));
                             window.crypto.subtle.encrypt({
@@ -3190,26 +3436,32 @@
                         //generateKey
 
                         //128 bits
-                        window.crypto.subtle.generateKey({
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({
                             name: "AES-CBC",
                             length: 128,
-                        }, false, ["encrypt", "decrypt"])
+                        }, false, ["encrypt", "decrypt"]);
+                        })
                         .then(ok("aes-cbc", "generateKey", "128 bits"))
                         .catch(err("aes-cbc", "generateKey", "128 bits"));
 
                         //192 bits
-                        window.crypto.subtle.generateKey({
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({
                             name: "AES-CBC",
                             length: 192,
-                        }, false, ["encrypt", "decrypt"])
+                        }, false, ["encrypt", "decrypt"]);
+                        })
                         .then(ok("aes-cbc", "generateKey", "192 bits"))
                         .catch(err("aes-cbc", "generateKey", "192 bits"));
 
                         //256 bits
-                        window.crypto.subtle.generateKey({
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({
                             name: "AES-CBC",
                             length: 256,
-                        }, false, ["encrypt", "decrypt"])
+                        }, false, ["encrypt", "decrypt"]);
+                        })
                         .then(ok("aes-cbc", "generateKey", "256 bits"))
                         .catch(err("aes-cbc", "generateKey", "256 bits"));
                     </script>
@@ -3221,20 +3473,24 @@
                         //importKey
 
                         //jwk
-                        window.crypto.subtle.importKey("jwk", {
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.importKey("jwk", {
                             kty: "oct",
                             k: "KfKY5nueRX7eBrOddn9IerHLv1r-T7qpggaCF3MfSR4",
                             alg: "A256CBC",
                             ext: true,
-                        }, AESCBC, false, ["encrypt", "decrypt"])
+                        }, AESCBC, false, ["encrypt", "decrypt"]);
+                        })
                         .then(ok("aes-cbc", "importKey", "jwk-key"))
                         .catch(err("aes-cbc", "importKey", "jwk-key"));
 
                         //raw
-                        window.crypto.subtle.importKey("raw", new Uint8Array([
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.importKey("raw", new Uint8Array([
                             122,94,39,230,46,23,151,80,131,230,3,101,80,234,143,9,251,
                             152,229,228,89,222,31,135,214,104,55,68,67,59,5,51
-                        ]), AESCBC, false, ["encrypt", "decrypt"])
+                        ]), AESCBC, false, ["encrypt", "decrypt"]);
+                        })
                         .then(ok("aes-cbc", "importKey", "raw-key"))
                         .catch(err("aes-cbc", "importKey", "raw-key"));
                     </script>
@@ -3242,7 +3498,9 @@
                 <td class="exportKey unsafe">
                     <script>
                         //exportKey
-                        window.crypto.subtle.generateKey(AESCBC, true, ["encrypt", "decrypt"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey(AESCBC, true, ["encrypt", "decrypt"]);
+                        })
                         .then(function(key){
 
                             //jwk
@@ -3262,7 +3520,9 @@
                 <td class="wrapKey unsafe">
                     <script>
                         //RSASSA-PKCS1-v1_5
-                        window.crypto.subtle.generateKey({name: "AES-CBC", length: 256}, false, ["wrapKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({name: "AES-CBC", length: 256}, false, ["wrapKey"]);
+                        })
                         .then(function(wrappingKey){
                             return window.crypto.subtle.generateKey({
                                 name: "RSASSA-PKCS1-v1_5",
@@ -3289,7 +3549,9 @@
                         .catch(err("aes-cbc", "wrapKey", "RSASSA-PKCS1-v1_5"));
 
                         //RSA-PSS
-                        window.crypto.subtle.generateKey({name: "AES-CBC", length: 256}, false, ["wrapKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({name: "AES-CBC", length: 256}, false, ["wrapKey"]);
+                        })
                         .then(function(wrappingKey){
                             return window.crypto.subtle.generateKey({
                                 name: "RSA-PSS",
@@ -3317,7 +3579,9 @@
                         .catch(err("aes-cbc", "wrapKey", "RSA-PSS"));
 
                         //RSA-OAEP
-                        window.crypto.subtle.generateKey({name: "AES-CBC", length: 256}, false, ["wrapKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({name: "AES-CBC", length: 256}, false, ["wrapKey"]);
+                        })
                         .then(function(wrappingKey){
                             return window.crypto.subtle.generateKey({
                                 name: "RSA-OAEP",
@@ -3344,7 +3608,9 @@
                         .catch(err("aes-cbc", "wrapKey", "RSA-OAEP"));
 
                         //ECDSA
-                        window.crypto.subtle.generateKey({name: "AES-CBC", length: 256}, false, ["wrapKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({name: "AES-CBC", length: 256}, false, ["wrapKey"]);
+                        })
                         .then(function(wrappingKey){
                             return window.crypto.subtle.generateKey({
                                 name: "ECDSA",
@@ -3370,7 +3636,9 @@
                         .catch(err("aes-cbc", "wrapKey", "ECDSA"));
 
                         //ECDH
-                        window.crypto.subtle.generateKey({name: "AES-CBC", length: 256}, false, ["wrapKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({name: "AES-CBC", length: 256}, false, ["wrapKey"]);
+                        })
                         .then(function(wrappingKey){
                             return window.crypto.subtle.generateKey({
                                 name: "ECDH",
@@ -3395,7 +3663,9 @@
                         .catch(err("aes-cbc", "wrapKey", "ECDH"));
 
                         //AES-CTR
-                        window.crypto.subtle.generateKey({name: "AES-CBC", length: 256}, false, ["wrapKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({name: "AES-CBC", length: 256}, false, ["wrapKey"]);
+                        })
                         .then(function(wrappingKey){
                             return window.crypto.subtle.generateKey(
                                 {name: "AES-CTR", length: 256},
@@ -3412,7 +3682,9 @@
                         .catch(err("aes-cbc", "wrapKey", "AES-CTR"));
 
                         //AES-CBC
-                        window.crypto.subtle.generateKey({name: "AES-CBC", length: 256}, false, ["wrapKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({name: "AES-CBC", length: 256}, false, ["wrapKey"]);
+                        })
                         .then(function(wrappingKey){
                             return window.crypto.subtle.generateKey(
                                 {name: "AES-CBC", length: 256},
@@ -3429,7 +3701,9 @@
                         .catch(err("aes-cbc", "wrapKey", "AES-CBC"));
 
                         //AES-GCM
-                        window.crypto.subtle.generateKey({name: "AES-CBC", length: 256}, false, ["wrapKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({name: "AES-CBC", length: 256}, false, ["wrapKey"]);
+                        })
                         .then(function(wrappingKey){
                             return window.crypto.subtle.generateKey(
                                 {name: "AES-GCM", length: 256},
@@ -3446,7 +3720,9 @@
                         .catch(err("aes-cbc", "wrapKey", "AES-GCM"));
 
                         //HMAC
-                        window.crypto.subtle.generateKey({name: "AES-CBC", length: 256}, false, ["wrapKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({name: "AES-CBC", length: 256}, false, ["wrapKey"]);
+                        })
                         .then(function(wrappingKey){
                             return window.crypto.subtle.generateKey(
                                 {name: "HMAC", hash: {name: "SHA-256"}},
@@ -3466,7 +3742,9 @@
                 <td class="unwrapKey unsafe">
                     <script>
                         //RSASSA-PKCS1-v1_5
-                        window.crypto.subtle.generateKey({name: "AES-CBC", length: 256}, false, ["wrapKey", "unwrapKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({name: "AES-CBC", length: 256}, false, ["wrapKey", "unwrapKey"]);
+                        })
                         .then(function(wrappingKey){
                             return window.crypto.subtle.generateKey({
                                 name: "RSASSA-PKCS1-v1_5",
@@ -3517,7 +3795,9 @@
                         .catch(err("aes-cbc", "unwrapKey", "RSASSA-PKCS1-v1_5"));
 
                         //RSA-PSS
-                        window.crypto.subtle.generateKey({name: "AES-CBC", length: 256}, false, ["wrapKey", "unwrapKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({name: "AES-CBC", length: 256}, false, ["wrapKey", "unwrapKey"]);
+                        })
                         .then(function(wrappingKey){
                             return window.crypto.subtle.generateKey({
                                 name: "RSA-PSS",
@@ -3571,7 +3851,9 @@
                         .catch(err("aes-cbc", "unwrapKey", "RSA-PSS"));
 
                         //RSA-OAEP
-                        window.crypto.subtle.generateKey({name: "AES-CBC", length: 256}, false, ["wrapKey", "unwrapKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({name: "AES-CBC", length: 256}, false, ["wrapKey", "unwrapKey"]);
+                        })
                         .then(function(wrappingKey){
                             return window.crypto.subtle.generateKey({
                                 name: "RSA-OAEP",
@@ -3622,7 +3904,9 @@
                         .catch(err("aes-cbc", "unwrapKey", "RSA-OAEP"));
 
                         //ECDSA
-                        window.crypto.subtle.generateKey({name: "AES-CBC", length: 256}, false, ["wrapKey", "unwrapKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({name: "AES-CBC", length: 256}, false, ["wrapKey", "unwrapKey"]);
+                        })
                         .then(function(wrappingKey){
                             return window.crypto.subtle.generateKey({
                                 name: "ECDSA",
@@ -3670,7 +3954,9 @@
                         .catch(err("aes-cbc", "unwrapKey", "ECDSA"));
 
                         //ECDH
-                        window.crypto.subtle.generateKey({name: "AES-CBC", length: 256}, false, ["wrapKey", "unwrapKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({name: "AES-CBC", length: 256}, false, ["wrapKey", "unwrapKey"]);
+                        })
                         .then(function(wrappingKey){
                             return window.crypto.subtle.generateKey({
                                 name: "ECDH",
@@ -3718,7 +4004,9 @@
                         .catch(err("aes-cbc", "unwrapKey", "ECDH"));
 
                         //AES-CTR
-                        window.crypto.subtle.generateKey({name: "AES-CBC", length: 256}, false, ["wrapKey", "unwrapKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({name: "AES-CBC", length: 256}, false, ["wrapKey", "unwrapKey"]);
+                        })
                         .then(function(wrappingKey){
                             return window.crypto.subtle.generateKey(
                                 {name: "AES-CTR", length: 256},
@@ -3743,7 +4031,9 @@
                         .catch(err("aes-cbc", "unwrapKey", "AES-CTR"));
 
                         //AES-CBC
-                        window.crypto.subtle.generateKey({name: "AES-CBC", length: 256}, false, ["wrapKey", "unwrapKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({name: "AES-CBC", length: 256}, false, ["wrapKey", "unwrapKey"]);
+                        })
                         .then(function(wrappingKey){
                             return window.crypto.subtle.generateKey(
                                 {name: "AES-CBC", length: 256},
@@ -3768,7 +4058,9 @@
                         .catch(err("aes-cbc", "unwrapKey", "AES-CBC"));
 
                         //AES-GCM
-                        window.crypto.subtle.generateKey({name: "AES-CBC", length: 256}, false, ["wrapKey", "unwrapKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({name: "AES-CBC", length: 256}, false, ["wrapKey", "unwrapKey"]);
+                        })
                         .then(function(wrappingKey){
                             return window.crypto.subtle.generateKey(
                                 {name: "AES-GCM", length: 256},
@@ -3793,7 +4085,9 @@
                         .catch(err("aes-cbc", "unwrapKey", "AES-GCM"));
 
                         //HMAC
-                        window.crypto.subtle.generateKey({name: "AES-CBC", length: 256}, false, ["wrapKey", "unwrapKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({name: "AES-CBC", length: 256}, false, ["wrapKey", "unwrapKey"]);
+                        })
                         .then(function(wrappingKey){
                             return window.crypto.subtle.generateKey(
                                 {name: "HMAC", hash: {name: "SHA-256"}},
@@ -3838,7 +4132,9 @@
                 <td class="encrypt unsafe">
                     <script>
                         //encrypt
-                        window.crypto.subtle.generateKey(AESCFB, false, ["encrypt"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey(AESCFB, false, ["encrypt"]);
+                        })
                         .then(function(key){
                             return window.crypto.subtle.encrypt({
                                 name: "AES-CFB-8",
@@ -3852,7 +4148,9 @@
                 <td class="decrypt unsafe">
                     <script>
                         //decrypt
-                        window.crypto.subtle.generateKey(AESCFB, false, ["encrypt", "decrypt"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey(AESCFB, false, ["encrypt", "decrypt"]);
+                        })
                         .then(function(key){
                             var iv = window.crypto.getRandomValues(new Uint8Array(16));
                             window.crypto.subtle.encrypt({
@@ -3879,26 +4177,32 @@
                         //generateKey
 
                         //128 bits
-                        window.crypto.subtle.generateKey({
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({
                             name: "AES-CFB-8",
                             length: 128,
-                        }, false, ["encrypt", "decrypt"])
+                        }, false, ["encrypt", "decrypt"]);
+                        })
                         .then(ok("aes-cfb", "generateKey", "128 bits"))
                         .catch(err("aes-cfb", "generateKey", "128 bits"));
 
                         //192 bits
-                        window.crypto.subtle.generateKey({
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({
                             name: "AES-CFB-8",
                             length: 192,
-                        }, false, ["encrypt", "decrypt"])
+                        }, false, ["encrypt", "decrypt"]);
+                        })
                         .then(ok("aes-cfb", "generateKey", "192 bits"))
                         .catch(err("aes-cfb", "generateKey", "192 bits"));
 
                         //256 bits
-                        window.crypto.subtle.generateKey({
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({
                             name: "AES-CFB-8",
                             length: 256,
-                        }, false, ["encrypt", "decrypt"])
+                        }, false, ["encrypt", "decrypt"]);
+                        })
                         .then(ok("aes-cfb", "generateKey", "256 bits"))
                         .catch(err("aes-cfb", "generateKey", "256 bits"));
                     </script>
@@ -3910,20 +4214,24 @@
                         //importKey
 
                         //jwk
-                        window.crypto.subtle.importKey("jwk", {
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.importKey("jwk", {
                             kty: "oct",
                             k: "Y0zt37HgOx-BY7SQjYVmrqhPkO44Ii2Jcb9yydUDPfE",
                             alg: "A256CFB8",
                             ext: true,
-                        }, AESCFB, false, ["encrypt", "decrypt"])
+                        }, AESCFB, false, ["encrypt", "decrypt"]);
+                        })
                         .then(ok("aes-cfb", "importKey", "jwk-key"))
                         .catch(err("aes-cfb", "importKey", "jwk-key"));
 
                         //raw
-                        window.crypto.subtle.importKey("raw", new Uint8Array([
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.importKey("raw", new Uint8Array([
                             122,94,39,230,46,23,151,80,131,230,3,101,80,234,143,9,251,
                             152,229,228,89,222,31,135,214,104,55,68,67,59,5,51
-                        ]), AESCFB, false, ["encrypt", "decrypt"])
+                        ]), AESCFB, false, ["encrypt", "decrypt"]);
+                        })
                         .then(ok("aes-cfb", "importKey", "raw-key"))
                         .catch(err("aes-cfb", "importKey", "raw-key"));
                     </script>
@@ -3931,7 +4239,9 @@
                 <td class="exportKey unsafe">
                     <script>
                         //exportKey
-                        window.crypto.subtle.generateKey(AESCFB, true, ["encrypt", "decrypt"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey(AESCFB, true, ["encrypt", "decrypt"]);
+                        })
                         .then(function(key){
 
                             //jwk
@@ -3950,14 +4260,18 @@
                 </td>
                 <td class="wrapKey unsafe">
                     <script>
-                        window.crypto.subtle.generateKey(AESCFB, true, ["wrapKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey(AESCFB, true, ["wrapKey"]);
+                        })
                         .then(ok("aes-cfb", "wrapKey", "TODO"))
                         .catch(err("aes-cfb", "wrapKey", "N/A"));
                     </script>
                 </td>
                 <td class="unwrapKey unsafe">
                     <script>
-                        window.crypto.subtle.generateKey(AESCFB, true, ["wrapKey", "unwrapKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey(AESCFB, true, ["wrapKey", "unwrapKey"]);
+                        })
                         .then(ok("aes-cfb", "unwrapKey", "TODO"))
                         .catch(err("aes-cfb", "unwrapKey", "N/A"));
                     </script>
@@ -3988,7 +4302,9 @@
                 <td class="sign unsafe">
                     <script>
                         //sign
-                        window.crypto.subtle.generateKey(RSASSA, false, ["sign"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey(RSASSA, false, ["sign"]);
+                        })
                         .then(function(key){
                             return window.crypto.subtle.sign(RSASSA, key.privateKey, TESTBYTES);
                         })
@@ -3999,7 +4315,9 @@
                 <td class="verify unsafe">
                     <script>
                         //verify
-                        window.crypto.subtle.generateKey(RSASSA, false, ["sign", "verify"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey(RSASSA, false, ["sign", "verify"]);
+                        })
                         .then(function(key){
                             window.crypto.subtle.sign(RSASSA, key.privateKey, TESTBYTES)
                             .then(function(sig){
@@ -4060,17 +4378,20 @@
                         //importKey
 
                         //jwk
-                        window.crypto.subtle.importKey("jwk", {
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.importKey("jwk", {
                             kty: "RSA",
                             e: "AQAB",
                             n: "vGO3eU16ag9zRkJ4AK8ZUZrjbtp5xWK0LyFMNT8933evJoHeczexMUzSiXaLrEFSyQZortk81zJH3y41MBO_UFDO_X0crAquNrkjZDrf9Scc5-MdxlWU2Jl7Gc4Z18AC9aNibWVmXhgvHYkEoFdLCFG-2Sq-qIyW4KFkjan05IE",
                             alg: "RS256",
                             ext: true,
-                        }, RSASSA, false, ["verify"])
+                        }, RSASSA, false, ["verify"]);
+                        })
                         .then(ok("rsassa-pkcs1", "importKey", "jwk-pub"))
                         .catch(err("rsassa-pkcs1", "importKey", "jwk-pub"));
 
-                        window.crypto.subtle.importKey("jwk", {
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.importKey("jwk", {
                             kty: "RSA",
                             e: "AQAB",
                             d: "n_dIVw9MD_04lANi5KnKJPoRfxKy7cGHYLG0hU5DGpsFNfx2yH0Uz9j8uU7ZARai1iHECBxcxhpi3wbckQtjmbkCUKvs4G0gKLT9UuNHcCbh0WfvadfPPec52n4z6s4zwisbgWCNbT2L-SyHt1yuFmLAYXkg0swk3y5Bt_ilA8E",
@@ -4082,12 +4403,14 @@
                             qi: "R3CkCGVAESy_hChmDvUaLMT-R1xk6kK7RLIUQKXATPQbnDqWBMgm-vcawFVhKJ-ICJsPfmRUsv7Wt1bJ01wLGQ",
                             alg: "RS256",
                             ext: true,
-                        }, RSASSA, false, ["sign"])
+                        }, RSASSA, false, ["sign"]);
+                        })
                         .then(ok("rsassa-pkcs1", "importKey", "jwk-priv"))
                         .catch(err("rsassa-pkcs1", "importKey", "jwk-priv"));
 
                         //spki
-                        window.crypto.subtle.importKey("spki", new Uint8Array([
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.importKey("spki", new Uint8Array([
                             48,129,159,48,13,6,9,42,134,72,134,247,13,1,1,1,5,0,3,
                             129,141,0,48,129,137,2,129,129,0,182,93,35,213,252,204,
                             20,103,91,238,105,199,53,114,24,221,114,210,137,173,88,
@@ -4098,12 +4421,14 @@
                             110,3,70,202,148,95,45,228,94,95,148,2,162,79,146,137,29,
                             189,102,75,207,214,116,58,63,171,219,27,5,9,108,16,218,23,
                             169,43,181,119,31,172,95,205,180,18,255,203,2,3,1,0,1
-                        ]), RSASSA, false, ["verify"])
+                        ]), RSASSA, false, ["verify"]);
+                        })
                         .then(ok("rsassa-pkcs1", "importKey", "spki-pub"))
                         .catch(err("rsassa-pkcs1", "importKey", "spki-pub"));
 
                         //pkcs8
-                        window.crypto.subtle.importKey("pkcs8", new Uint8Array([
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.importKey("pkcs8", new Uint8Array([
                             48,130,2,118,2,1,0,48,13,6,9,42,134,72,134,247,13,1,1,1,5,0,4,130,2,96,48,130,2,92,2,1,0,2,129,
                             129,0,217,78,147,218,221,152,10,66,75,127,242,108,182,142,157,44,93,58,176,193,135,103,216,179,
                             69,72,38,115,144,244,12,139,0,245,48,115,204,234,158,193,231,127,178,240,244,203,35,229,203,245,
@@ -4127,7 +4452,8 @@
                             253,30,241,2,64,15,148,8,16,189,122,55,109,203,175,173,24,222,36,130,130,179,87,189,32,141,149,30,
                             115,211,227,79,234,78,202,253,48,173,95,167,203,20,193,160,30,146,33,109,4,221,25,212,216,183,100,
                             18,46,184,52,65,146,249,68,225,10,84,38,98,133
-                        ]), RSASSA, false, ["sign"])
+                        ]), RSASSA, false, ["sign"]);
+                        })
                         .then(ok("rsassa-pkcs1", "importKey", "pkcs8-priv"))
                         .catch(err("rsassa-pkcs1", "importKey", "pkcs8-priv"));
                     </script>
@@ -4135,7 +4461,9 @@
                 <td class="exportKey unsafe">
                     <script>
                         //exportKey
-                        window.crypto.subtle.generateKey(RSASSA, true, ["sign", "verify"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey(RSASSA, true, ["sign", "verify"]);
+                        })
                         .then(function(key){
 
                             //jwk
@@ -4190,7 +4518,9 @@
                 <td class="sign unsafe">
                     <script>
                         //sign
-                        window.crypto.subtle.generateKey(RSAPSS, false, ["sign"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey(RSAPSS, false, ["sign"]);
+                        })
                         .then(function(key){
                             return window.crypto.subtle.sign(RSAPSS, key.privateKey, TESTBYTES);
                         })
@@ -4201,7 +4531,9 @@
                 <td class="verify unsafe">
                     <script>
                         //verify
-                        window.crypto.subtle.generateKey(RSAPSS, false, ["sign", "verify"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey(RSAPSS, false, ["sign", "verify"]);
+                        })
                         .then(function(key){
                             window.crypto.subtle.sign(RSAPSS, key.privateKey, TESTBYTES)
                             .then(function(sig){
@@ -4265,17 +4597,20 @@
                         //importKey
 
                         //jwk
-                        window.crypto.subtle.importKey("jwk", {
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.importKey("jwk", {
                             kty: "RSA",
                             e: "AQAB",
                             n: "vGO3eU16ag9zRkJ4AK8ZUZrjbtp5xWK0LyFMNT8933evJoHeczexMUzSiXaLrEFSyQZortk81zJH3y41MBO_UFDO_X0crAquNrkjZDrf9Scc5-MdxlWU2Jl7Gc4Z18AC9aNibWVmXhgvHYkEoFdLCFG-2Sq-qIyW4KFkjan05IE",
                             alg: "PS256",
                             ext: true,
-                        }, RSAPSS, false, ["verify"])
+                        }, RSAPSS, false, ["verify"]);
+                        })
                         .then(ok("rsa-pss", "importKey", "jwk-pub"))
                         .catch(err("rsa-pss", "importKey", "jwk-pub"));
 
-                        window.crypto.subtle.importKey("jwk", {
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.importKey("jwk", {
                             kty: "RSA",
                             e: "AQAB",
                             d: "n_dIVw9MD_04lANi5KnKJPoRfxKy7cGHYLG0hU5DGpsFNfx2yH0Uz9j8uU7ZARai1iHECBxcxhpi3wbckQtjmbkCUKvs4G0gKLT9UuNHcCbh0WfvadfPPec52n4z6s4zwisbgWCNbT2L-SyHt1yuFmLAYXkg0swk3y5Bt_ilA8E",
@@ -4287,12 +4622,14 @@
                             qi: "R3CkCGVAESy_hChmDvUaLMT-R1xk6kK7RLIUQKXATPQbnDqWBMgm-vcawFVhKJ-ICJsPfmRUsv7Wt1bJ01wLGQ",
                             alg: "PS256",
                             ext: true,
-                        }, RSAPSS, false, ["sign"])
+                        }, RSAPSS, false, ["sign"]);
+                        })
                         .then(ok("rsa-pss", "importKey", "jwk-priv"))
                         .catch(err("rsa-pss", "importKey", "jwk-priv"));
 
                         //spki
-                        window.crypto.subtle.importKey("spki", new Uint8Array([
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.importKey("spki", new Uint8Array([
                             48,129,159,48,13,6,9,42,134,72,134,247,13,1,1,1,5,0,3,129,141,0,
                             48,129,137,2,129,129,0,180,31,227,200,37,227,65,238,23,91,226,130,
                             51,32,165,245,1,24,244,5,184,42,181,155,23,142,249,220,222,131,
@@ -4302,12 +4639,14 @@
                             124,200,105,75,104,158,156,158,238,214,14,81,95,130,155,146,114,
                             125,88,158,212,44,65,236,228,194,105,96,211,155,60,71,134,90,151,
                             202,68,20,228,105,249,202,170,155,2,3,1,0,1
-                        ]), RSAPSS, false, ["verify"])
+                        ]), RSAPSS, false, ["verify"]);
+                        })
                         .then(ok("rsa-pss", "importKey", "spki-pub"))
                         .catch(err("rsa-pss", "importKey", "spki-pub"));
 
                         //pkcs8
-                        window.crypto.subtle.importKey("pkcs8", new Uint8Array([
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.importKey("pkcs8", new Uint8Array([
                             48,130,2,119,2,1,0,48,13,6,9,42,134,72,134,247,13,1,1,1,5,0,4,130,2,97,48,130,2,93,2,1,0,
                             2,129,129,0,180,31,227,200,37,227,65,238,23,91,226,130,51,32,165,245,1,24,244,5,184,42,181,
                             155,23,142,249,220,222,131,175,54,117,135,64,232,120,90,160,221,18,31,200,41,23,174,18,172,
@@ -4333,7 +4672,8 @@
                             141,176,179,203,180,190,224,34,134,226,151,73,139,163,47,17,179,117,167,200,255,174,67,114,
                             158,96,195,176,163,241,96,24,72,35,38,18,132,176,76,235,8,29,225,138,155,191,97,158,3,22,114,
                             133,176,213,207,120,33,55,52,135,79,161
-                        ]), RSAPSS, false, ["sign"])
+                        ]), RSAPSS, false, ["sign"]);
+                        })
                         .then(ok("rsa-pss", "importKey", "pkcs8-priv"))
                         .catch(err("rsa-pss", "importKey", "pkcs8-priv"));
                     </script>
@@ -4341,7 +4681,9 @@
                 <td class="exportKey unsafe">
                     <script>
                         //exportKey
-                        window.crypto.subtle.generateKey(RSAPSS, true, ["sign", "verify"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey(RSAPSS, true, ["sign", "verify"]);
+                        })
                         .then(function(key){
 
                             //jwk
@@ -4391,7 +4733,9 @@
                 <td class="sign unsafe">
                     <script>
                         //sign
-                        window.crypto.subtle.generateKey(AESCMAC, false, ["sign"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey(AESCMAC, false, ["sign"]);
+                        })
                         .then(function(key){
                             return window.crypto.subtle.sign({name: "AES-CMAC", lenth: 256}, key, TESTBYTES);
                         })
@@ -4402,7 +4746,9 @@
                 <td class="verify unsafe">
                     <script>
                         //verify
-                        window.crypto.subtle.generateKey(AESCMAC, false, ["sign", "verify"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey(AESCMAC, false, ["sign", "verify"]);
+                        })
                         .then(function(key){
                             window.crypto.subtle.sign({name: "AES-CMAC", lenth: 256}, key, TESTBYTES)
                             .then(function(sig){
@@ -4420,17 +4766,23 @@
                         //generateKey
 
                         //128 bits
-                        window.crypto.subtle.generateKey({name: "AES-CMAC", length: 128}, false, ["sign", "verify"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({name: "AES-CMAC", length: 128}, false, ["sign", "verify"]);
+                        })
                         .then(ok("aes-cmac", "generateKey", "128 bits"))
                         .catch(err("aes-cmac", "generateKey", "128 bits"));
 
                         //192 bits
-                        window.crypto.subtle.generateKey({name: "AES-CMAC", length: 192}, false, ["sign", "verify"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({name: "AES-CMAC", length: 192}, false, ["sign", "verify"]);
+                        })
                         .then(ok("aes-cmac", "generateKey", "192 bits"))
                         .catch(err("aes-cmac", "generateKey", "192 bits"));
 
                         //256 bits
-                        window.crypto.subtle.generateKey({name: "AES-CMAC", length: 256}, false, ["sign", "verify"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey({name: "AES-CMAC", length: 256}, false, ["sign", "verify"]);
+                        })
                         .then(ok("aes-cmac", "generateKey", "256 bits"))
                         .catch(err("aes-cmac", "generateKey", "256 bits"));
                     </script>
@@ -4442,20 +4794,24 @@
                         //importKey
 
                         //jwk
-                        window.crypto.subtle.importKey("jwk", {
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.importKey("jwk", {
                             kty: "oct",
                             k: "Y0zt37HgOx-BY7SQjYVmrqhPkO44Ii2Jcb9yydUDPfE",
                             alg: "A256CMAC",
                             ext: true,
-                        }, AESCMAC, false, ["sign", "verify"])
+                        }, AESCMAC, false, ["sign", "verify"]);
+                        })
                         .then(ok("aes-cmac", "importKey", "jwk-key"))
                         .catch(err("aes-cmac", "importKey", "jwk-key"));
 
                         //raw
-                        window.crypto.subtle.importKey("raw", new Uint8Array([
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.importKey("raw", new Uint8Array([
                             122,94,39,230,46,23,151,80,131,230,3,101,80,234,143,9,251,
                             152,229,228,89,222,31,135,214,104,55,68,67,59,5,51
-                        ]), AESCMAC, false, ["sign", "verify"])
+                        ]), AESCMAC, false, ["sign", "verify"]);
+                        })
                         .then(ok("aes-cmac", "importKey", "raw-key"))
                         .catch(err("aes-cmac", "importKey", "raw-key"));
                     </script>
@@ -4463,7 +4819,9 @@
                 <td class="exportKey unsafe">
                     <script>
                         //exportKey
-                        window.crypto.subtle.generateKey(AESCMAC, true, ["sign", "verify"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey(AESCMAC, true, ["sign", "verify"]);
+                        })
                         .then(function(key){
 
                             //jwk
@@ -4499,7 +4857,9 @@
                 <td class="digest unsafe">
                     <script>
                         //digest
-                        window.crypto.subtle.digest({name: "SHA-1"}, TESTBYTES)
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.digest({name: "SHA-1"}, TESTBYTES);
+                        })
                         .then(ok("sha-1", "digest", "Yes"))
                         .catch(err("sha-1", "digest", "No"));
                     </script>
@@ -4550,7 +4910,9 @@
                 <td class="generateKey unsafe">
                     <script>
                         //generateKey
-                        window.crypto.subtle.generateKey(DH, false, ["deriveBits", "deriveKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey(DH, false, ["deriveBits", "deriveKey"]);
+                        })
                         .then(ok("dh", "generateKey", "Yes"))
                         .catch(err("dh", "generateKey", "No"));
                     </script>
@@ -4558,7 +4920,9 @@
                 <td class="deriveKey unsafe">
                     <script>
                         //deriveKey
-                        window.crypto.subtle.generateKey(DH, false, ["deriveKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey(DH, false, ["deriveKey"]);
+                        })
                         .then(function(key1){
                             window.crypto.subtle.generateKey(DH, false, ["deriveKey"])
                             .then(function(key2){
@@ -4594,7 +4958,9 @@
                 <td class="deriveBits unsafe">
                     <script>
                         //deriveBits
-                        window.crypto.subtle.generateKey(DH, false, ["deriveBits"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey(DH, false, ["deriveBits"]);
+                        })
                         .then(function(key1){
                             window.crypto.subtle.generateKey(DH, false, ["deriveBits"])
                             .then(function(key2){
@@ -4632,7 +4998,8 @@
                         //importKey
 
                         //raw
-                        window.crypto.subtle.importKey("raw", new Uint8Array([
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.importKey("raw", new Uint8Array([
                             203,25,0,203,43,75,46,159,217,37,185,181,25,220,71,187,112,195,251,233,152,56,206,
                             93,18,96,87,132,17,113,166,110,123,190,194,168,100,147,21,174,131,80,8,247,125,35,
                             210,70,103,141,152,173,99,74,34,132,92,134,216,55,171,186,89,167,189,217,164,119,
@@ -4642,12 +5009,14 @@
                             203,118,217,91,45,58,172,165,224,122,230,50,135,120,124,37,190,186,204,103,218,19,
                             91,246,115,6,199,45,121,156,149,6,208,85,26,94,171,165,228,58,200,49,82,210,170,243,
                             154,190,15,2,225,143,159
-                        ]), DH, false, [])
+                        ]), DH, false, []);
+                        })
                         .then(ok("dh", "importKey", "raw-pub"))
                         .catch(err("dh", "importKey", "raw-pub"));
 
                         //spki
-                        window.crypto.subtle.importKey("spki", new Uint8Array([
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.importKey("spki", new Uint8Array([
                             48,130,1,160,48,129,214,6,9,42,134,72,134,247,13,1,3,1,48,129,200,2,129,192,
                             255,255,255,255,255,255,255,255,201,15,218,162,33,104,194,52,196,198,98,139,
                             128,220,28,209,41,2,78,8,138,103,204,116,2,11,190,166,59,19,155,34,81,74,8,
@@ -4667,12 +5036,15 @@
                             197,29,246,201,146,241,249,123,67,52,67,24,167,232,249,3,191,254,50,249,76,14,237,
                             1,116,7,157,11,248,166,79,140,76,241,191,184,146,143,52,91,164,209,63,124,116,6,
                             150,123,68,137,168,229,210,250,198,7
-                        ]), DH, false, [])
+                        ]), DH, false, []);
+                        })
                         .then(ok("dh", "importKey", "spki-pub"))
                         .catch(err("dh", "importKey", "spki-pub"));
 
                         //pkcs8
-                        window.crypto.subtle.importKey("pkcs8", null, DH, false, ["deriveBits", "deriveKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.importKey("pkcs8", null, DH, false, ["deriveBits", "deriveKey"]);
+                        })
                         .then(ok("dh", "importKey", "pkcs8-priv"))
                         .catch(err("dh", "importKey", "pkcs8-priv*"));
                     </script>
@@ -4680,7 +5052,9 @@
                 <td class="exportKey unsafe">
                     <script>
                         //exportKey
-                        window.crypto.subtle.generateKey(DH, true, ["deriveBits", "deriveKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.generateKey(DH, true, ["deriveBits", "deriveKey"]);
+                        })
                         .then(function(key){
 
                             //raw
@@ -4728,7 +5102,9 @@
                     <script>
                         //deriveKey
                         var keydata = window.crypto.getRandomValues(new Uint8Array(16));
-                        window.crypto.subtle.importKey("raw", keydata, {name: "CONCAT"}, false, ["deriveBits", "deriveKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.importKey("raw", keydata, {name: "CONCAT"}, false, ["deriveBits", "deriveKey"]);
+                        })
                         .then(function(key){
 
                             window.crypto.subtle.deriveBits({
@@ -4751,7 +5127,9 @@
                     <script>
                         //deriveBits
                         var keydata = window.crypto.getRandomValues(new Uint8Array(16));
-                        window.crypto.subtle.importKey("raw", keydata, {name: "CONCAT"}, false, ["deriveBits", "deriveKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.importKey("raw", keydata, {name: "CONCAT"}, false, ["deriveBits", "deriveKey"]);
+                        })
                         .then(function(key){
 
                             window.crypto.subtle.deriveBits({
@@ -4776,7 +5154,9 @@
 
                         //raw
                         var keydata = window.crypto.getRandomValues(new Uint8Array(16));
-                        window.crypto.subtle.importKey("raw", keydata, {name: "CONCAT"}, false, ["deriveBits", "deriveKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.importKey("raw", keydata, {name: "CONCAT"}, false, ["deriveBits", "deriveKey"]);
+                        })
                         .then(ok("concatkdf", "importKey", "raw"))
                         .catch(err("concatkdf", "importKey", "raw*"));
                     </script>
@@ -4804,7 +5184,9 @@
                     <script>
                         //deriveKey
                         var keydata = window.crypto.getRandomValues(new Uint8Array(16));
-                        window.crypto.subtle.importKey("raw", keydata, {name: "HKDF-CTR"}, false, ["deriveBits", "deriveKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.importKey("raw", keydata, {name: "HKDF-CTR"}, false, ["deriveBits", "deriveKey"]);
+                        })
                         .then(function(key){
 
                             window.crypto.subtle.deriveBits({
@@ -4824,7 +5206,9 @@
                     <script>
                         //deriveBits
                         var keydata = window.crypto.getRandomValues(new Uint8Array(16));
-                        window.crypto.subtle.importKey("raw", keydata, {name: "HKDF-CTR"}, false, ["deriveBits", "deriveKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.importKey("raw", keydata, {name: "HKDF-CTR"}, false, ["deriveBits", "deriveKey"]);
+                        })
                         .then(function(key){
 
                             window.crypto.subtle.deriveBits({
@@ -4846,7 +5230,9 @@
 
                         //raw
                         var keydata = window.crypto.getRandomValues(new Uint8Array(16));
-                        window.crypto.subtle.importKey("raw", keydata, {name: "HKDF-CTR"}, false, ["deriveBits", "deriveKey"])
+                        Promise.resolve().then(function(){
+                            return window.crypto.subtle.importKey("raw", keydata, {name: "HKDF-CTR"}, false, ["deriveBits", "deriveKey"]);
+                        })
                         .then(ok("hkdf-ctr", "importKey", "raw"))
                         .catch(err("hkdf-ctr", "importKey", "raw*"));
                     </script>
