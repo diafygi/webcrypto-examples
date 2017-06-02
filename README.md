@@ -641,7 +641,6 @@ window.crypto.subtle.exportKey(
 window.crypto.subtle.deriveKey(
     {
         name: "ECDH",
-        namedCurve: "P-256", //can be "P-256", "P-384", or "P-521"
         public: publicKey, //an ECDH public key from generateKey or importKey
     },
     privateKey, //your ECDH private key from generateKey or importKey
