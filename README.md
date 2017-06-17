@@ -1894,7 +1894,7 @@ window.crypto.subtle.importKey(
 ```javascript
 window.crypto.subtle.deriveKey(
     {
-        "name": "HKDF-CTR",
+        name: "HKDF-CTR",
         label: ArrayBuffer, //?????? I don't know what this should be
         context: ArrayBuffer, //?????? I don't know what this should be
         hash: {name: "SHA-1"}, //can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
@@ -1920,7 +1920,7 @@ window.crypto.subtle.deriveKey(
 ```javascript
 window.crypto.subtle.deriveBits(
     {
-        "name": "HKDF-CTR",
+        name: "HKDF-CTR",
         label: ArrayBuffer, //?????? I don't know what this should be
         context: ArrayBuffer, //?????? I don't know what this should be
         hash: {name: "SHA-1"}, //can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
@@ -1979,7 +1979,7 @@ window.crypto.subtle.importKey(
 ```javascript
 window.crypto.subtle.deriveKey(
     {
-        "name": "PBKDF2",
+        name: "PBKDF2",
         salt: window.crypto.getRandomValues(new Uint8Array(16)),
         iterations: 1000,
         hash: {name: "SHA-1"}, //can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
@@ -2005,7 +2005,7 @@ window.crypto.subtle.deriveKey(
 ```javascript
 window.crypto.subtle.deriveBits(
     {
-        "name": "PBKDF2",
+        name: "PBKDF2",
         salt: window.crypto.getRandomValues(new Uint8Array(16)),
         iterations: 1000,
         hash: {name: "SHA-1"}, //can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
