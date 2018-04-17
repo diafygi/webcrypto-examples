@@ -764,7 +764,7 @@ window.crypto.subtle.encrypt(
 window.crypto.subtle.decrypt(
     {
         name: "AES-CTR",
-        counter: ArrayBuffer(16), //The same counter you used to encrypt
+        counter: new ArrayBuffer(16), //The same counter you used to encrypt
         length: 128, //The same length you used to encrypt
     },
     key, //from generateKey or importKey above
