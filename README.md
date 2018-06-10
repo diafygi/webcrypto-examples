@@ -117,10 +117,10 @@ wrote examples and made a live table with them. Pull requests welcome!
 [deriveKey](#concat---derivekey) |
 [deriveBits](#concat---derivebits)
 
-19. [HKDF-CTR](#hkdf-ctr)
-  * [importKey](#hkdf-ctr---importkey) |
-[deriveKey](#hkdf-ctr---derivekey) |
-[deriveBits](#hkdf-ctr---derivebits)
+19. [HKDF](#hkdf)
+  * [importKey](#hkdf---importkey) |
+[deriveKey](#hkdf---derivekey) |
+[deriveBits](#hkdf---derivebits)
 
 20. [PBKDF2](#pbkdf2)
   * [generateKey](#pbkdf2---generatekey) |
@@ -1870,14 +1870,14 @@ window.crypto.subtle.deriveBits(
 });
 ```
 
-## HKDF-CTR
-#### HKDF-CTR - importKey
+## HKDF
+#### HKDF - importKey
 ```javascript
 window.crypto.subtle.importKey(
     "raw", //only "raw" is allowed
     keydata, //your raw key data as an ArrayBuffer
     {
-        name: "HKDF-CTR",
+        name: "HKDF",
     },
     false, //whether the key is extractable (i.e. can be used in exportKey)
     ["deriveKey", "deriveBits"] //can be any combination of "deriveKey" and "deriveBits"
@@ -1890,13 +1890,13 @@ window.crypto.subtle.importKey(
     console.error(err);
 });
 ```
-#### HKDF-CTR - deriveKey
+#### HKDF - deriveKey
 ```javascript
 window.crypto.subtle.deriveKey(
     {
-        "name": "HKDF-CTR",
-        label: ArrayBuffer, //?????? I don't know what this should be
-        context: ArrayBuffer, //?????? I don't know what this should be
+        "name": "HKDF",
+        salt: ArrayBuffer, // one time use salt
+        info: ArrayBuffer, // extra authenticated data
         hash: {name: "SHA-1"}, //can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
     },
     key, //your key from importKey
@@ -1916,13 +1916,13 @@ window.crypto.subtle.deriveKey(
     console.error(err);
 });
 ```
-#### HKDF-CTR - deriveBits
+#### HKDF - deriveBits
 ```javascript
 window.crypto.subtle.deriveBits(
     {
-        "name": "HKDF-CTR",
-        label: ArrayBuffer, //?????? I don't know what this should be
-        context: ArrayBuffer, //?????? I don't know what this should be
+        "name": "HKDF",
+        salt: ArrayBuffer, // one time use salt
+        info: ArrayBuffer, // extra authenticated data
         hash: {name: "SHA-1"}, //can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
     },
     key, //your key importKey

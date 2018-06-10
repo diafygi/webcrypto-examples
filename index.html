@@ -4789,11 +4789,11 @@
 
             <!--
             ####################
-            ###   HKDF-CTR   ###
+            ###   HKDF   ###
             ####################
             -->
-            <tr id="hkdf-ctr">
-                <td class="algname"><a href="https://github.com/diafygi/webcrypto-examples/#hkdf-ctr">HKDF-CTR</a></td>
+            <tr id="hkdf">
+                <td class="algname"><a href="https://github.com/diafygi/webcrypto-examples/#hkdf">HKDF</a></td>
                 <td class="encrypt disabled"></td>
                 <td class="decrypt disabled"></td>
                 <td class="sign disabled"></td>
@@ -4804,40 +4804,40 @@
                     <script>
                         //deriveKey
                         var keydata = window.crypto.getRandomValues(new Uint8Array(16));
-                        window.crypto.subtle.importKey("raw", keydata, {name: "HKDF-CTR"}, false, ["deriveBits", "deriveKey"])
+                        window.crypto.subtle.importKey("raw", keydata, {name: "HKDF"}, false, ["deriveBits", "deriveKey"])
                         .then(function(key){
 
                             window.crypto.subtle.deriveBits({
-                                name: "HKDF-CTR",
-                                label: "?????",
-                                context: "?????",
+                                name: "HKDF",
+                                salt: window.crypto.getRandomValues(new Uint8Array(16)),
+                                info: window.crypto.getRandomValues(new Uint8Array(16)),
                                 hash: {name: "SHA-1"},
-                            }, "?????", AESCBC, false, ["encrypt", "decrypt"])
-                            .then(ok("hkdf-ctr", "deriveKey", "Yes"))
-                            .catch(err("hkdf-ctr", "deriveKey", "No"));
+                            }, key, AESCBC, false, ["encrypt", "decrypt"])
+                            .then(ok("hkdf", "deriveKey", "Yes"))
+                            .catch(err("hkdf", "deriveKey", "No"));
 
                         })
-                        .catch(err("hkdf-ctr", "deriveKey", "N/A"));
+                        .catch(err("hkdf", "deriveKey", "N/A"));
                     </script>
                 </td>
                 <td class="deriveBits unsafe">
                     <script>
                         //deriveBits
                         var keydata = window.crypto.getRandomValues(new Uint8Array(16));
-                        window.crypto.subtle.importKey("raw", keydata, {name: "HKDF-CTR"}, false, ["deriveBits", "deriveKey"])
+                        window.crypto.subtle.importKey("raw", keydata, {name: "HKDF"}, false, ["deriveBits", "deriveKey"])
                         .then(function(key){
 
                             window.crypto.subtle.deriveBits({
-                                name: "HKDF-CTR",
-                                label: "?????",
-                                context: "?????",
+                                name: "HKDF",
+                                salt: window.crypto.getRandomValues(new Uint8Array(16)),
+                                info: window.crypto.getRandomValues(new Uint8Array(16)),
                                 hash: {name: "SHA-1"},
-                            }, "?????", 128)
-                            .then(ok("hkdf-ctr", "deriveBits", "Yes"))
-                            .catch(err("hkdf-ctr", "deriveBits", "No"));
+                            }, key, 128)
+                            .then(ok("hkdf", "deriveBits", "Yes"))
+                            .catch(err("hkdf", "deriveBits", "No"));
 
                         })
-                        .catch(err("hkdf-ctr", "deriveBits", "N/A"));
+                        .catch(err("hkdf", "deriveBits", "N/A"));
                     </script>
                 </td>
                 <td class="importKey unsafe">
@@ -4846,9 +4846,9 @@
 
                         //raw
                         var keydata = window.crypto.getRandomValues(new Uint8Array(16));
-                        window.crypto.subtle.importKey("raw", keydata, {name: "HKDF-CTR"}, false, ["deriveBits", "deriveKey"])
-                        .then(ok("hkdf-ctr", "importKey", "raw"))
-                        .catch(err("hkdf-ctr", "importKey", "raw*"));
+                        window.crypto.subtle.importKey("raw", keydata, {name: "HKDF"}, false, ["deriveBits", "deriveKey"])
+                        .then(ok("hkdf", "importKey", "raw"))
+                        .catch(err("hkdf", "importKey", "raw*"));
                     </script>
                 </td>
                 <td class="exportKey disabled"></td>
