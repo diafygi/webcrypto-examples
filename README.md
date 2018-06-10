@@ -112,11 +112,6 @@ wrote examples and made a live table with them. Pull requests welcome!
 [SHA-384 digest](#sha-384---digest) |
 [SHA-512 digest](#sha-512---digest)
 
-18. [CONCAT](#concat)
-  * [importKey](#concat---importkey) |
-[deriveKey](#concat---derivekey) |
-[deriveBits](#concat---derivebits)
-
 19. [HKDF-CTR](#hkdf-ctr)
   * [importKey](#hkdf-ctr---importkey) |
 [deriveKey](#hkdf-ctr---derivekey) |
@@ -1791,79 +1786,6 @@ window.crypto.subtle.digest(
 .then(function(hash){
     //returns the hash as an ArrayBuffer
     console.log(new Uint8Array(hash));
-})
-.catch(function(err){
-    console.error(err);
-});
-```
-
-## CONCAT
-#### CONCAT - importKey
-```javascript
-window.crypto.subtle.importKey(
-    "raw", //only "raw" is allowed
-    keydata, //your raw key data as an ArrayBuffer
-    {
-        name: "CONCAT",
-    },
-    false, //whether the key is extractable (i.e. can be used in exportKey)
-    ["deriveKey", "deriveBits"] //can be any combination of "deriveKey" and "deriveBits"
-)
-.then(function(key){
-    //returns a key object
-    console.log(key);
-})
-.catch(function(err){
-    console.error(err);
-});
-```
-#### CONCAT - deriveKey
-```javascript
-window.crypto.subtle.deriveKey(
-    {
-        "name": "CONCAT",
-        algorithmId: ArrayBuffer, //?????? I don't know what this should be
-        partyUInfo: ArrayBuffer, //?????? I don't know what this should be
-        partyVInfo: ArrayBuffer, //?????? I don't know what this should be
-        publicInfo: ArrayBuffer, //?????? I don't know what this should be
-        privateInfo: ArrayBuffer, //?????? I don't know what this should be
-        hash: {name: "SHA-1"}, //can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
-    },
-    key, //your key from importKey
-    { //the key type you want to create based on the derived bits
-        name: "AES-CTR", //can be any AES algorithm ("AES-CTR", "AES-CBC", "AES-CMAC", "AES-GCM", "AES-CFB", "AES-KW", "ECDH", "DH", or "HMAC")
-        //the generateKey parameters for that type of algorithm
-        length: 256, //can be  128, 192, or 256
-    },
-    false, //whether the derived key is extractable (i.e. can be used in exportKey)
-    ["encrypt", "decrypt"] //limited to the options in that algorithm's importKey
-)
-.then(function(key){
-    //returns the derived key
-    console.log(key);
-})
-.catch(function(err){
-    console.error(err);
-});
-```
-#### CONCAT - deriveBits
-```javascript
-window.crypto.subtle.deriveBits(
-    {
-        "name": "CONCAT",
-        algorithmId: ArrayBuffer, //?????? I don't know what this should be
-        partyUInfo: ArrayBuffer, //?????? I don't know what this should be
-        partyVInfo: ArrayBuffer, //?????? I don't know what this should be
-        publicInfo: ArrayBuffer, //?????? I don't know what this should be
-        privateInfo: ArrayBuffer, //?????? I don't know what this should be
-        hash: {name: "SHA-1"}, //can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
-    },
-    key, //your key importKey
-    256 //the number of bits you want to derive
-)
-.then(function(bits){
-    //returns the derived bits as an ArrayBuffer
-    console.log(new Uint8Array(bits));
 })
 .catch(function(err){
     console.error(err);
