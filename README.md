@@ -1895,8 +1895,8 @@ window.crypto.subtle.importKey(
 window.crypto.subtle.deriveKey(
     {
         "name": "HKDF-CTR",
-        label: ArrayBuffer, //?????? I don't know what this should be
-        context: ArrayBuffer, //?????? I don't know what this should be
+        label: ArrayBuffer, //named 'salt' in the spec; an optional non-secret random value for the extract phase
+        context: ArrayBuffer, //optional application specific info (e.g. 'aes-key' or 'hmac-key') so you can derive different keys for the same input keying material
         hash: {name: "SHA-1"}, //can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
     },
     key, //your key from importKey
@@ -1921,8 +1921,8 @@ window.crypto.subtle.deriveKey(
 window.crypto.subtle.deriveBits(
     {
         "name": "HKDF-CTR",
-        label: ArrayBuffer, //?????? I don't know what this should be
-        context: ArrayBuffer, //?????? I don't know what this should be
+        label: ArrayBuffer, //named 'salt' in the spec; an optional non-secret random value for the extract phase
+        context: ArrayBuffer, //optional application specific info (e.g. 'aes-key' or 'hmac-key') so you can derive different keys for the same input keying material
         hash: {name: "SHA-1"}, //can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
     },
     key, //your key importKey
