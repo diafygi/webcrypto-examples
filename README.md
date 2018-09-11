@@ -1134,10 +1134,10 @@ window.crypto.subtle.encrypt(
         //Recommended to use 12 bytes length
         iv: window.crypto.getRandomValues(new Uint8Array(12)),
 
-        //Additional authentication data (optional, except for on IE and Edge which require it with a non-zero value ie: new Uint8Array(1))
+        //Additional authentication data (optional on all browsers except for on IE 11 and Edge which require it with a non-zero value ie: new Uint8Array(1))
         additionalData: ArrayBuffer,
 
-        //Tag length (optional, except for on IE and Edge)
+        //Tag length (optional on all browsers except for IE 11 and Edge which require it)
         tagLength: 128, //can be 32, 64, 96, 104, 112, 120 or 128 (default)
     },
     key, //from generateKey or importKey above
