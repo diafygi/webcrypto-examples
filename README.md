@@ -122,7 +122,12 @@ wrote examples and made a live table with them. Pull requests welcome!
 [deriveKey](#hkdf-ctr---derivekey) |
 [deriveBits](#hkdf-ctr---derivebits)
 
-20. [PBKDF2](#pbkdf2)
+20. [HKDF](#hkdf)
+  * [importKey](#hkdf---importkey) |
+[deriveKey](#hkdf---derivekey) |
+[deriveBits](#hkdf---derivebits)
+
+21. [PBKDF2](#pbkdf2)
   * [generateKey](#pbkdf2---generatekey) |
 [importKey](#pbkdf2---importkey) |
 [deriveKey](#pbkdf2---derivekey) |
@@ -136,7 +141,7 @@ window.crypto.subtle.generateKey(
         name: "RSASSA-PKCS1-v1_5",
         modulusLength: 2048, //can be 1024, 2048, or 4096
         publicExponent: new Uint8Array([0x01, 0x00, 0x01]),
-        hash: {name: "SHA-256"}, //can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
+        hash: {name: "SHA-256"} //can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
     },
     false, //whether the key is extractable (i.e. can be used in exportKey)
     ["sign", "verify"] //can be any combination of "sign" and "verify"
@@ -164,7 +169,7 @@ window.crypto.subtle.importKey(
     },
     {   //these are the algorithm options
         name: "RSASSA-PKCS1-v1_5",
-        hash: {name: "SHA-256"}, //can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
+        hash: {name: "SHA-256"} //can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
     },
     false, //whether the key is extractable (i.e. can be used in exportKey)
     ["verify"] //"verify" for public key import, "sign" for private key imports
@@ -235,7 +240,7 @@ window.crypto.subtle.generateKey(
         name: "RSA-PSS",
         modulusLength: 2048, //can be 1024, 2048, or 4096
         publicExponent: new Uint8Array([0x01, 0x00, 0x01]),
-        hash: {name: "SHA-256"}, //can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
+        hash: {name: "SHA-256"} //can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
     },
     false, //whether the key is extractable (i.e. can be used in exportKey)
     ["sign", "verify"] //can be any combination of "sign" and "verify"
@@ -259,11 +264,11 @@ window.crypto.subtle.importKey(
         e: "AQAB",
         n: "vGO3eU16ag9zRkJ4AK8ZUZrjbtp5xWK0LyFMNT8933evJoHeczexMUzSiXaLrEFSyQZortk81zJH3y41MBO_UFDO_X0crAquNrkjZDrf9Scc5-MdxlWU2Jl7Gc4Z18AC9aNibWVmXhgvHYkEoFdLCFG-2Sq-qIyW4KFkjan05IE",
         alg: "PS256",
-        ext: true,
+        ext: true
     },
     {   //these are the algorithm options
         name: "RSA-PSS",
-        hash: {name: "SHA-256"}, //can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
+        hash: {name: "SHA-256"} //can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
     },
     false, //whether the key is extractable (i.e. can be used in exportKey)
     ["verify"] //"verify" for public key import, "sign" for private key imports
@@ -295,7 +300,7 @@ window.crypto.subtle.exportKey(
 window.crypto.subtle.sign(
     {
         name: "RSA-PSS",
-        saltLength: 128, //the length of the salt
+        saltLength: 128 //the length of the salt
     },
     privateKey, //from generateKey or importKey above
     data //ArrayBuffer of data you want to sign
@@ -313,7 +318,7 @@ window.crypto.subtle.sign(
 window.crypto.subtle.verify(
     {
         name: "RSA-PSS",
-        saltLength: 128, //the length of the salt
+        saltLength: 128 //the length of the salt
     },
     publicKey, //from generateKey or importKey above
     signature, //ArrayBuffer of the signature
@@ -336,7 +341,7 @@ window.crypto.subtle.generateKey(
         name: "RSA-OAEP",
         modulusLength: 2048, //can be 1024, 2048, or 4096
         publicExponent: new Uint8Array([0x01, 0x00, 0x01]),
-        hash: {name: "SHA-256"}, //can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
+        hash: {name: "SHA-256"} //can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
     },
     false, //whether the key is extractable (i.e. can be used in exportKey)
     ["encrypt", "decrypt"] //must be ["encrypt", "decrypt"] or ["wrapKey", "unwrapKey"]
@@ -360,11 +365,11 @@ window.crypto.subtle.importKey(
         e: "AQAB",
         n: "vGO3eU16ag9zRkJ4AK8ZUZrjbtp5xWK0LyFMNT8933evJoHeczexMUzSiXaLrEFSyQZortk81zJH3y41MBO_UFDO_X0crAquNrkjZDrf9Scc5-MdxlWU2Jl7Gc4Z18AC9aNibWVmXhgvHYkEoFdLCFG-2Sq-qIyW4KFkjan05IE",
         alg: "RSA-OAEP-256",
-        ext: true,
+        ext: true
     },
     {   //these are the algorithm options
         name: "RSA-OAEP",
-        hash: {name: "SHA-256"}, //can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
+        hash: {name: "SHA-256"} //can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
     },
     false, //whether the key is extractable (i.e. can be used in exportKey)
     ["encrypt"] //"encrypt" or "wrapKey" for public key import or
@@ -436,7 +441,7 @@ window.crypto.subtle.wrapKey(
     publicKey, //the public key with "wrapKey" usage flag
     {   //these are the wrapping key's algorithm options
         name: "RSA-OAEP",
-        hash: {name: "SHA-256"},
+        hash: {name: "SHA-256"}
     }
 )
 .then(function(wrapped){
@@ -457,7 +462,7 @@ window.crypto.subtle.unwrapKey(
         name: "RSA-OAEP",
         modulusLength: 2048,
         publicExponent: new Uint8Array([0x01, 0x00, 0x01]),
-        hash: {name: "SHA-256"},
+        hash: {name: "SHA-256"}
     },
     {   //this what you want the wrapped key to become (same as when wrapping)
         name: "AES-GCM",
@@ -481,7 +486,7 @@ window.crypto.subtle.unwrapKey(
 window.crypto.subtle.generateKey(
     {
         name: "ECDSA",
-        namedCurve: "P-256", //can be "P-256", "P-384", or "P-521"
+        namedCurve: "P-256" //can be "P-256", "P-384", or "P-521"
     },
     false, //whether the key is extractable (i.e. can be used in exportKey)
     ["sign", "verify"] //can be any combination of "sign" and "verify"
@@ -505,11 +510,11 @@ window.crypto.subtle.importKey(
         crv: "P-256",
         x: "zCQ5BPHPCLZYgdpo1n-x_90P2Ij52d53YVwTh3ZdiMo",
         y: "pDfQTUx0-OiZc5ZuKMcA7v2Q7ZPKsQwzB58bft0JTko",
-        ext: true,
+        ext: true
     },
     {   //these are the algorithm options
         name: "ECDSA",
-        namedCurve: "P-256", //can be "P-256", "P-384", or "P-521"
+        namedCurve: "P-256" //can be "P-256", "P-384", or "P-521"
     },
     false, //whether the key is extractable (i.e. can be used in exportKey)
     ["verify"] //"verify" for public key import, "sign" for private key imports
@@ -541,7 +546,7 @@ window.crypto.subtle.exportKey(
 window.crypto.subtle.sign(
     {
         name: "ECDSA",
-        hash: {name: "SHA-256"}, //can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
+        hash: {name: "SHA-256"} //can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
     },
     privateKey, //from generateKey or importKey above
     data //ArrayBuffer of data you want to sign
@@ -559,7 +564,7 @@ window.crypto.subtle.sign(
 window.crypto.subtle.verify(
     {
         name: "ECDSA",
-        hash: {name: "SHA-256"}, //can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
+        hash: {name: "SHA-256"} //can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
     },
     publicKey, //from generateKey or importKey above
     signature, //ArrayBuffer of the signature
@@ -580,7 +585,7 @@ window.crypto.subtle.verify(
 window.crypto.subtle.generateKey(
     {
         name: "ECDH",
-        namedCurve: "P-256", //can be "P-256", "P-384", or "P-521"
+        namedCurve: "P-256" //can be "P-256", "P-384", or "P-521"
     },
     false, //whether the key is extractable (i.e. can be used in exportKey)
     ["deriveKey", "deriveBits"] //can be any combination of "deriveKey" and "deriveBits"
@@ -605,11 +610,11 @@ window.crypto.subtle.importKey(
         x: "kgR_PqO07L8sZOBbw6rvv7O_f7clqDeiE3WnMkb5EoI",
         y: "djI-XqCqSyO9GFk_QT_stROMCAROIvU8KOORBgQUemE",
         d: "5aPFSt0UFVXYGu-ZKyC9FQIUOAMmnjzdIwkxCMe3Iok",
-        ext: true,
+        ext: true
     },
     {   //these are the algorithm options
         name: "ECDH",
-        namedCurve: "P-256", //can be "P-256", "P-384", or "P-521"
+        namedCurve: "P-256" //can be "P-256", "P-384", or "P-521"
     },
     false, //whether the key is extractable (i.e. can be used in exportKey)
     ["deriveKey", "deriveBits"] //"deriveKey" and/or "deriveBits" for private keys only (just put an empty list if importing a public key)
@@ -642,13 +647,13 @@ window.crypto.subtle.deriveKey(
     {
         name: "ECDH",
         namedCurve: "P-256", //can be "P-256", "P-384", or "P-521"
-        public: publicKey, //an ECDH public key from generateKey or importKey
+        public: publicKey //an ECDH public key from generateKey or importKey
     },
     privateKey, //your ECDH private key from generateKey or importKey
     { //the key type you want to create based on the derived bits
         name: "AES-CTR", //can be any AES algorithm ("AES-CTR", "AES-CBC", "AES-CMAC", "AES-GCM", "AES-CFB", "AES-KW", "ECDH", "DH", or "HMAC")
         //the generateKey parameters for that type of algorithm
-        length: 256, //can be  128, 192, or 256
+        length: 256 //can be  128, 192, or 256
     },
     false, //whether the derived key is extractable (i.e. can be used in exportKey)
     ["encrypt", "decrypt"] //limited to the options in that algorithm's importKey
@@ -667,7 +672,7 @@ window.crypto.subtle.deriveBits(
     {
         name: "ECDH",
         namedCurve: "P-256", //can be "P-256", "P-384", or "P-521"
-        public: publicKey, //an ECDH public key from generateKey or importKey
+        public: publicKey //an ECDH public key from generateKey or importKey
     },
     privateKey, //your ECDH private key from generateKey or importKey
     256 //the number of bits you want to derive
@@ -687,7 +692,7 @@ window.crypto.subtle.deriveBits(
 window.crypto.subtle.generateKey(
     {
         name: "AES-CTR",
-        length: 256, //can be  128, 192, or 256
+        length: 256 //can be  128, 192, or 256
     },
     false, //whether the key is extractable (i.e. can be used in exportKey)
     ["encrypt", "decrypt"] //can "encrypt", "decrypt", "wrapKey", or "unwrapKey"
@@ -708,10 +713,10 @@ window.crypto.subtle.importKey(
         kty: "oct",
         k: "Y0zt37HgOx-BY7SQjYVmrqhPkO44Ii2Jcb9yydUDPfE",
         alg: "A256CTR",
-        ext: true,
+        ext: true
     },
     {   //this is the algorithm options
-        name: "AES-CTR",
+        name: "AES-CTR"
     },
     false, //whether the key is extractable (i.e. can be used in exportKey)
     ["encrypt", "decrypt"] //can "encrypt", "decrypt", "wrapKey", or "unwrapKey"
@@ -746,7 +751,7 @@ window.crypto.subtle.encrypt(
         //Don't re-use counters!
         //Always use a new counter every time your encrypt!
         counter: new Uint8Array(16),
-        length: 128, //can be 1-128
+        length: 128 //can be 1-128
     },
     key, //from generateKey or importKey above
     data //ArrayBuffer of data you want to encrypt
@@ -765,7 +770,7 @@ window.crypto.subtle.decrypt(
     {
         name: "AES-CTR",
         counter: ArrayBuffer(16), //The same counter you used to encrypt
-        length: 128, //The same length you used to encrypt
+        length: 128 //The same length you used to encrypt
     },
     key, //from generateKey or importKey above
     data //ArrayBuffer of the data
@@ -789,7 +794,7 @@ window.crypto.subtle.wrapKey(
         //Don't re-use counters!
         //Always use a new counter every time your encrypt!
         counter: new Uint8Array(16),
-        length: 128, //can be 1-128
+        length: 128 //can be 1-128
     }
 )
 .then(function(wrapped){
@@ -811,7 +816,7 @@ window.crypto.subtle.unwrapKey(
         //Don't re-use counters!
         //Always use a new counter every time your encrypt!
         counter: new Uint8Array(16),
-        length: 128, //can be 1-128
+        length: 128 //can be 1-128
     },
     {   //this what you want the wrapped key to become (same as when wrapping)
         name: "AES-GCM",
@@ -835,7 +840,7 @@ window.crypto.subtle.unwrapKey(
 window.crypto.subtle.generateKey(
     {
         name: "AES-CBC",
-        length: 256, //can be  128, 192, or 256
+        length: 256 //can be  128, 192, or 256
     },
     false, //whether the key is extractable (i.e. can be used in exportKey)
     ["encrypt", "decrypt"] //can be "encrypt", "decrypt", "wrapKey", or "unwrapKey"
@@ -856,10 +861,10 @@ window.crypto.subtle.importKey(
         kty: "oct",
         k: "Y0zt37HgOx-BY7SQjYVmrqhPkO44Ii2Jcb9yydUDPfE",
         alg: "A256CBC",
-        ext: true,
+        ext: true
     },
     {   //this is the algorithm options
-        name: "AES-CBC",
+        name: "AES-CBC"
     },
     false, //whether the key is extractable (i.e. can be used in exportKey)
     ["encrypt", "decrypt"] //can be "encrypt", "decrypt", "wrapKey", or "unwrapKey"
@@ -893,7 +898,7 @@ window.crypto.subtle.encrypt(
         name: "AES-CBC",
         //Don't re-use initialization vectors!
         //Always generate a new iv every time your encrypt!
-        iv: window.crypto.getRandomValues(new Uint8Array(16)),
+        iv: window.crypto.getRandomValues(new Uint8Array(16))
     },
     key, //from generateKey or importKey above
     data //ArrayBuffer of data you want to encrypt
@@ -911,7 +916,7 @@ window.crypto.subtle.encrypt(
 window.crypto.subtle.decrypt(
     {
         name: "AES-CBC",
-        iv: ArrayBuffer(16), //The initialization vector you used to encrypt
+        iv: ArrayBuffer(16) //The initialization vector you used to encrypt
     },
     key, //from generateKey or importKey above
     data //ArrayBuffer of the data
@@ -934,7 +939,7 @@ window.crypto.subtle.wrapKey(
         name: "AES-CBC",
         //Don't re-use initialization vectors!
         //Always generate a new iv every time your encrypt!
-        iv: window.crypto.getRandomValues(new Uint8Array(16)),
+        iv: window.crypto.getRandomValues(new Uint8Array(16))
     }
 )
 .then(function(wrapped){
@@ -953,7 +958,7 @@ window.crypto.subtle.unwrapKey(
     wrappingKey, //the AES-CBC key with "unwrapKey" usage flag
     {   //these are the wrapping key's algorithm options
         name: "AES-CBC",
-        iv: ArrayBuffer(16), //The initialization vector you used to encrypt
+        iv: ArrayBuffer(16) //The initialization vector you used to encrypt
     },
     {   //this what you want the wrapped key to become (same as when wrapping)
         name: "AES-GCM",
@@ -977,7 +982,7 @@ window.crypto.subtle.unwrapKey(
 window.crypto.subtle.generateKey(
     {
         name: "AES-CMAC",
-        length: 256, //can be  128, 192, or 256
+        length: 256 //can be  128, 192, or 256
     },
     false, //whether the key is extractable (i.e. can be used in exportKey)
     ["sign", "verify"] //can be any combination of "sign" and "verify"
@@ -998,10 +1003,10 @@ window.crypto.subtle.importKey(
         kty: "oct",
         k: "Y0zt37HgOx-BY7SQjYVmrqhPkO44Ii2Jcb9yydUDPfE",
         alg: "A256CMAC",
-        ext: true,
+        ext: true
     },
     {   //this is the algorithm options
-        name: "AES-CMAC",
+        name: "AES-CMAC"
     },
     false, //whether the key is extractable (i.e. can be used in exportKey)
     ["sign", "verify"] //can be any combination of "sign" and "verify"
@@ -1033,7 +1038,7 @@ window.crypto.subtle.exportKey(
 window.crypto.subtle.sign(
     {
         name: "AES-CMAC",
-        length: 256, //bit length of the MAC
+        length: 256 //bit length of the MAC
     },
     key, //from generateKey or importKey above
     data //ArrayBuffer of data you want to sign
@@ -1051,7 +1056,7 @@ window.crypto.subtle.sign(
 window.crypto.subtle.verify(
     {
         name: "AES-CMAC",
-        length: 256, //bit length of the MAC
+        length: 256 //bit length of the MAC
     },
     key, //from generateKey or importKey above
     signature, //ArrayBuffer of the signature
@@ -1072,7 +1077,7 @@ window.crypto.subtle.verify(
 window.crypto.subtle.generateKey(
     {
         name: "AES-GCM",
-        length: 256, //can be  128, 192, or 256
+        length: 256 //can be  128, 192, or 256
     },
     false, //whether the key is extractable (i.e. can be used in exportKey)
     ["encrypt", "decrypt"] //can "encrypt", "decrypt", "wrapKey", or "unwrapKey"
@@ -1093,10 +1098,10 @@ window.crypto.subtle.importKey(
         kty: "oct",
         k: "Y0zt37HgOx-BY7SQjYVmrqhPkO44Ii2Jcb9yydUDPfE",
         alg: "A256GCM",
-        ext: true,
+        ext: true
     },
     {   //this is the algorithm options
-        name: "AES-GCM",
+        name: "AES-GCM"
     },
     false, //whether the key is extractable (i.e. can be used in exportKey)
     ["encrypt", "decrypt"] //can "encrypt", "decrypt", "wrapKey", or "unwrapKey"
@@ -1138,7 +1143,7 @@ window.crypto.subtle.encrypt(
         additionalData: ArrayBuffer,
 
         //Tag length (optional)
-        tagLength: 128, //can be 32, 64, 96, 104, 112, 120 or 128 (default)
+        tagLength: 128 //can be 32, 64, 96, 104, 112, 120 or 128 (default)
     },
     key, //from generateKey or importKey above
     data //ArrayBuffer of data you want to encrypt
@@ -1158,7 +1163,7 @@ window.crypto.subtle.decrypt(
         name: "AES-GCM",
         iv: ArrayBuffer(12), //The initialization vector you used to encrypt
         additionalData: ArrayBuffer, //The addtionalData you used to encrypt (if any)
-        tagLength: 128, //The tagLength you used to encrypt (if any)
+        tagLength: 128 //The tagLength you used to encrypt (if any)
     },
     key, //from generateKey or importKey above
     data //ArrayBuffer of the data
@@ -1189,7 +1194,7 @@ window.crypto.subtle.wrapKey(
         additionalData: ArrayBuffer,
 
         //Tag length (optional)
-        tagLength: 128, //can be 32, 64, 96, 104, 112, 120 or 128 (default)
+        tagLength: 128 //can be 32, 64, 96, 104, 112, 120 or 128 (default)
     }
 )
 .then(function(wrapped){
@@ -1210,7 +1215,7 @@ window.crypto.subtle.unwrapKey(
         name: "AES-GCM",
         iv: ArrayBuffer(12), //The initialization vector you used to encrypt
         additionalData: ArrayBuffer, //The addtionalData you used to encrypt (if any)
-        tagLength: 128, //The tagLength you used to encrypt (if any)
+        tagLength: 128 //The tagLength you used to encrypt (if any)
     },
     {   //this what you want the wrapped key to become (same as when wrapping)
         name: "AES-CBC",
@@ -1234,7 +1239,7 @@ window.crypto.subtle.unwrapKey(
 window.crypto.subtle.generateKey(
     {
         name: "AES-CFB-8",
-        length: 256, //can be  128, 192, or 256
+        length: 256 //can be  128, 192, or 256
     },
     false, //whether the key is extractable (i.e. can be used in exportKey)
     ["encrypt", "decrypt"] //can "encrypt", "decrypt", "wrapKey", or "unwrapKey"
@@ -1255,10 +1260,10 @@ window.crypto.subtle.importKey(
         kty: "oct",
         k: "Y0zt37HgOx-BY7SQjYVmrqhPkO44Ii2Jcb9yydUDPfE",
         alg: "A256CFB8",
-        ext: true,
+        ext: true
     },
     {   //this is the algorithm options
-        name: "AES-CFB-8",
+        name: "AES-CFB-8"
     },
     false, //whether the key is extractable (i.e. can be used in exportKey)
     ["encrypt", "decrypt"] //can "encrypt", "decrypt", "wrapKey", or "unwrapKey"
@@ -1292,7 +1297,7 @@ window.crypto.subtle.encrypt(
         name: "AES-CFB-8",
         //Don't re-use initialization vectors!
         //Always generate a new iv every time your encrypt!
-        iv: window.crypto.getRandomValues(new Uint8Array(16)),
+        iv: window.crypto.getRandomValues(new Uint8Array(16))
     },
     key, //from generateKey or importKey above
     data //ArrayBuffer of data you want to encrypt
@@ -1310,7 +1315,7 @@ window.crypto.subtle.encrypt(
 window.crypto.subtle.decrypt(
     {
         name: "AES-CFB-8",
-        iv: ArrayBuffer(16), //The initialization vector you used to encrypt
+        iv: ArrayBuffer(16) //The initialization vector you used to encrypt
     },
     key, //from generateKey or importKey above
     data //ArrayBuffer of the data
@@ -1333,7 +1338,7 @@ window.crypto.subtle.wrapKey(
         name: "AES-CFB",
         //Don't re-use initialization vectors!
         //Always generate a new iv every time your encrypt!
-        iv: window.crypto.getRandomValues(new Uint8Array(16)),
+        iv: window.crypto.getRandomValues(new Uint8Array(16))
     }
 )
 .then(function(wrapped){
@@ -1352,7 +1357,7 @@ window.crypto.subtle.unwrapKey(
     wrappingKey, //the AES-CFB key with "unwrapKey" usage flag
     {   //these are the wrapping key's algorithm options
         name: "AES-CFB",
-        iv: ArrayBuffer(16), //The initialization vector you used to encrypt
+        iv: ArrayBuffer(16) //The initialization vector you used to encrypt
     },
     {   //this what you want the wrapped key to become (same as when wrapping)
         name: "AES-GCM",
@@ -1376,7 +1381,7 @@ window.crypto.subtle.unwrapKey(
 window.crypto.subtle.generateKey(
     {
         name: "AES-KW",
-        length: 256, //can be  128, 192, or 256
+        length: 256 //can be  128, 192, or 256
     },
     false, //whether the key is extractable (i.e. can be used in exportKey)
     ["wrapKey", "unwrapKey"] //can be any combination of "wrapKey" and "unwrapKey"
@@ -1397,10 +1402,10 @@ window.crypto.subtle.importKey(
         kty: "oct",
         k: "Y0zt37HgOx-BY7SQjYVmrqhPkO44Ii2Jcb9yydUDPfE",
         alg: "A256KW",
-        ext: true,
+        ext: true
     },
     {   //this is the algorithm options
-        name: "AES-KW",
+        name: "AES-KW"
     },
     false, //whether the key is extractable (i.e. can be used in exportKey)
     ["wrapKey", "unwrapKey"] //can be any combination of "wrapKey" and "unwrapKey"
@@ -1434,7 +1439,7 @@ window.crypto.subtle.wrapKey(
     key, //the key you want to wrap, must export in 8 byte increments
     wrappingKey, //the AES-KW key with "wrapKey" usage flag
     {   //these are the wrapping key's algorithm options
-        name: "AES-KW",
+        name: "AES-KW"
     }
 )
 .then(function(wrapped){
@@ -1452,7 +1457,7 @@ window.crypto.subtle.unwrapKey(
     wrapped, //the key you want to unwrap
     wrappingKey, //the AES-KW key with "unwrapKey" usage flag
     {   //these are the wrapping key's algorithm options
-        name: "AES-KW",
+        name: "AES-KW"
     },
     {   //this what you want the wrapped key to become (same as when wrapping)
         name: "AES-GCM",
@@ -1477,7 +1482,7 @@ window.crypto.subtle.generateKey(
     {
         name: "HMAC",
         hash: {name: "SHA-256"}, //can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
-        //length: 256, //optional, if you want your key length to differ from the hash function's block length
+        //length: 256 //optional, if you want your key length to differ from the hash function's block length
     },
     false, //whether the key is extractable (i.e. can be used in exportKey)
     ["sign", "verify"] //can be any combination of "sign" and "verify"
@@ -1498,12 +1503,12 @@ window.crypto.subtle.importKey(
         kty: "oct",
         k: "Y0zt37HgOx-BY7SQjYVmrqhPkO44Ii2Jcb9yydUDPfE",
         alg: "HS256",
-        ext: true,
+        ext: true
     },
     {   //this is the algorithm options
         name: "HMAC",
         hash: {name: "SHA-256"}, //can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
-        //length: 256, //optional, if you want your key length to differ from the hash function's block length
+        //length: 256 //optional, if you want your key length to differ from the hash function's block length
     },
     false, //whether the key is extractable (i.e. can be used in exportKey)
     ["sign", "verify"] //can be any combination of "sign" and "verify"
@@ -1534,7 +1539,7 @@ window.crypto.subtle.exportKey(
 ```javascript
 window.crypto.subtle.sign(
     {
-        name: "HMAC",
+        name: "HMAC"
     },
     key, //from generateKey or importKey above
     data //ArrayBuffer of data you want to sign
@@ -1551,7 +1556,7 @@ window.crypto.subtle.sign(
 ```javascript
 window.crypto.subtle.verify(
     {
-        name: "HMAC",
+        name: "HMAC"
     },
     key, //from generateKey or importKey above
     signature, //ArrayBuffer of the signature
@@ -1585,7 +1590,7 @@ window.crypto.subtle.generateKey(
             150,28,98,243,86,32,133,82,187,158,213,41,7,112,150,150,109,103,12,53,78,74,
             188,152,4,241,116,108,8,202,35,115,39,255,255,255,255,255,255,255,255
         ]),
-        generator: new Uint8Array([2]),
+        generator: new Uint8Array([2])
     },
     false, //whether the key is extractable (i.e. can be used in exportKey)
     ["deriveKey", "deriveBits"] //can be any combination of "deriveKey" and "deriveBits"
@@ -1630,7 +1635,7 @@ window.crypto.subtle.importKey(
             150,28,98,243,86,32,133,82,187,158,213,41,7,112,150,150,109,103,12,53,78,74,
             188,152,4,241,116,108,8,202,35,115,39,255,255,255,255,255,255,255,255
         ]),
-        generator: new Uint8Array([2]),
+        generator: new Uint8Array([2])
     },
     false, //whether the key is extractable (i.e. can be used in exportKey)
     [] //use ["deriveKey", "deriveBits"] if importing a private key
@@ -1676,13 +1681,13 @@ window.crypto.subtle.deriveKey(
             188,152,4,241,116,108,8,202,35,115,39,255,255,255,255,255,255,255,255
         ]),
         generator: new Uint8Array([2]),
-        public: publicKey, //a DH public key from generateKey or importKey
+        public: publicKey //a DH public key from generateKey or importKey
     },
     privateKey, //your DH private key from generateKey or importKey
     { //the key type you want to create based on the derived bits
         name: "AES-CTR", //can be any AES algorithm ("AES-CTR", "AES-CBC", "AES-CMAC", "AES-GCM", "AES-CFB", "AES-KW", "ECDH", "DH", or "HMAC")
         //the generateKey parameters for that type of algorithm
-        length: 256, //can be  128, 192, or 256
+        length: 256 //can be  128, 192, or 256
     },
     false, //whether the derived key is extractable (i.e. can be used in exportKey)
     ["encrypt", "decrypt"] //limited to the options in that algorithm's importKey
@@ -1714,7 +1719,7 @@ window.crypto.subtle.deriveBits(
             188,152,4,241,116,108,8,202,35,115,39,255,255,255,255,255,255,255,255
         ]),
         generator: new Uint8Array([2]),
-        public: publicKey, //a DH public key from generateKey or importKey
+        public: publicKey //a DH public key from generateKey or importKey
     },
     privateKey, //your DH private key from generateKey or importKey
     256 //the number of bits you want to derive
@@ -1733,7 +1738,7 @@ window.crypto.subtle.deriveBits(
 ```javascript
 window.crypto.subtle.digest(
     {
-        name: "SHA-1",
+        name: "SHA-1"
     },
     new Uint8Array([1,2,3,4]) //The data you want to hash as an ArrayBuffer
 )
@@ -1750,7 +1755,7 @@ window.crypto.subtle.digest(
 ```javascript
 window.crypto.subtle.digest(
     {
-        name: "SHA-256",
+        name: "SHA-256"
     },
     new Uint8Array([1,2,3,4]) //The data you want to hash as an ArrayBuffer
 )
@@ -1767,7 +1772,7 @@ window.crypto.subtle.digest(
 ```javascript
 window.crypto.subtle.digest(
     {
-        name: "SHA-384",
+        name: "SHA-384"
     },
     new Uint8Array([1,2,3,4]) //The data you want to hash as an ArrayBuffer
 )
@@ -1784,7 +1789,7 @@ window.crypto.subtle.digest(
 ```javascript
 window.crypto.subtle.digest(
     {
-        name: "SHA-512",
+        name: "SHA-512"
     },
     new Uint8Array([1,2,3,4]) //The data you want to hash as an ArrayBuffer
 )
@@ -1804,7 +1809,7 @@ window.crypto.subtle.importKey(
     "raw", //only "raw" is allowed
     keydata, //your raw key data as an ArrayBuffer
     {
-        name: "CONCAT",
+        name: "CONCAT"
     },
     false, //whether the key is extractable (i.e. can be used in exportKey)
     ["deriveKey", "deriveBits"] //can be any combination of "deriveKey" and "deriveBits"
@@ -1827,13 +1832,13 @@ window.crypto.subtle.deriveKey(
         partyVInfo: ArrayBuffer, //?????? I don't know what this should be
         publicInfo: ArrayBuffer, //?????? I don't know what this should be
         privateInfo: ArrayBuffer, //?????? I don't know what this should be
-        hash: {name: "SHA-1"}, //can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
+        hash: {name: "SHA-1"} //can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
     },
     key, //your key from importKey
     { //the key type you want to create based on the derived bits
         name: "AES-CTR", //can be any AES algorithm ("AES-CTR", "AES-CBC", "AES-CMAC", "AES-GCM", "AES-CFB", "AES-KW", "ECDH", "DH", or "HMAC")
         //the generateKey parameters for that type of algorithm
-        length: 256, //can be  128, 192, or 256
+        length: 256 //can be  128, 192, or 256
     },
     false, //whether the derived key is extractable (i.e. can be used in exportKey)
     ["encrypt", "decrypt"] //limited to the options in that algorithm's importKey
@@ -1856,7 +1861,7 @@ window.crypto.subtle.deriveBits(
         partyVInfo: ArrayBuffer, //?????? I don't know what this should be
         publicInfo: ArrayBuffer, //?????? I don't know what this should be
         privateInfo: ArrayBuffer, //?????? I don't know what this should be
-        hash: {name: "SHA-1"}, //can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
+        hash: {name: "SHA-1"} //can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
     },
     key, //your key importKey
     256 //the number of bits you want to derive
@@ -1877,7 +1882,7 @@ window.crypto.subtle.importKey(
     "raw", //only "raw" is allowed
     keydata, //your raw key data as an ArrayBuffer
     {
-        name: "HKDF-CTR",
+        name: "HKDF-CTR"
     },
     false, //whether the key is extractable (i.e. can be used in exportKey)
     ["deriveKey", "deriveBits"] //can be any combination of "deriveKey" and "deriveBits"
@@ -1897,13 +1902,13 @@ window.crypto.subtle.deriveKey(
         "name": "HKDF-CTR",
         label: ArrayBuffer, //?????? I don't know what this should be
         context: ArrayBuffer, //?????? I don't know what this should be
-        hash: {name: "SHA-1"}, //can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
+        hash: {name: "SHA-1"} //can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
     },
     key, //your key from importKey
     { //the key type you want to create based on the derived bits
         name: "AES-CTR", //can be any AES algorithm ("AES-CTR", "AES-CBC", "AES-CMAC", "AES-GCM", "AES-CFB", "AES-KW", "ECDH", "DH", or "HMAC")
         //the generateKey parameters for that type of algorithm
-        length: 256, //can be  128, 192, or 256
+        length: 256 //can be  128, 192, or 256
     },
     false, //whether the derived key is extractable (i.e. can be used in exportKey)
     ["encrypt", "decrypt"] //limited to the options in that algorithm's importKey
@@ -1923,7 +1928,7 @@ window.crypto.subtle.deriveBits(
         "name": "HKDF-CTR",
         label: ArrayBuffer, //?????? I don't know what this should be
         context: ArrayBuffer, //?????? I don't know what this should be
-        hash: {name: "SHA-1"}, //can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
+        hash: {name: "SHA-1"} //can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
     },
     key, //your key importKey
     256 //the number of bits you want to derive
@@ -1937,13 +1942,78 @@ window.crypto.subtle.deriveBits(
 });
 ```
 
+## HKDF
+#### HKDF - importKey
+```javascript
+window.crypto.subtle.importKey(
+  "raw", //only "raw" is allowed
+  keydata, //your raw keydata as an ArrayBuffer
+  {
+    name: "HKDF"
+  },
+  false, //whether the key is extractable (i.e. can be used in exportKey)
+  ["deriveKey", "deriveBits"] //can be any combination of "deriveKey" and "deriveBits"
+).then(function(key) {
+  //returns a key object
+  console.log(key);
+}).catch(function(err) {
+  console.log(err);
+});
+```
+#### HKDF - deriveKey
+```javascript
+window.crypto.subtle.deriveKey(
+  {
+    name: "HKDF",
+    hash: {name: "SHA-1"}, //can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
+    salt: window.crypto.getRandomValues(new Uint8Array(16)),
+    info: window.crypto.getRandomValues(new Uint8Array(16))
+  },
+  key,
+  {
+    name: "AES-CTR", //can be any AES algorithm ("AES-CTR", "AES-CBC", "AES-CMAC", "AES-GCM", "AES-CFB", "AES-KW", "ECDH", "DH", or "HMAC") //the generateKey parameters for that type of algorithm
+    length: 256, //can be  128, 192, or 256
+  },
+  false, //whether the derived key is extractable (i.e. can be used in exportKey)
+  ["encrypt", "decrypt"] //limited to the options in that algorithm's importKey
+).then(function(key) {
+  //returns the derived key
+  console.log(key);
+}).catch(function(err) {
+  console.log(err);
+});
+```
+#### HKDF - deriveBits
+```javascript
+window.crypto.subtle.deriveBits(
+  {
+    name: "HKDF",
+    hash: {name: "SHA-1"}, //can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
+    salt: window.crypto.getRandomValues(new Uint8Array(16)),
+    info: window.crypto.getRandomValues(new Uint8Array(16))
+  },
+  key,
+  {
+    name: "AES-CTR", //can be any AES algorithm ("AES-CTR", "AES-CBC", "AES-CMAC", "AES-GCM", "AES-CFB", "AES-KW", "ECDH", "DH", or "HMAC") //the generateKey parameters for that type of algorithm
+    length: 256, //can be  128, 192, or 256
+  }
+  false //whether the key is extractable (i.e. can be used in exportKey)
+  ["encrypt", "decrypt"] //limited to the options in that algorithm's importKey
+).then(function(bits) {
+  //returns the derived bits as an ArrayBuffer
+  console.log(new Uint8Array(bits));
+}).catch(function(err) {
+  console.log(err);
+});
+```
+
 ## PBKDF2
 #### PBKDF2 - generateKey
 ```javascript
 //NOTE: This prompts the user to enter a password.
 window.crypto.subtle.generateKey(
     {
-        name: "PBKDF2",
+        name: "PBKDF2"
     },
     false, //whether the key is extractable (i.e. can be used in exportKey)
     ["deriveKey", "deriveBits"] //can be any combination of "deriveKey" and "deriveBits"
@@ -1962,7 +2032,7 @@ window.crypto.subtle.importKey(
     "raw", //only "raw" is allowed
     window.crypto.getRandomValues(new Uint8Array(16)), //your password
     {
-        name: "PBKDF2",
+        name: "PBKDF2"
     },
     false, //whether the key is extractable (i.e. can be used in exportKey)
     ["deriveKey", "deriveBits"] //can be any combination of "deriveKey" and "deriveBits"
@@ -1982,13 +2052,13 @@ window.crypto.subtle.deriveKey(
         "name": "PBKDF2",
         salt: window.crypto.getRandomValues(new Uint8Array(16)),
         iterations: 1000,
-        hash: {name: "SHA-1"}, //can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
+        hash: {name: "SHA-1"} //can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
     },
     key, //your key from generateKey or importKey
     { //the key type you want to create based on the derived bits
         name: "AES-CTR", //can be any AES algorithm ("AES-CTR", "AES-CBC", "AES-CMAC", "AES-GCM", "AES-CFB", "AES-KW", "ECDH", "DH", or "HMAC")
         //the generateKey parameters for that type of algorithm
-        length: 256, //can be  128, 192, or 256
+        length: 256 //can be  128, 192, or 256
     },
     false, //whether the derived key is extractable (i.e. can be used in exportKey)
     ["encrypt", "decrypt"] //limited to the options in that algorithm's importKey
@@ -2008,7 +2078,7 @@ window.crypto.subtle.deriveBits(
         "name": "PBKDF2",
         salt: window.crypto.getRandomValues(new Uint8Array(16)),
         iterations: 1000,
-        hash: {name: "SHA-1"}, //can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
+        hash: {name: "SHA-1"} //can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
     },
     key, //your key from generateKey or importKey
     256 //the number of bits you want to derive
