@@ -1604,7 +1604,7 @@ window.crypto.subtle.generateKey(
 ```javascript
 window.crypto.subtle.importKey(
     "raw", //can be "raw" (public only), "spki" (public only), or "pkcs8" (private only)
-    new Uint8Array([ //this is an example raw key, "raw" would be an ArrayBuffer
+    new Uint8Array([ //this is an example raw key
         203,25,0,203,43,75,46,159,217,37,185,181,25,220,71,187,112,195,251,233,152,56,206,
         93,18,96,87,132,17,113,166,110,123,190,194,168,100,147,21,174,131,80,8,247,125,35,
         210,70,103,141,152,173,99,74,34,132,92,134,216,55,171,186,89,167,189,217,164,119,
