@@ -1299,9 +1299,13 @@
                         .catch(err("ecdh", "importKey", "jwk-priv"));
 
                         //raw
-                        window.crypto.subtle.importKey("raw", null, ECDH, false, ["deriveBits", "deriveKey"])
+                        window.crypto.subtle.importKey("raw", new Uint8Array([
+                            4,118,33,81,28,67,199,245,128,15,232,154,206,164,60,5,236,15,143,197,184,70,229,99,200,
+                            198,233,224,144,119,199,19,232,73,73,241,124,184,122,164,184,228,190,38,29,4,139,56,209,
+                            217,0,238,10,96,62,55,157,108,78,254,237,100,42,154,85
+                        ]), ECDH, false, [])
                         .then(ok("ecdh", "importKey", "raw-pub"))
-                        .catch(err("ecdh", "importKey", "raw-pub*"));
+                        .catch(err("ecdh", "importKey", "raw-pub"));
 
                         //spki
                         window.crypto.subtle.importKey("spki", new Uint8Array([
